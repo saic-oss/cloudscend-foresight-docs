@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[22],{91:function(o){o.exports=JSON.parse('{"allTagsPath":"/sage-docs/blog/tags","slug":"hello","name":"hello","count":2,"permalink":"/sage-docs/blog/tags/hello"}')}}]);
