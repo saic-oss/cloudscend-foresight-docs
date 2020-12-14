@@ -117,5 +117,10 @@ tasks:
         msg: "GIT_CONFIG_EMAIL not set"
     cmds:
       - |
-        git config user.name "{{.GIT_CONFIG_USR}}" \
-        && git config user.email "{{.GIT_CONFIG_EMAIL}}"
+        if [ "$CI" == "true" ]; then
+          git config --global user.name "{{.GIT_CONFIG_USR}}"
+          git config --global user.email "{{.GIT_CONFIG_EMAIL}}"
+        else
+          git config user.name "{{.GIT_CONFIG_USR}}"
+          git config user.email "{{.GIT_CONFIG_EMAIL}}"
+        fi
