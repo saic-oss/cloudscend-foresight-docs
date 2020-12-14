@@ -1,6 +1,6 @@
 # https://taskfile.dev
 
-version: "2"
+version: "3"
 
 tasks:
   validate:
@@ -12,23 +12,110 @@ tasks:
   test:
     desc: Run automated tests
     cmds:
-      - echo "Add your logic here"
-      - exit 1
+      - task: build
 
   secure:
     desc: Run automated security checks
     cmds:
-      - echo "Add your logic here"
-      - exit 1
+      - echo "TODO: Figure out what the right security scans to run are (if any)"
 
   deliver:
-    desc: Deliver artifact
+    desc: Create and push index.yaml to gh-pages branch
+    vars:
+      # Username of GitHub user that will perform the push
+      GIT_USER: '{{ coalesce .GIT_USER "<no value>" }}'
+      # API Token for $GIT_USER
+      GIT_PASS: '{{ coalesce .GIT_PASS "<no value>" }}'
+      # Branch that the website will be deployed to. Should be 'gh-pages' in most cases
+      DEPLOYMENT_BRANCH: '{{ coalesce .DEPLOYMENT_BRANCH "gh-pages" }}'
+      # Branch that contains the latest docs changes that will be deployed. Should be 'main' in most cases.
+      CURRENT_BRANCH: '{{ coalesce .CURRENT_BRANCH "<no value>" }}'
+      # User Name to use in the commit signature. Can be different from $GIT_USER
+      GIT_CONFIG_USR: '{{ coalesce .GIT_CONFIG_USR "<no value>" }}'
+      # Email address to use in the commit signature. Can be different from $GIT_USER's email address
+      GIT_CONFIG_EMAIL: '{{ coalesce .GIT_CONFIG_EMAIL "<no value>" }}'
+    preconditions:
+      - sh: test "{{.GIT_USER}}" != "<no value>"
+        msg: "GIT_USER not set"
+      - sh: test "{{.GIT_PASS}}" != "<no value>"
+        msg: "GIT_PASS not set"
+      - sh: test "{{.DEPLOYMENT_BRANCH}}" != "<no value>"
+        msg: "DEPLOYMENT_BRANCH not set"
+      - sh: test "{{.CURRENT_BRANCH}}" != "<no value>"
+        msg: "CURRENT_BRANCH not set"
+      - sh: test "{{.GIT_CONFIG_USR}}" != "<no value>"
+        msg: "GIT_CONFIG_USR not set"
+      - sh: test "{{.GIT_CONFIG_EMAIL}}" != "<no value>"
+        msg: "GIT_CONFIG_EMAIL not set"
     cmds:
-      - echo "Add your logic here"
-      - exit 1
+      - task: git:config
+      - task: npm:install
+      - task: npm:deploy
 
   deploy:
     desc: Deploy project
     cmds:
-      - echo "Add your logic here"
-      - exit 1
+      - echo "N/A. This project uses the 'deliver' task to release to GitHub Pages
+
+  start:
+    desc: Run the Docusaurus site locally
+    dir: webapp
+    cmds:
+      - npm run start
+
+  build:
+    desc: Build the Docusaurus static content
+    dir: webapp
+    cmds:
+      - task: npm:install
+      - task: npm:build
+
+  npm:install:
+    dir: webapp
+    cmds:
+      - |
+        if [ -e yarn.lock ]; then
+          yarn install --frozen-lockfile
+        elif [ -e package-lock.json ]; then
+          npm ci
+        else
+          npm i
+        fi
+
+  npm:build:
+    dir: webapp
+    cmds:
+      - npm run build
+
+  npm:deploy:
+    dir: webapp
+    vars:
+      GIT_USER: '{{ coalesce .GIT_USER "<no value>" }}'
+      GIT_PASS: '{{ coalesce .GIT_PASS "<no value>" }}'
+      DEPLOYMENT_BRANCH: '{{ coalesce .DEPLOYMENT_BRANCH "<no value>" }}'
+      CURRENT_BRANCH: '{{ coalesce .CURRENT_BRANCH "<no value>" }}'
+    preconditions:
+      - sh: test "{{.GIT_USER}}" != "<no value>"
+        msg: "GIT_USER not set"
+      - sh: test "{{.GIT_PASS}}" != "<no value>"
+        msg: "GIT_PASS not set"
+      - sh: test "{{.DEPLOYMENT_BRANCH}}" != "<no value>"
+        msg: "DEPLOYMENT_BRANCH not set"
+      - sh: test "{{.CURRENT_BRANCH}}" != "<no value>"
+        msg: "CURRENT_BRANCH not set"
+    cmds:
+      - npx docusaurus deploy
+
+  git:config:
+    vars:
+      GIT_CONFIG_USR: '{{ coalesce .GIT_CONFIG_USR "<no value>" }}'
+      GIT_CONFIG_EMAIL: '{{ coalesce .GIT_CONFIG_EMAIL "<no value>" }}'
+    preconditions:
+      - sh: test "{{.GIT_CONFIG_USR}}" != "<no value>"
+        msg: "GIT_CONFIG_USR not set"
+      - sh: test "{{.GIT_CONFIG_EMAIL}}" != "<no value>"
+        msg: "GIT_CONFIG_EMAIL not set"
+    cmds:
+      - |
+        git config user.name "{{.GIT_CONFIG_USR}}" \
+        && git config user.email "{{.GIT_CONFIG_EMAIL}}"
