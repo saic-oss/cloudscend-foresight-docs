@@ -7,7 +7,7 @@ See the [webapp](./webapp) directory for the Docusaurus code
 ## Prerequisites
 
 - [go-task](https://taskfile.dev)
-- [pre-commit](https://pre-commit.com/)
+* [pre-commit](https://pre-commit.com/)
 - Current version of Node/NPM
 
 ## Getting Started
