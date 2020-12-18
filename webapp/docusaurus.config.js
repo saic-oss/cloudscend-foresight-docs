@@ -58,7 +58,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `© 2021 SAIC`,
+      copyright: '© 2021 SAIC',
     },
   },
   presets: [
