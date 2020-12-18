@@ -1,6 +1,6 @@
-# docusaurus-example
+# Sage by SAIC
 
-Example implementation of a documentation site powered by Docusaurus and published to GitHub Pages
+Sage Documentation site powered by Docusaurus and published to GitHub Pages. Contains a User Guide, Installation Guide, and an Operations Guide for using Sage.
 
 See the [webapp](./webapp) directory for the Docusaurus code
 
