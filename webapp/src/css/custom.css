@@ -1,5 +1,4 @@
 /* stylelint-disable docusaurus/copyright-header */
-
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
@@ -8,13 +7,13 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: rgb(33, 175, 144);
-  --ifm-color-primary-darker: rgb(31, 165, 136);
-  --ifm-color-primary-darkest: rgb(26, 136, 112);
-  --ifm-color-primary-light: rgb(70, 203, 174);
-  --ifm-color-primary-lighter: rgb(102, 212, 189);
-  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-color-primary: #255cc2;
+  --ifm-color-primary-dark: rgb(33, 66, 175);
+  --ifm-color-primary-darker: rgb(33, 51, 175);
+  --ifm-color-primary-darkest: rgb(33, 36, 175);
+  --ifm-color-primary-light: rgb(70, 143, 203);
+  --ifm-color-primary-lighter: rgb(102, 186, 212);
+  --ifm-color-primary-lightest: rgb(146, 219, 224);
   --ifm-code-font-size: 95%;
 }
 
@@ -23,4 +22,25 @@
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
+}
+
+.tablist li + li {
+  margin-top: 0 !important;
+}
+
+.api-method {
+  display: inline-block;
+  background: #61affe;
+  padding: 6px 8px;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.api-url {
+  display: inline-block;
+  background: var(--ifm-color-gray-200);
+  color: var(--ifm-color-gray-700);
+  padding: 6px 8px;
+  font-family: var(--ifm-font-family-monospace);
+  vertical-align: top;
 }

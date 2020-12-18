@@ -1,0 +1,475 @@
+---
+id: sage-managing-apps
+title: Managing Your Applications
+hide_title: Managing Your Applications
+sidebar_label: Managing Your Applications
+---
+
+# Managing Your Applications
+
+Once you have logged into Sage, you will be presented with the Sage home page. From the Sage home page you can select what actions you would like to perform. You can choose the following:
+
+- Add new applications through [Onboarding](#onboarding) tasks.
+- View your application portfolio dashboards from the [App Portfolio](#Dashboards)
+- Upload source code, artifacts, enter surveys and run migration estimates from the [App Analyzer](#app-analyzer)
+- Learn more about your application code quality and security vulnerabilities through [Continuous Assessment](#Continuous-Assessment)
+- Perform data mining on your own to answer questions about your app portfolio using our [Knowledge Discovery](#knowledge-discovery) option.
+
+![Sage Home](/img/SageHomePage.png)
+
+## Onboarding
+
+Now that you are logged into the Sage product you will need to onboard your application(s) in order to process them. Please watch the following video for an overview of the onboarding process. Step by step instructions follow the video.
+
+_onboarding video here_
+
+Now, you can follow these easy steps below to complete your application onboarding.
+
+### Application Onboarding
+
+Let's begin onboarding your application.
+
+**1. Select either the Onboarding link on the Sage home screen or the Onboarding link located on the main menu bar.**
+
+![Application Onboarding](/img/AppOnboardingLink.png)
+
+<br></br>
+
+The Onboarding Page allows you to enter all the basic information for setting up your application within Sage.
+
+<br></br>
+
+:::note
+
+The Application Name, acroynm, organizaion name, and application owner are all required fields.
+
+:::
+
+![Onboarding Screen](/img/FullOnboardingPage.png)
+
+<br></br>
+
+**2. Enter your application name, its acroynm, your organizaion name and optionally your sub-organization name.**
+
+![Enter All Application Onboarding Information](/img/GeneralOnboardingFields2.png)
+
+<br></br>
+
+**3. Enter the Application Owner information (required) and any other applicable personnel fields. Note that for any name fields, the individual must have an account on Sage.**
+
+![Enter Application Personnel Information](/img/PersonnelOnboardingFields.png)
+
+<br></br>
+
+**4. Select Submit at the bottom of the page to proceed.**
+
+![Select Submit](/img/SubmitOnboardingFields.png)
+
+<br></br>
+
+Once you have submitted your application for onboarding, you will be offered the option to continue on to complete your survey.
+:::note
+
+It is common to complete your survey following onboarding your application. While completing the survey is required to analyze your application, it doesn't have to be done immediately following onboarding so you may choose to postpone this step.
+
+:::
+
+**5. Make your selection to complete the survey by selecting the Start Survey button. Optionally, you can choose the Take Later button to postpone completing the survey and you will be taken back to the home screen. However, please note, that you must complete the survey before any application processing will be performed.**
+
+![Confirm Survey](/img/FollowingOnboardingSubmitConfirm.png)
+
+Once you have selected the Complete Survey button, you will be taken to the Survey Window. Please see the [Survey Management](#survey-management) section of this guide for step by step instructions on filling out your survey.
+
+### Survey Management
+
+In order to provide you with the most accurate Cloud readiness analysis, you need to complete a short survey with questions regarding your application and its dependencies and interfaces as well as questions regarding the business impact of your application. Please be sure to provide the most accurate information as possible as incorrect answers can affect your output.
+
+Please watch the following video for a quick overview of completing the survey.
+
+_Video Here_
+
+#### Survey Question Details
+
+The table below provides you with the survey questions and possible answers so you can prepare to provide the most accurate answers possible for your application.
+
+**Technical Assessment Questions**
+
+| Survey Question                                                                                                            | Possible Answers                                                                                              |
+| -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| What is the system type                                                                                                    | Legacy System<br></br>Cloud System                                                                            |
+| What is the architechture of the system?                                                                                   | Web System (n-Tier)<br></br>Thick Client System<br></br>Mainframe System                                      |
+| How many HTTPS-based/443 interface does the system use with external systems?                                              | 0-50                                                                                                          |
+| How many non HTTPS-based/443 interface does the system use (e.g., TCP, UDP, SMTP) with external systems?                   | 0-50                                                                                                          |
+| What is the primary database type for this system?                                                                         | Self-Managed (MySQL, Postgres, Oracle, etc)<br></br>CSP Managed (AWS RDS, Azure SQL, etc)<br></br>No Database |
+| How many primary databases are associated with this system?                                                                | 0-20                                                                                                          |
+| What primary database components are used for this system?                                                                 | DB Links<br></br>Stored Procs<br></br>Both<br></br>None                                                       |
+| What is the secondary database type for this system?                                                                       | Self-Managed (MySQL, Postgres, Oracle, etc)<br></br>CSP Managed (AWS RDS, Azure SQL, etc)<br></br>No Database |
+| How many secondary databases are associated with this system?                                                              | 0-20                                                                                                          |
+| What secondary database components are used for this system?                                                               | DB Links<br></br>Stored Procs<br></br>Both<br></br>None                                                       |
+| Does this system integrate with a CAC/PIV for user authentication?                                                         | Yes<br></br>No                                                                                                |
+| What Single Sign-On token does the system use?                                                                             | SAML<br></br>OIDC/JWT<br></br>Other                                                                           |
+| Does the system use Shared Filesystems or Shared Caching?                                                                  | Yes<br></br>No                                                                                                |
+| Does this system use messaging based products (e.g. MQSeries, RabbitMQ)?                                                   | Yes<br></br>No                                                                                                |
+| Does this system have a need for real-time data syncronization?                                                            | Yes<br></br>No                                                                                                |
+| Does this system use ERP that must be migrated to cloud with the system?                                                   | Yes<br></br>No                                                                                                |
+| Does this system use other 3rd party software that must be migrated to cloud with the system (COTS, open source software)? | Yes<br></br>No                                                                                                |
+| Who is your preferred CSP (e.g., AWS, Azure)?                                                                              | AWS<br></br>Azure<br></br>Other (e.g. Google)                                                                 |
+| What is a lower range value of Refactor Coverage? Please consult this question with migration team.                        | 0-100%                                                                                                        |
+| What is a upper range value of Refactor Coverage? Please consult this question with migration team.                        | 0-100%                                                                                                        |
+
+**Business Impact Questions**
+
+| Survey Question                                                                                   | Possible Answers                                                            |
+| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| The number of major releases delivered over the last 12 months                                    | Less than 4<br></br>4 to 6<br></br>7 to 12<br></br>More than 12             |
+| Is this application in line with the organization's future technology direction?                  | Yes<br></br>No                                                              |
+| The average number of people (FTE) that worked on the code over the last 12 months?               | 0-9999                                                                      |
+| Does the application serve internal or external users?                                            | External<br></br>Internal users or business processes<br></br>Both          |
+| What is the approximate number of end users?                                                      | Less than 100<br></br>100 to 500<br></br>501 to 2500<br></br>More than 2500 |
+| Could failure of this application lead to disruption?                                             | Low<br></br>Medium<br></br>High<br></br>Very High                           |
+| Could failure of this application lead to loss of revenue, business opportunity or mission goals? | Low<br></br>Medium<br></br>High<br></br>Very High                           |
+| Could failure of this application lead to harm of the organization's public image?                | Low<br></br>Medium<br></br>High<br></br>Very High                           |
+| Could failure of this application lead to loss of customer confidence?                            | Low<br></br>Medium<br></br>High<br></br>Very High                           |
+
+#### Accesing and Completing the Survey
+
+You can access your survey in two ways. First you can simply move through the application Onboarding process and start your survey when asked after submitting your application information as described above in the [Onboarding Section](#application-onboarding), in which case you can move down to step 3 below. However, if you chose to postpone completing your survey or you need to make changes to your survey, you can access it from the App Analyzer screen. Follow these steps to access your survey at any time following onboarding your application:
+
+**1. From the Sage home screen, you will select App Analyzer or from the main menu bar you can go to Dashboards -> App Analyzer.**
+
+![App Analyzer](/img/SageHomeAppAnalyzer.png)
+
+This will bring up the App Analyzer home screen.
+
+![App Analyzer Home](/img/AppAnalyzerHome.png)
+
+**2. Select the Start under the Survey Status column for your application to begin your survey.**
+
+![Begin Survey](/img/AppAnalyzerSurveyClick.png)
+
+<br></br>
+
+**3. Answer all the Technical Assessment survey questions.**
+
+![Start Survey](/img/SurveyBegin.png)
+
+:::important
+Survey answers need to be as accurate as possible. Seek out the assistance of your application software experts if you don't know the answers as incorrect survey values can affect your output.
+:::
+
+**4. Once you complete the Technical Assessment questions, select Next at the bottom of the screen to answer the Business Impact questions. Optionally you can choose to Save your answers and leave the survey. If you choose to save and leave the survey your entered information will be saved but your survey will show as In Progress on the App Analyzer home screen. Additionally, if you choose to Cancel without saving your answers will be lost.**
+
+![Next Survey](/img/SurveyNext.png)
+
+**5. Answer all of the Business Impact questions.**
+
+![Business Impact](/img/SurveyBusinessImpact.png)
+
+**6. After answering all the quesitons, select Submit to complete your survey. Optionally, you can save and not submit, go back to the previous survey screen or cancel out completely.**
+
+![Submit Survey](/img/SurveyEndSubmit.png)
+
+Once you have successfully submitted a completed survey, you will see the Survey Response screen which will show you your entered values.
+
+![Survey Response](/img/SurveyResponse.png)
+
+**5. If you need to change your survey answers, you can retake the survey by selecting the Retake Survey button on the Survey Response screen. If you choose to retake your survey, the previous answers will be populated when the survey window opens.**
+
+![Retake Survey](/img/SurveyResponseRetakeButton.png)
+
+:::note
+
+If you need to print or save a local copy of your survey answers, you may select the View PDF button, located beside the Retake Survey button, that will open a printable or downloadable version of your completed survey.
+
+:::
+
+Once you have completed your survey, you can continue on with your applicaiton analysis by selecting Home on the menu bar.
+
+<br></br>
+
+## App Analyzer
+
+Once you have completed the set up of your application, you will want to perform the application analysis steps, including:
+
+- Uploading your source code
+- Uploading any application artifacts
+- Completing or re-taking the survey
+- Running migration estimates
+
+**1. From the Sage home screen, you will select App Analyzer or from the main menu bar you can go to Dashboards -> App Analyzer.**
+
+![App Analyzer](/img/SageHomeAppAnalyzer.png)
+
+This will take you to the App Analyzer main page where you should see your onboarded applications listed.
+
+![Home Screen](/img/AppAnalyzerHome.png)
+
+:::tip
+
+You can use the Filter option above the list of applications to search for your specific application. You can search using the application name or the application identification number (App Global ID). The App Global ID can be found and and stored on your clipboard by clicking on the blue key icon on the right side of the Application Name.
+
+:::
+
+<br></br>
+
+### Uploading Source Code
+
+Now that you have entered your information and taken the survey, it's time to upload your application source code. You will want to upload your source code to begin your migration estimate but you may upload your code at any other time as well. You will want to upload your source code throughout your refactoring process to keep track of your progress and keep on top of any new issues that have been created by your refactoring.
+For detailed information regarding packaging your source code for uploading, refer to the [Sage Operations Guide](/docs/sage-ops-standard-guidelines#packaging-source-code).
+
+**2. Select the Upload Source Code icon.**
+
+![Source Upload](/img/SourceUploadIcon.png)
+
+<br></br>
+
+**3. Click on the file selector icon.**
+
+![File uploader](/img/SourceUploader.png)
+
+**4. Use the File Explorer window to navigate to your zipped up source code. Select the .zip file you want to upload and click the Open button.**
+
+![File Explorer Selection](/img/FileSelector.png)
+
+<br></br>
+
+**5. Click the Upload button to complete the upload of your source code.**
+
+![Source Upload](/img/ClickUpload.png)
+
+You will see that as soon as your source code is uploaded, the Sage analyzer begins working and your App Analysis Status is now Processing.
+
+![Source Code Processing](/img/SourceCodeProcessing.png)
+
+And when the initial analysis is complete, your App Analysis Status will change to Analysis Results Ready.
+
+![Analysis Results Ready](/img/AnalysisResultsReady.png)
+
+### Migration Metrics Reports Details
+
+The Sage product will provide you with 4 reports once your source code is processed. Each of these reports provide different information regarding your application based on the source code you uploaded.
+
+#### Application Assessment Report Details
+
+The Application Assessment Report provides you with general overview of your source code with information about the size and type of your source code. You will be presented with data regarding the following:
+
+1. All languages supported in your source code
+2. The overall number of executable lines of code (LOC)
+3. The total number of physical lines of code
+4. The total number of commented lines of code
+5. By file, the number of executable lines of code and the number of complex lines of the code where it can be deteremined.
+
+#### Application Technical Debt Report Details
+
+The Application Technical Debt Report provides you with an overall SAIC technical debt score as well as specific details regarding issues within your source code. You will be presented with the following information:
+
+1. A calculated total technical debt as well as the technical debt broken down by maintainability issues, reliability issues and security issues
+2. A calculated technical debt rating from 1.0 - 5.0 where 1.0 means very low technical debt and 5.0 means very high technical debt
+3. A detailed breakdown by issue type (maintainability, reliability, security) including the following
+   - File name
+   - Suggested code change
+   - Line number
+   - Severity (Blocker, Critical, Major, Minor)
+
+#### Application Cloud Readiness Report Details
+
+The Application Cloud Readiness report is generated by the CAST Highlight tool and presents you with metrics and analysis. Each of these metrics convey specific measurable dimension of code quality and cloud readiness.
+
+1. Normalized Cloud Readiness Index - Higher scores indicate an application is better suited for Cloud migration with fewer modifications.
+2. The number of security vulnerabilities
+3. Cloud Blocker Score - Lower scores indicate fewer blockers to Cloud migration
+4. Software Resiliency index represents the presence of good or bad programming habits within your source code that make it more or less robust and secure. The higher the index the lower the likehood of defects in production.
+5. Software Agility index represents the ease of maintaining your application source code. The higher the index the easier the code is to understand and maintain.
+6. Software Elegance index represents code complexity. The higher the index the fewer potential defects that may arise from your code.
+7. Obsolesence information informs you of the number of frameworks that are obsolete and need remediation.
+8. CAST Technical Debt refers to the cost to fix the structural quality of the application per CAST Highlight calculations.
+
+#### Application Cost Estimate Report Details
+
+The Application Cost Estimate report utilizes data from the Cloud Readiness Report and feeds it into a tailored COCOMO Model and provides the following pieces of information.
+
+1. The Percent Design Modified value is simply a percentage of the application design that must be modified to adapt to the new objectives or environment.
+2. The Percent Code Modified value is simply a percentage of the application code that must be modified to adapt to the new objectives or environment.
+3. The Software Understand value is a penalty based on the ease of understanding the code, with lower values representing better structured and descriptive code.
+4. The Required Software Reliability refers to the effect caused if there is a software failure.
+5. The Product Complexity value refers to specific areas of operations for your software that may effect the effort to migrate your application.
+6. The Estimated Effort is the amount of time estimated to be required for completion in units of Person-Months
+
+### Viewing Migration Metrics Reports
+
+You can view the reports for your application for each time you have uploaded your source code. To access the reports follow these steps:
+
+**1. From the App Analyzer screen, once your App Analysis Status is Analysis Results Ready, you may view these reports. Click on the Analysis Results Ready link.**
+
+![Analysis Ready](/img/AnalysisReportsReady.png)
+
+**2. Each report is listed on the screen, if the status is Ready to View you may view that report by clicking the View Report icon to the right of the report you wish to view.**
+
+![View Report Example](/img/ViewAssessmentReport.png)
+
+Since you can upload your source code numerous times during your applications life, you can all the versions of the reports for each source code upload you have performed. To view different versions of you reports, follow the steps below.
+
+**3. In the Reports screen, select the Source Code Upload History drop down menu and select the date and time corresponding to the source code upload date and time that you would like to view.**
+
+![View Report History](/img/AnalysisReportsHistory.png)
+
+Once you have selected your Upload History date and time, you will be able to view those historical reports.
+
+<br></br>
+
+### Uploading Artifacts
+
+Now that you have successfully uploaded your source code, it's time to upload any artifacts, requirements, documents, charts, graphs, test cases, etc that you may want to include with your application.
+
+**6. Select the Upload Artifacts Icon from the App Analyzer screen if you have any artifacts to include.**
+
+![Upload Artifacts](/img/ClickUploadArtifacts.png)
+
+If you have previously uploaded artifacts, they will be listed in the bottom Uploaded Artifacts panel, as seen here:
+
+![Files Uploaded](/img/ArtifactsAlreadyUploaded.png)
+
+<br></br>
+
+**7. Click on the file selector icon.**
+
+![File uploader](/img/UploadArtifactAttach.png)
+
+**8. Use the File Explorer window to navigate to your application artifacts. Select the artifacts you would like to include and click the Open button.**
+
+![File Explorer Selection](/img/ArtifactSelection.png)
+
+<br></br>
+
+**9. Click the Upload button to complete the upload of your artifacts.**
+
+![Source Upload](/img/ClickUploadArtifactsButton.png)
+
+Once your files have been uploaded they will be displayed in the bottom panel as shown. You may now either upload more artifacts or close the window to continue your analysis.
+
+![Artifacts Uploaded](/img/ArtifactUploadComplete.png)
+
+### Migration Estimate
+
+In order to create your complete Sage Migration Estimate Report, you will need to run the Migration Estimation tool against your uploaded code results and completed survey. Please watch the following viedo for a quick overview of running migration estimates.
+
+_Video Here_
+
+Peform the following steps to create your migration estimates.
+
+**1. Select the Migration Estimate Icon on the App Analyzer home screen.**
+
+![Migration Estimate](../static/img/ClickMigrationEst.png)
+
+**2. The Migration Estimate tool will process your application immediately and show you the estimated time and refactoring cost to migrate your application to the cloud.**
+
+![Migration Estimate](/img/MigrationEstimate.png)
+
+Once you have run the Migration Estimates, you can also use the Interactive Calculator if you would like to see what effect different inputs would have on your estimate.
+
+**3. If you are interested in using custom values for your COCOMO model parameters, select the Interactive Calculator icon on the Migration Estimate screen**
+
+![Interactive Calculator Icon](/img/InteractiveCalculatorIcon.png)
+
+The Interactive Calculator screen will come up populated with the current values used as parameters in your estimate.
+
+![Interactive Calculator](/img/InteractiveCalculator.png)
+
+**4. Make the changes you desire to the Derived COCOMO Parameters fields and select Preview Estimate to validate you have your desired results.**
+
+![Interactive Calculator Edit](/img/InteractiveCalculatorEdit.png)
+
+Your new estimated effort will be calculated based on the data you changed in the Interactive Calculator.
+
+**5. If you are satisfied with your estimate and would like to save the changes you made in the Interactive Calculator, then select the Save Estimate Button at the botton of the screen.**
+
+![Interactive Calculator Save](/img/InteractiveCalculatorSaveEst.png)
+
+**6. Once all your changes have been made and saved in the Interactive Calculator, select the X at the top of the page to exit and return to the Migration Estimate screen.**
+
+![Interactive Calculator Exit](/img/InteractiveCalculatorExit.png)
+
+**7. To view your complete Sage migration estimate report, select the Sage results icon on the Migration Estimate screen.**
+
+![Sage Results Icon](/img/MigrationSageResults.png)
+
+Your complete Sage Results report will open on the Summary tab. Note there are three tabs on the Sage Results report - Summary, App Analysis Details, and Refactoring Details.
+
+![Sage Results](/img/SageResultsTabs.png)
+
+The Summary Tab provides you the overall estimation amounts for App Analysis and Refactoring as well as general profile information.
+
+Selecting the App Analysis Details tab will provide you with all the information that goes into creating your App Analysis Estimation. Generally speaking, the lower an Overall Score in a category, the lower your estimated time and cost will be.
+
+![Sage Results AA](/img/SageResultsAA.png)
+
+Selecting the Refactoring Details tab will provide you with all the information that goes into calculating your Refactor Estimate.
+
+![Sage Results Refactor](/img/SageResultsRefactor.png)
+
+:::note
+
+At any time while viewing the Sage Results you may download a copy of the report by selecting the View Excel button in the upper right corner of the screen.
+
+![Sage Results Excel](/img/SageResultsViewExcel.png)
+
+:::
+
+## App Portfolio
+
+For our App Portfolio, we have partnered with CAST Highlight to provide you the ability to quickly view and analyze your entire portfolio of applications. This will assist you in making decisions about which applications should be your next cloud migration effort as well as showing you trends and issues over time.
+
+### App Portfolio Dashboard
+
+In order to access your App Portfolio Dashboard, follow these steps:
+
+**1. Select App Portfolio from the Sage Home screen or from the Dashboards list on the main menu bar**
+
+![App Portfolio Menu](/img/AppPortfolioMenu.png)
+
+**MORE APP PORTOLIO HERE**
+
+:::tip
+If you need more information regarding CAST Highlight Dashboard capabilities, see the [CAST Highlight documentation](https://doc.casthighlight.com/).
+:::
+
+## Continuous Assessment
+
+### Continuous Assessment Dashboard
+
+## Knowledge Discovery
+
+In Knowledge Discovery, you can use pre-exiting queries to view charts and graphs or you can create your own.
+
+### Data Analytics
+
+Sage provides you a few basic charts and graphs representing some of your application data.
+
+**1. Select Knowledge Discovery from the Sage Home screen or from the Dashboards list on the main menu bar.**
+
+![Knowledge Discovery](/img/KnowledgeDiscoveryClick.png)
+
+This will bring up the Sage Analytics Dashboard.
+
+![Sage Analytics Dashboard](/img/SageMetabaseDashboard.png)
+
+From here you can see the representation of four sets of data:
+
+- Cloud Readiness by Language
+- Cloud Readiness by Functional Organization and Technology
+- Cloud Readiness by Technology and Application
+- Vulnerabilities by Application
+
+:::note
+If you would like to create your own analytics, see [Creating Your Own Data Analytics](#creating-your-own-data-analytics)
+:::
+
+**2. The Sage Analytics Dashboard is interactive. Move your mouse over any dot and a small popup will display what that dot represents.**
+
+![Sage Analytics Interactive](/img/MetabaseInteractive.png)
+
+### Creating Your Own Data Analytics
+
+If you have your own instance of Metabase, you can create charts and graphs representing the application data that interests you most.
+
+We have provided you read only access to allow you to pull data from our Sage database. You can use the [Sage Data Dictionary](sage-data-dictionary.mdx) to determine what data is available to you.

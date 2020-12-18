@@ -1,0 +1,399 @@
+---
+id: sage-install-ECS
+title: Installing Sage to AWS ECS
+hide_title: Installing Sage to AWS ECS
+sidebar_label: Installing Sage to AWS ECS
+---
+
+# Installing Sage to AWS ECS
+
+## Assumptions for AWS ECS Installation
+
+- You are familiar with AWS ECS Environments
+- Access to functional AWS ECS Environment
+- Technical Knowledge of the following
+
+  - Docker
+  - Docker Compose
+  - AWS
+  - [AWS CLI Version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html)
+  - Optionally, [ECS-CLI](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html)
+
+- SSL Instructions have been completed **_NEED INPUT FROM TEAM ON THIS_**
+- **NEED INPUT FROM TEAM**
+
+## Technical Requirements for AWS ECS Installation
+
+Before performing your ECS Sage installation, ensure your environment is set with the following:
+
+- AWS ECS Environment
+- EC2 instance
+- Amazon Virtual Private Cloud (VPC)
+- Elastic Load Balancing (ELB)
+- Amazon CloudWatch
+- Amazon Elastic File System (EFS)
+- Security Groups for you VPC
+- AWS Systems Manager Agent (SSM)
+- AWS Secrets Manager
+- You must download and install an instance of [SonarQube](https://www.sonarqube.org/downloads/). You may download either a Community, Developer or Enterprise Edition.
+- If any of your source code is written in Cold Fusion, you must also download and install [CFLint](https://github.com/stepstone-tech/sonar-coldfusion/releases/tag/2.0.0).
+- **Explain different plugins for different versions of SonarQube (like CFLint, TypeScript, Java, etc)**
+- **NEED INPUT FROM TEAM**
+
+## Steps for Configuring and Installing Sage in AWS ECS Environment
+
+### General configuration steps
+
+**Environment Variables ???? (perhaps this should be somewhere else or isn't valid)**
+**ANY OTHER GENERAL CONFIGURATIONS???**
+
+Before installing Sage, you must ensure your AWS Environment is setup correctly for an ECS Cluster. Below is an overview of the services required by the ECS cluster.
+
+![ECS Cluster](/img/ECS.png)
+
+1. Create a VPC with preferably two public and two private subnets:
+
+- Example:
+  - 192.168.0.0/24 VPC
+  - 192.168.0.64/26 Public Subnet-1
+  - 192.168.0.128/26 Public Subnet-2
+  - 192.168.0.192/27 Private Subnet-1
+  - 192.168.0.192/27 Private Subnet-2
+
+2. Create an ECS cluster preferably EC2 Linux + Networking (both EC2 and Fargate capable services are compatible with this setup). Utilize the VPC previously created during ECS setup.
+
+3. Choose Amazon ECS-optimized Amazon Linux 2 AMI ami-0583ca2f3ce809fcb and create at least 2 instances with specifications such as:
+
+- t2.2xlarge
+- 60 GiB
+- ecsInstanceRole IAM role
+- Enable CloudWatch logs
+
+Tasks and services that use the awsvpc network mode require the Amazon ECS service-linked role to provide Amazon ECS with the permissions to make calls to other AWS services on your behalf. This role is created for you automatically when you create a cluster.
+
+4. Create the proper Security Groups to be used by the ECS cluster EC2 instances and ELB.
+
+5. Create Application Load Balancer (ELB) and register the ECS Instances as ELB Targets. Ensure to set the targets to IP and not Instance. This is because tasks that use the awsvpc network mode are associated with an ENI, not with an Amazon EC2 instance.
+
+6. Ensure the Internet Gateway of the ECS VPC is properly configured to the Route Table.
+
+ECS has integration with Elastic Load Balancing (Application Load Balancers) through the Service feature, where tasks will be automatically registered in the ELB and deregistered in the ELB appropriately.
+
+7. Create a EC2 instance to administer and manage the ECS cluster
+
+8. Configure AWS CLI on a management Linux instance
+
+```
+[root@ip-172-00-00-111 docker-compose]# aws configure
+AWS Access Key ID [****************RI7S]:
+AWS Secret Access Key [****************zAUX]:
+Default region name [us-east-2]:
+Default output format [json]:
+
+```
+
+Additional information on installing AWS CLI is available at [AWS Amazon](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install).
+
+9. Navigate to the code repository to obtain the json files which are the ECS task definitions. Each application service has a json for EC2 and Fargate deployment respectively.
+
+### Configure your ECS Cluster and Install Sage
+
+1. Obtain your deployment code repository from the [Sage ECS Deployment location](PUT A LINK IN HERE?).
+
+2. Deployment order of Sage containers:
+
+   - Commondata Database
+   - Commondata Backend
+   - Metabase DB
+   - Metabase Backend
+   - Sage DB
+   - Sage Backend
+   - Sage Frontend
+   - Keycloak Database
+   - Keycloak
+   - Highlight Agent
+   - Reports Service
+   - Uploader
+   - Elasticsearch
+   - Fluentd
+   - Kibana
+   - Gitlab
+   - Sonarqube
+
+3. Create the ECS Task definitions based on your ECS type and Sage deployment order.
+
+:::note
+ECS may be deployed with two different ECS types:
+
+- EC2 – cluster based on server instances
+- Fargate – serverless compute for containers
+  The main differences with Fargate and EC2 Task Definitions is that volumes need to be mounted to Fargate Task Definitions from sourceVolume, to provide nonpersistent empty storage for containers in a Fargate task.
+  It is the decision of your administrator as to which you deploy.
+
+:::
+
+- Regardless of your ECS type, you will need to create a task definitions for each Sage json file.
+- Use awsvpc networking mode
+  - Your containers in the task will share an ENI using a common network stack. Port mappings can only specify container ports (any existing host port specifications will be removed).
+
+For example, the following describe and register statements create task definitions for the commondata-db container:
+
+```
+  aws ecs describe-task-definition --task-definition commondata-db-ec2:4
+  aws ecs register-task-definition --cli-input-json file://commondata-db-ec2.json
+
+```
+
+4. Create ECS Services
+
+- If your administrator has chosen the Fargate service, then create ECS Fargate Services
+
+  - To create a service with Fargate, run similar AWS CLI command below for each ECS Task Definition previously created. Below is an example using the commondata-db container. Ensure you use the correct network and cluster values for your environment.
+
+  ```
+   /usr/local/bin/aws ecs create-service --cluster default-ecs-ec2 --service-name commondata-db --task-definition commondata-db-ec2:5 --desired-count 2 --launch-type FARGATE --platform-version LATEST --network-configuration "awsvpcConfiguration={subnets=[subnet-xxxxxx5b024557fe5],securityGroups=[ sg-0035ba27e231xxxxxx],assignPublicIp=DISABLED}"
+  ```
+
+  :::note
+  It’s recommended to run Elasticsearch on Fargate due to recent compatibility contingencies.
+
+  - To fix paging issue on Elasticsearch EC2 attempt to add this command to the instances: **THIS SAYS EC2 BUT DEALING WITH FARGATE**
+  - sudo sysctl -w vm.max_map_count=262144
+  - sudo sysctl -w fs.file-max=65536
+    :::
+
+Below find an example of a successful output when task definition is properly registered using FARGATE:
+
+```
+{
+    "taskDefinition": {
+        "status": "ACTIVE",
+        "memory": "1024",
+        "networkMode": "awsvpc",
+        "family": "sage-frontend",
+        "placementConstraints": [],
+        "requiresAttributes": [
+            {
+                "name": "com.amazonaws.ecs.capability.ecr-auth"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.task-iam-role"
+            },
+            {
+                "name": "ecs.capability.execution-role-ecr-pull"
+            },
+            {
+                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+            },
+            {
+                "name": "ecs.capability.task-eni"
+            }
+        ],
+        "cpu": "512",
+        "executionRoleArn": "arn:aws:iam::358354085340:role/ecsTaskExecutionRole",
+        "compatibilities": [
+            "FARGATE",
+        ],
+        "volumes": [],
+        "requiresCompatibilities": [
+            "FARGATE"
+        ],
+        "taskRoleArn": "arn:aws:iam::358354085340:role/ecsTaskExecutionRole",
+        "taskDefinitionArn": "arn:aws:ecs:us-east-2:358333225340:task-definition/sage-frontend:1",
+        "containerDefinitions": [
+            {
+                "environment": [],
+                "name": "sage-frontend",
+                "mountPoints": [],
+                "image": "358354085340.dkr.ecr.us-east-2.amazonaws.com/ecstestecr:sage-frontend",
+                "cpu": 512,
+                "portMappings": [
+                    {
+                        "protocol": "tcp",
+                        "containerPort": 80,
+                        "hostPort": 80
+                    }
+                ],
+                "memory": 1024,
+                "essential": true,
+                "volumesFrom": []
+            }
+        ],
+        "revision": 1
+    }
+}
+```
+
+- If your administrator has chosen the EC2 service, then create ECS EC2 Services
+
+  - To create a service with ECS EC2, run simialiar AWS CLI command for each Task Definition previously created. Below is an example using the commondata container. Ensure you use the correct network and cluster values for your environment.
+
+  ```
+  /usr/local/bin/aws ecs create-service --cluster default-ecs-ec2 --service-name commondata --task-definition commondata-ec2:7 --desired-count 2 --launch-type EC2 --network-configuration "awsvpcConfiguration={subnets=[subnet-xxxxxx5b024557fe5],securityGroups=[ sg-0035ba27e231xxxxxx],assignPublicIp=DISABLED}"
+  ```
+
+:::note
+
+**IS THIS NECESSARY**
+It’s recommended to run GitLab on EC2 due to recent compatability contingencies.
+
+:::
+
+Below you will find an example of a successful output when the Sage-Frontend EC2 Task Definition is properly registered
+
+```
+{
+  "service": {
+      "status": "ACTIVE",
+      "serviceRegistries": [],
+      "pendingCount": 0,
+      "launchType": "EC2",
+      "enableECSManagedTags": false,
+      "schedulingStrategy": "REPLICA",
+      "loadBalancers": [],
+      "placementConstraints": [],
+      "createdAt": 1607397320.811,
+      "desiredCount": 2,
+      "serviceName": "sage-frontend",
+      "clusterArn": "arn:aws:ecs:us-east-2:358354085340:cluster/dev-ec2-ecs",
+      "createdBy": "arn:aws:iam::358354085340:user/michael.a.schlosser@saic.com",
+      "taskDefinition": "arn:aws:ecs:us-east-2:358354085340:task-definition/sage-frontend-ec2:1",
+      "serviceArn": "arn:aws:ecs:us-east-2:358354085340:service/dev-ec2-ecs/sage-frontend",
+      "propagateTags": "NONE",
+      "deploymentConfiguration": {
+          "maximumPercent": 200,
+          "minimumHealthyPercent": 100
+      },
+      "deployments": [
+          {
+              "status": "PRIMARY",
+              "pendingCount": 0,
+              "launchType": "EC2",
+              "createdAt": 1607397320.811,
+              "desiredCount": 2,
+              "taskDefinition": "arn:aws:ecs:us-east-2:358354085340:task-definition/sage-frontend-ec2:1",
+              "updatedAt": 1607397320.811,
+              "id": "ecs-svc/8272762167026254857",
+              "runningCount": 0
+          }
+      ],
+      "events": [],
+      "runningCount": 0,
+      "placementStrategy": []
+  }
+}
+
+```
+
+**IS THERE A STATEMENT OR STEP NEEDED FOR DEPLOYING? WE HAVE THE OUTPUT OF DEPLOYMENT BUT WHAT DEPLOYS IT**
+
+Below you will find an example of a successful output when ECS Service is properly deployed.
+
+```
+{
+    "service": {
+        "serviceArn": "arn:aws:ecs:us-east-2:358354085340:service/default-ecs-ec2/commondata",
+        "serviceName": "commondata",
+        "clusterArn": "arn:aws:ecs:us-east-2:358354085340:cluster/default-ecs-ec2",
+        "loadBalancers": [],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 2,
+        "runningCount": 0,
+        "pendingCount": 0,
+        "launchType": "EC2",
+        "taskDefinition": "arn:aws:ecs:us-east-2:358354085340:task-definition/test-commondata-ec2:7",
+        "deploymentConfiguration": {
+            "deploymentCircuitBreaker": {
+                "enable": false,
+                "rollback": false
+            },
+            "maximumPercent": 200,
+            "minimumHealthyPercent": 100
+        },
+        "deployments": [
+            {
+                "id": "ecs-svc/1675382415882992629",
+                "status": "PRIMARY",
+                "taskDefinition": "arn:aws:ecs:us-east-2:358354085340:task-definition/test-commondata-ec2:7",
+                "desiredCount": 2,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 0,
+                "createdAt": "2020-12-11T02:49:20.433000+00:00",
+                "updatedAt": "2020-12-11T02:49:20.433000+00:00",
+                "launchType": "EC2",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-05e5075b024557fe5"
+                        ],
+                        "securityGroups": [
+                            "sg-0035ba27e231bd006"
+                        ],
+                        "assignPublicIp": "DISABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/1675382415882992629 in progress."
+            }
+        ],
+        "roleArn": "arn:aws:iam::358354085340:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+        "events": [],
+        "createdAt": "2020-12-11T02:49:20.433000+00:00",
+        "placementConstraints": [],
+        "placementStrategy": [],
+        "networkConfiguration": {
+            "awsvpcConfiguration": {
+                "subnets": [
+                    "subnet-05e5075b024557fe5"
+                ],
+                "securityGroups": [
+                    "sg-0035ba27e231bd006"
+                ],
+                "assignPublicIp": "DISABLED"
+            }
+        },
+        "schedulingStrategy": "REPLICA",
+        "createdBy": "arn:aws:iam::358354085340:user/michael.a.schlosser@saic.com",
+        "enableECSManagedTags": false,
+        "propagateTags": "NONE"
+    }
+```
+
+### Managing Sensitive Environment Variables
+
+**NEED SOME WORDS ABOUT WHAT THIS IS AND WHAT IT'S DOING. SEEMS LIKE THERE SHOULD BE MORE INFO HERE**
+
+1. Use System Manager and perform the following:
+
+```
+{
+"containerDefinitions": [{
+  "secrets": [{
+    "name": "environment_variable_name",
+    "valueFrom": "arn:aws:ssm:region:aws_account_id:parameter/parameter_name"
+  }]
+}]
+}
+
+```
+
+If you need assistance with sensitve data parameters refer to this [AWS Documentation](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data-parameters.html). 2. Use Secrets Manager and perform the following:
+
+```
+{
+"containerDefinitions": [{
+  "secrets": [{
+    "name": "environment_variable_name",
+    "valueFrom": "arn:aws:secretsmanager:region:aws_account_id:secret:secret_name-AbCdEf"
+    }]
+  }]
+}
+```
+
+If you need assistance with sensitive data secrets, refer to this [AWS Documentation](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data-secrets.html).
+
+## Troubleshooting and Support
+
+If you experience issues with your installation or need support with your Sage installation, please refer to the [Sage Operations Guide](sage-operations-guide.mdx).
