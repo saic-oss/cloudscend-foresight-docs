@@ -1,19 +1,21 @@
-const args = require(`minimist`)(process.argv.slice(2));
-const fs = require(`fs`);
-const chalk = require(`chalk`);
+// eslint-disable no-console detect-non-literal-fs-filename
+
+const args = require("minimist")(process.argv.slice(2));
+const fs = require("fs");
+const chalk = require("chalk");
 const { createStructureOfMarkdown, writeFile } = require("./util");
 
 /**
  * Init execution
  */
 function init() {
-  const path = args[`_`];
-  const outputDir = args[`o`] || "docs/";
+  const path = args["_"];
+  const outputDir = args["o"] || "docs/";
   if (path.length > 0) {
     console.log(chalk.green(`Reading file ${path[0]}`));
 
     if (fs.existsSync(path[0])) {
-      console.log(chalk.green(`Generating markdown file ...`));
+      console.log(chalk.green("Generating markdown file ..."));
 
       let rawData = fs.readFileSync(path[0]);
       const json = JSON.parse(rawData);
@@ -34,10 +36,10 @@ function init() {
       markdown += "\n";
       writeFile(pageHeader + markdown, outputDir + fileName + ".mdx");
     } else {
-      console.log(chalk.red(`Path is not valid or the file not exist.`));
+      console.log(chalk.red("Path is not valid or the file not exist."));
     }
   } else {
-    console.log(chalk.red(`Path of json file is required.`));
+    console.log(chalk.red("Path of json file is required."));
   }
 }
 
