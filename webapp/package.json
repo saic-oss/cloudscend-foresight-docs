@@ -11,7 +11,7 @@
     "deploy": "docusaurus deploy",
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
-    "build-api-doc": "node src/postman-to-md/index.js static/data/sage-api.postman_collection.json",
+    "build-api-doc": "node src/postman-to-md/index.js static/data/sage-api.postman_collection.json"
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-alpha.69",
