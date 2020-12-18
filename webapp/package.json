@@ -12,7 +12,6 @@
     "serve": "docusaurus serve",
     "clear": "docusaurus clear",
     "build-api-doc": "node src/postman-to-md/index.js static/data/sage-api.postman_collection.json",
-    "lint": "remark -e md,mdx ."
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-alpha.69",
@@ -24,13 +23,7 @@
   },
   "devDependencies": {
     "chalk": "^4.1.0",
-    "minimist": "^1.2.5",
-    "remark-cli": "^9.0.0",
-    "remark-frontmatter": "^3.0.0",
-    "remark-lint": "^8.0.0",
-    "remark-mdx": "^1.6.22",
-    "remark-message-control": "^6.0.0",
-    "remark-preset-lint-markdown-style-guide": "^4.0.0"
+    "minimist": "^1.2.5"
   },
   "browserslist": {
     "production": [
