@@ -25,8 +25,8 @@
   padding: 0 var(--ifm-pre-padding);
 }
 
-.tablist li + li {
-  margin-top: 0 !important;
+.tabs li.tabs__item + li.tabs__item {
+  margin-top: 0;
 }
 
 .api-method {
