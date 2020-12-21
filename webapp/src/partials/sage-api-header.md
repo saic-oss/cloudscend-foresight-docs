@@ -38,12 +38,11 @@ The quickest way to get started is to use our Postman request collection. The fo
 1. **Import the Sage Postman Collection**
 
    - <a
-       href="pathname:///data/sage-api.postman_collection.json"
-       download
-       className="button button--primary"
-     >
-       Download Postman Collection
-     </a>
+     href="pathname:///data/sage-api.postman_collection.json"
+     download
+     className="button button--primary"
+     > Download Postman Collection
+     > </a>
    - From Postman, Import -> Select downloaded sage postman collection
 
 2. **Configure Postman Environment**
