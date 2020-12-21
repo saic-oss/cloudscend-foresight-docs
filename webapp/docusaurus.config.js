@@ -19,7 +19,7 @@ module.exports = {
         {
           to: "docs/sage-intro",
           activeBasePath: "docs",
-          label: "Documentation",
+          label: "Documentation 🚧",
           position: "left",
         },
       ],
