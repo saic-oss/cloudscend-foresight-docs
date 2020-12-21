@@ -10,8 +10,7 @@
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "serve": "docusaurus serve",
-    "clear": "docusaurus clear",
-    "build-api-doc": "node src/postman-to-md/index.js static/data/sage-api.postman_collection.json"
+    "clear": "docusaurus clear"
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-alpha.69",
@@ -21,10 +20,7 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },
-  "devDependencies": {
-    "chalk": "^4.1.0",
-    "minimist": "^1.2.5"
-  },
+  "devDependencies": {},
   "browserslist": {
     "production": [
       ">0.5%",
