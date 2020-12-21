@@ -1,0 +1,546 @@
+{
+	"info": {
+		"_postman_id": "cba4ffcc-4d84-41cf-9558-363c632c3af8",
+		"name": "Sage API Guide",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Application",
+			"item": [
+				{
+					"name": "Get Applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sage/application/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sage",
+								"application",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": null,
+									"description": "test",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Retrieves a list of applications the user has access to."
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/sage/application/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"sage",
+										"application",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"id\": -83970435,\n  \"applicationId\": \"voluptate nostrud pariatur veniam adipisicing\",\n  \"applicationName\": \"dolor sit nisi\",\n  \"applicationUser\": \"dolore\",\n  \"projectManager\": \"elit incididunt mollit\",\n  \"functional\": \"ea commodo Ut ullamco\",\n  \"applicationLanguage\": \"TSQL\",\n  \"analysisStatus\": \"CODE_ANALYSIS_ERROR\",\n  \"artifactUrl\": \"enim in tempor eu dolor\",\n  \"appOwner\": \"dolor proident ut\",\n  \"surveyStatus\": \"laboris pariatu\",\n  \"cestatus\": \"CE_NOT_ATTEMPTED\",\n  \"programManager\": \"laborum et fugiat\"\n },\n {\n  \"id\": -92365495,\n  \"applicationId\": \"voluptate commodo velit\",\n  \"applicationName\": \"elit eiusmod esse\",\n  \"applicationUser\": \"in\",\n  \"projectManager\": \"Excepteur adipisicing Ut\",\n  \"functional\": \"officia in\",\n  \"applicationLanguage\": \"TYPESCRIPT\",\n  \"analysisStatus\": \"CODE_ANALYSIS_PROGRESS\",\n  \"artifactUrl\": \"eiusmod elit officia\",\n  \"appOwner\": \"lab\",\n  \"surveyStatus\": \"laborum eu in consectetur\",\n  \"cestatus\": \"CE_READY_WITH_NO_REPORT\",\n  \"programManager\": \"ut incididunt labore est Ut\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Application History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sage/appHistoryList/:app-id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sage",
+								"appHistoryList",
+								":app-id"
+							],
+							"variable": [
+								{
+									"description": "(Required) ",
+									"id": "c59c91ca-e46c-48f1-9df5-ca2b8b836378",
+									"key": "app-id",
+									"type": "string",
+									"value": "<string>"
+								}
+							]
+						},
+						"description": "Retrieves a list of application versions including the version tag and source code upload timestamp. A new application version is created each time source code is uploaded."
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/sage/appHistoryList/:app-id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"sage",
+										"appHistoryList",
+										":app-id"
+									],
+									"variable": [
+										{
+											"key": "app-id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"appGlobalId\": \"tempor aliquip occaecat nulla ipsum\",\n  \"id\": 38868107,\n  \"gitTag\": \"mollit cillum\",\n  \"uploadTimestamp\": \"1978-12-24T07:54:29.663Z\"\n },\n {\n  \"appGlobalId\": \"sed dolor exercitation\",\n  \"id\": 44339925,\n  \"gitTag\": \"Excepteur\",\n  \"uploadTimestamp\": \"1949-08-13T12:25:44.757Z\"\n }\n]"
+						}
+					]
+				}
+			],
+			"description": "This collection describes the important endpoints for working with Applications. Before doing any analysis in Sage you must first create an Application.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ecd58752-43e6-43c7-a149-264eaf14bf94",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "43046392-599f-4f9b-bd9d-9cfbdb4ea248",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Source Code",
+			"item": [
+				{
+					"name": "Upload Source Code for an Application",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"description": "The zip file containing the application source code. ",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{sourceCodeUploaderBaseUrl}}/pupload/:appGlobalId",
+							"host": [
+								"{{sourceCodeUploaderBaseUrl}}"
+							],
+							"path": [
+								"pupload",
+								":appGlobalId"
+							],
+							"variable": [
+								{
+									"key": "appGlobalId",
+									"value": "",
+									"description": "Application Id (Required)"
+								}
+							]
+						},
+						"description": "Stores a zip file containing an application's source code. Upon successful upload, check the status of processing the zip file contents using the Get Code Analysis Status endpoint."
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"value": "<binary>",
+											"description": {
+												"content": "",
+												"type": "text/plain"
+											},
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/pupload/:theuuid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pupload",
+										":theuuid"
+									],
+									"variable": [
+										{
+											"key": "theuuid"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{ \"id\": \"0000-0000-0000-0000\", \"success\": true, \"message\": \"good to go\" }"
+						}
+					]
+				},
+				{
+					"name": "Get Code Analysis Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sage/app-analysis/status/:appGlobalId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sage",
+								"app-analysis",
+								"status",
+								":appGlobalId"
+							],
+							"variable": [
+								{
+									"description": "(Required) ",
+									"id": "d0937939-b43a-45c6-8fd9-1af58f353f4d",
+									"key": "appGlobalId",
+									"type": "string",
+									"value": "<string>"
+								}
+							]
+						},
+						"description": "Returns the current source code analysis status for the latest source code version of an application.\r\n\r\n| Code | Status | Meaning |\r\n| --- | --- | --- |\r\n| READY_FOR_CODE_UPLOAD | Ready for source code upload | No source code has been uploaded for the application yet |\r\n| CODE_UPLOADED | Source code uploaded | Source code has been successfully uploaded but analysis has not started yet |\r\n| CODE_UPLOAD_ERROR | Error uploading source code | An error occurred extracting the source code from the uploaded source code zip file |\r\n| CODE_ANALYSIS_PROGRESS | Analysis in progress | Source code analysis is in progress | \r\n| CODE_ANALYSIS_DONE | Analysis results ready | Source code analysis is complete |\r\n| CODE_ANALYSIS_ERROR | Source code analysis error | Source code analysis failed processing. |"
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/sage/app-analysis/status/:appGlobalId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"sage",
+										"app-analysis",
+										"status",
+										":appGlobalId"
+									],
+									"variable": [
+										{
+											"key": "appGlobalId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"appGlobalId\": \"ce791988-8161-4369-b744-57eb77311ef7\",\n \"status\": \"CODE_ANALYSIS_ERROR\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Get analysis reports for application and tag",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sage/reports/history/:app-id/:git-tag",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sage",
+								"reports",
+								"history",
+								":app-id",
+								":git-tag"
+							],
+							"variable": [
+								{
+									"key": "app-id",
+									"value": "<string>",
+									"type": "string",
+									"description": "(Required) "
+								},
+								{
+									"key": "git-tag",
+									"value": "<string>",
+									"description": "(Required)"
+								}
+							]
+						},
+						"description": "Retrieves the analysis reports data for a given application and version (tag)."
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/sage/reports/history/:app-id/:git-tag",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"sage",
+										"reports",
+										"history",
+										":app-id",
+										":git-tag"
+									],
+									"variable": [
+										{
+											"key": "app-id"
+										},
+										{
+											"key": "git-tag"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"applicationId\": \"<string>\",\n  \"reportName\": \"<string>\",\n  \"s3Uri\": \"<string>\",\n  \"toolName\": \"<string>\",\n  \"id\": \"<long>\",\n  \"reportStatus\": \"<string>\",\n  \"effectiveDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"gitTag\": \"<string>\"\n },\n {\n  \"applicationId\": \"<string>\",\n  \"reportName\": \"<string>\",\n  \"s3Uri\": \"<string>\",\n  \"toolName\": \"<string>\",\n  \"id\": \"<long>\",\n  \"reportStatus\": \"<string>\",\n  \"effectiveDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"gitTag\": \"<string>\"\n }\n]"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessTokenUrl",
+				"value": "{{loginBaseUrl}}/auth/realms/appmod/protocol/openid-connect/token",
+				"type": "string"
+			},
+			{
+				"key": "password",
+				"value": "{{E2E_PASSWORD}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{E2E_USER}}",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": true,
+				"type": "boolean"
+			},
+			{
+				"key": "scope",
+				"value": "openid email profile",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "password_credentials",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "sage",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://keycloak.dev.saicappmod.com/auth/realms/appmod/protocol/openid-connect/auth",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "accessToken",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDVTRST2pZdnZXelRCb3puLUxGTG13SE5uTEp3TWo4amdEcjJEMWlDMzFrIn0.eyJleHAiOjE2MDM4MDY3MTIsImlhdCI6MTYwMzgwNjExMiwiYXV0aF90aW1lIjoxNjAzODA2MTA5LCJqdGkiOiI5NDI3ZDcyNC1lMGViLTQxNWUtYjM3Mi0yZmViMmJiOTgzZDEiLCJpc3MiOiJodHRwczovL2tleWNsb2FrLmRldi5zYWljYXBwbW9kLmNvbS9hdXRoL3JlYWxtcy9hcHBtb2QiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNzM3MDQ3ZWYtMTM4MC00NWQ2LWFhYWQtMzdmMTFlNTQ0ZjIxIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2FnZSIsInNlc3Npb25fc3RhdGUiOiIxYzVhNzZhOC1iYzE2LTQxNjUtODQ1Ny0wMDUwMTRkYjUwMjMiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlNhZ2UtVXNlcnMiXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50Iiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IlRlc3QgVXNlciIsInByZWZlcnJlZF91c2VybmFtZSI6InRlc3R1c2VyIiwiZ2l2ZW5fbmFtZSI6IlRlc3QiLCJmYW1pbHlfbmFtZSI6IlVzZXIiLCJlbWFpbCI6InRlc3RAc2FpYy5jb20ifQ.LQchSjgx1xmgt6oNv5M0ShWFkb60R8grq2CQtZqdIJSY7uzmz8NuwpivcgTxsxQ7eHSGHtKGAlElZX9jHpRxfn5K7DEgkS6a0QeLVv-b8iP-cU-dxZiRVQEgC6NKImXuEMttwdIfM_Ep9h1d0IFAX8V6eQPd6AGmwjKCd7teaYxs-sO43T1Co4Ac7nrSOnJJH7HZ91Ofgq8pnaS-VIKbdwP48IBnLHFr6QJNRXkx8N0CivKpSM_WXASXn3QP206JDUW_WewhIlGxAOrCXHIdyyeVoSWOO2oWiJ2wPo2XjBgfgZPAlfSrcV7TvRBS0g_i8wnagk-LeS0wE2CplKXRqQ",
+				"type": "string"
+			},
+			{
+				"key": "tokenType",
+				"value": "bearer",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3843100e-bc54-4b94-906d-becb77182413",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bae10857-9e91-482f-b020-69b101ece22b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "af70d608-40f9-4670-9b24-cef5b24c7fa3",
+			"key": "baseUrl",
+			"value": "https://sage-api.dev.saicappmod.com"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
