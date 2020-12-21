@@ -7,9 +7,9 @@ sidebar_label: Sage API Guide
 
 <!-- Run npm run build-api-doc after modifying this header -->
 
-import ApiRequest from '@site/src/components/api-request';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import ApiRequest from "@site/src/components/api-request";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # Sage API Guide
 
@@ -35,12 +35,18 @@ The default `baseURL` variable should point to the Sage backend API service. `so
 
 The quickest way to get started is to use our Postman request collection. The following steps will help you get up and running.
 
-1. Import the Sage Postman Collection
+1. **Import the Sage Postman Collection**
 
-   - <a href="pathname:///data/sage-api.postman_collection.json" download className="button button--primary">Download Postman Collection</a>
+   - <a
+       href="pathname:///data/sage-api.postman_collection.json"
+       download
+       className="button button--primary"
+     >
+       Download Postman Collection
+     </a>
    - From Postman, Import -> Select downloaded sage postman collection
 
-1. Configure Postman Environment
+2. **Configure Postman Environment**
 
    - Setup a new environment in Postman. Click New -> Environment.
    - Name the new environment _Sage API_
@@ -50,7 +56,8 @@ The quickest way to get started is to use our Postman request collection. The fo
      - loginBaseUrl: _enter the Keycloak service base url_
    - Click Add to create
 
-1. Explore the API
+3. **Explore the API**
+
    - Execute any of the requests within the collection
    - Refer to this documentation for the requirements of each method
 
