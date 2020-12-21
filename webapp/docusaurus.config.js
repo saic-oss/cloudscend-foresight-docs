@@ -1,8 +1,8 @@
 module.exports = {
-  title: "My Site",
-  tagline: "The tagline of my site",
+  title: "Sage by SAIC",
+  tagline: "Embodiment of Cloud Migration Best Practices",
   url: "https://saic-oss.github.io",
-  baseUrl: "/sage-docs/",
+  baseUrl: process.env.HELP_BASE_URL || "/sage-docs/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
@@ -10,23 +10,17 @@ module.exports = {
   projectName: "sage-docs", // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "My Site",
+      title: " ",
       logo: {
-        alt: "My Site Logo",
-        src: "img/logo.svg",
+        alt: "SAIC Logo",
+        src: "img/SAIC_RI_logo_R_RGB_sm.png",
       },
       items: [
         {
-          to: "docs/",
+          to: "docs/sage-intro",
           activeBasePath: "docs",
-          label: "Docs",
+          label: "Documentation",
           position: "left",
-        },
-        { to: "blog", label: "Blog", position: "left" },
-        {
-          href: "https://github.com/facebook/docusaurus",
-          label: "GitHub",
-          position: "right",
         },
       ],
     },
@@ -37,29 +31,16 @@ module.exports = {
           title: "Docs",
           items: [
             {
-              label: "Style Guide",
-              to: "docs/",
+              label: "Sage Users Guide",
+              to: "docs/sage-intro",
             },
             {
-              label: "Second Doc",
-              to: "docs/doc2/",
-            },
-          ],
-        },
-        {
-          title: "Community",
-          items: [
-            {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
+              label: "Sage Installation Guide",
+              to: "docs/sage-install-intro/",
             },
             {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus",
+              label: "Sage Operations Guide",
+              to: "docs/sage-ops-overview/",
             },
           ],
         },
@@ -67,17 +48,17 @@ module.exports = {
           title: "More",
           items: [
             {
-              label: "Blog",
-              to: "blog",
+              label: "FAQs",
+              to: "docs/sage-faqs/",
             },
             {
               label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
+              href: "https://github.com/saic-oss/sage-docs",
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: "© 2021 SAIC",
     },
   },
   presets: [
@@ -86,15 +67,11 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
           editUrl:
-            "https://github.com/facebook/docusaurus/edit/master/website/",
+            "https://github.com/saic-oss/sage-docs/edit/main/webapp/docs/",
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            "https://github.com/facebook/docusaurus/edit/master/website/blog/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
