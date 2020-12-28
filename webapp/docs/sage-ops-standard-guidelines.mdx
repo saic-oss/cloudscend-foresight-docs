@@ -9,22 +9,17 @@ sidebar_label: Standard Operation Guidelines
 
 ## User Management
 
-When you install the Sage product, an instance of KeyCloak will be installed. KeyCloak is an identity and security management solution that you will use to perform user administration tasks. You will provide the password you want for your KeyCloak admin account at installation time. This admin account is strictly for use with your KeyCloak instance and cannot be used for access to the Sage product itself.
+When you install the Sage product, an instance of KeyCloak will be installed. KeyCloak is an identity and security management solution that you will securely store all your Sage user information.
 
 ### Roles and Access
 
-The **Sage_User** role is for general users. This role can perform the following:
+The **Sage_User** role is for all users. This role can perform all Sage functionality including the following:
 
 - Onboard applications
 - Upload Source Code
 - Upload application artifacts
 - Run migration estimates
 - View reports and dashboards for analysis
-
-The **Sage_Admin** role is for administrators. This role can:
-
-- Can perform all the tasks of a Sage_User
-- Can perform user management tasks
 
 ### Security and Password Management
 
@@ -39,178 +34,27 @@ Whether you are creating your own account or setting a new password, you must se
 
 ### Add a New User Account
 
-As a Sage_Admin, follow the steps below to manually add your individual user accounts into KeyCloak.
+All first time users of Sage will need to create and setup an account.
 
-**1. Access your KeyCloak Administration application at **some provided url\*\* \*\*
+Users will need to register for your account and create a password in the Sage KeyCloak instance.
 
-**2. Select the Administration Console link on the main screen.**
+**1. Open a web browser and go the the Sage site. _Not sure about this step - how do they get to the Sage site_**
 
-![KeyCloak Administration Main](/img/KeyCloakAdminMain.png)
+![KeyCloak Login](/img/KeyCloakLogin.png)
 
-**3. Login to KeyCloak Console with your admin username and password.**
+**2. Click on the Register link to create your account.**
 
-![KeyCloak Admin Console Login](/img/KeyCloakAdminUserPwd.png)
+![KeyCloak Register Link](/img/KeyCloakRegisterLink.png)
 
-From this console, you will be able to add new users and/or set roles for existing users.
-You will see that a KeyCloak Realm named AppMod has been created. This is the realm where you should be adding and/or editing users for Sage.
+**3. Enter your name, email, username and desired password, making sure to confirm your password by entering it a second time to register for a Sage account. Note: All passwords must follow the [password guidelines](#security-and-password-management) above.**
 
-![KeyCloak Admin Console](/img/KeyCloakConsoleRealmSettings.png)
+![KeyCloak Register](/img/KeyCloakRegister.png)
 
-**4. To add a user, select the Users tab on the menu to the left**
+**5. Click Register to create your user account.**
 
-![KeyCloak Admin Console Users](/img/KeyCloakConsoleUsersClick.png)
+![KeyCloak Register Click](/img/KeyCloakRegisterClick.png)
 
-This will allow you to manage your users
-
-![KeyCloak Admin Console User Data](/img/KeyCloakConsoleUsersAfterClick.png)
-
-**5. Select the Add User button to the right of the screen**
-
-![KeyCloak Add User Button](/img/KeyCloakConsoleAddUserButton.png)
-
-**6. Enter a UserName and as much optional information that you have**
-
-![KeyCloak Add User Screen](/img/KeyCloakConsoleAddUserScreen.png)
-
-**7. Select Save to save your new user**
-
-![KeyCloak Add User Save](/img/KeyCloakConsoleAddUserSave.png)
-
-Following the save, you will then see other options for this newly created user
-
-![KeyCloak Add User After Saving](/img/KeyCloakConsoleAddUserAfterSave.png)
-
-To minimize the risk of issues with running Sage, you should primarily only make changes to the Details, Credentials and Role Mappings tabs.
-
-![KeyCloak Add User Tabs of Interest](/img/KeyCloakConsoleAddUserTabsOfInterest.png)
-
-**8. Switch to the Credentials tab**
-
-![KeyCloak Add User Credentials](/img/KeyCloakConsoleAddUserCredentialsTab.png)
-
-**9. Enter a temporary password for the user and ensure the temporary toggle is set to on.**
-
-![KeyCloak Add User Credentials Set](/img/KeyCloakConsoleAddUserCredentialsTempToggle.png)
-
-**10. Click the Set Password button**
-
-![KeyCloak Add User Credentials Set Button](/img/KeyCloakConsoleAddUserCredSetPwd.png)
-
-**11. You will be asked if you are sure you want to set the password, select the Set Password button**
-
-![KeyCloak Add User Credentials Set Confirm](/img/KeyCloakConsoleAddUserCredSetPwdConfirm.png)
-
-Now you will add the roles for the newly created user.
-
-**12. Select the Role Mappings tab for the user**
-
-![KeyCloak Add User Role Mapping](/img/KeyCloakConsoleAddUserRoleMap.png)
-
-From here you will need to remove the New_User_Pending_Review role and add the appropriate role for this user.
-
-**13. Select the New_User_Pending_Review role in the Assigned Roles Column and then click the Remove Selected button**
-
-![KeyCloak Add User Role Remove](/img/KeyCloakConsoleAddUserRoleRemove.png)
-
-**14. Then select either the Sage_Admin and/or Sage_User role from the Available Roles Column and click Add Selected**
-
-![KeyCloak Add User Role Add](/img/KeyCloakConsoleAddUserRoleAdd.png)
-
-At this point, this user is completely set up with a username, password and appropriate role. Repeat the steps above to add other users.
-
-**15. Remember to notify the user that their account has been created, provide them the temporary password and have them log into the Sage product and create a new password.**
-
-**16. Once you are done making your changes, remember to Sign Out of the KeyCloak Admin Console.**
-
-![KeyCloak Admin Console Sign Out](/img/KeyCloakConsoleLogOut.png)
-
-### Set Up Roles for User Added Accounts
-
-A user may access Sage and register for an account from the login screen. When they do this, they will enter their own username and account information but the role will be assigned as the New_User_Pending_Review role. As the administrator, you will need to periodically log in and assign roles to those accounts that are pending. Follow these steps to set the roles for registered accounts.
-
-**1. Access your KeyCloak Administration application at **some provided url\*\* \*\*
-
-**2. Select the Administration Console link on the main screen.**
-
-![KeyCloak Administration Main](/img/KeyCloakAdminMain.png)
-
-**3. Login to KeyCloak Console with your admin username and password.**
-
-![KeyCloak Admin Console Login](/img/KeyCloakAdminUserPwd.png)
-
-**4. Select the Roles tab on the left of the screen to see a list of all available roles. And click on the New_User_Pending_Review role.**
-
-![KeyCloak Admin Console Roles List](/img/KeyCloakPendingRvwClick.png)
-
-**5. Now, select the Users In Role tab at the top of the page.**
-
-![Key Cloak Admin Console Roles](/img/KeyCloakUserInRoleClick.png)
-
-This will show you all the users who are currently assigned to the New_User_Pending_Review role. The pending review role has no access to Sage and needs to be removed and the appropriate role added for the user.
-
-**6. Click on the username that you would like to set up with a role.**
-
-![KeyCLoak Admin Console ](/img/KeyCloakUserInRolePending.png)
-
-From here you will need to remove the New_User_Pending_Review role and add the appropriate role for this user.
-
-**7. Select the Role Mappings tab for the user**
-
-![KeyCloak Add User Role Mapping](/img/KeyCloakConsoleAddUserRoleMap.png)
-
-**8. Select the New_User_Pending_Review role in the Assigned Roles Column and then click the Remove Selected button**
-
-![KeyCloak Add User Role Remove](/img/KeyCloakConsoleAddUserRoleRemove.png)
-
-**9. Then select either the Sage_Admin and/or Sage_User role from the Available Roles Column and click Add Selected**
-
-![KeyCloak Add User Role Add](/img/KeyCloakConsoleAddUserRoleAdd.png)
-
-At this point, this user is completely set up with the appropriate role. Repeat the steps above for each user currently in the New_User_Pending_Review role.
-
-**10. Remember to notify the user that their role has been set and they can now log into the Sage product.**
-
-**11. Once you are done making your changes, remember to Sign Out of the KeyCloak Admin Console.**
-
-![KeyCloak Admin Console Sign Out](/img/KeyCloakConsoleLogOut.png)
-
-### Editing or Deleting a User
-
-There may be times, for whatever reason, that you want to edit user information or remove a users access to Sage. In those cases, you can simply edit or delete the user information from KeyCloak. Follow the steps below to edit user information or delete a user.
-
-**1. Access your KeyCloak Administration application at **some provided url\*\* \*\*
-
-**2. Select the Administration Console link on the main screen.**
-
-![KeyCloak Administration Main](/img/KeyCloakAdminMain.png)
-
-**3. Login to KeyCloak Console with your admin username and password.**
-
-![KeyCloak Admin Console Login](/img/KeyCloakAdminUserPwd.png)
-
-**4. Select the Users tab on the left side menu.**
-
-![KeyCloak Admin Console Users](/img/KeyCloakConsoleUsersClick.png)
-
-**5. The Users tab will be shown and you can now use the lookup to search for the user you want to edit or delete. Simply enter the username or begining of the user name and click the magnifying glass icon.**
-
-![KeyCloak Admin Console Users Search](/img/KeyCloakConsoleSearchUser.png)
-
-**6. A list of users that match your search criteria will then be shown. From here you can simply select the Edit or Delete button to the right to make your changes.**
-
-![KeyCloak Admin Console User EditDelete](/img/KeyCloakConsoleUserEditDel.png)
-
-**7. If you delete a user, you will be asked if you are sure you want to delete them. If you are sure, then click the Delete button.**
-
-![KeyCloak Admin Console User Delete](/img/KeyCloakConsoleDeleteUser.png)
-
-**8. Once you are done making your changes, remember to Sign Out of the KeyCloak Admin Console.**
-
-![KeyCloak Admin Console Sign Out](/img/KeyCloakConsoleLogOut.png)
-
-### Other Administrative User Tasks
-
-_*any thing else here*_
+**6. Once you have created your account, you are ready to login and begin [managing applications](sage-managing-apps.mdx).**
 
 ## System Tuning
 
