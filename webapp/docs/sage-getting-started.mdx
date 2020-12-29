@@ -23,10 +23,11 @@ Let's get started using Sage!
 
 - Your source code and artifacts must be accessible to machine running the Sage product
 
-## Security Consideratons
+## Security Considerations
 
-**NEED INPUT FROM TEAM**
-_SSP support for your organizations security requirements_
+**NEED INPUT FROM TEAM _Specific SSP support for your organizations security requirements?_**
+
+We have spent considerable time and effort to ensure your data and source code are well protected. Your information will only be passed through HTTPS secure encryption. And we have followed the protocol set forth in the NIST Special Publication 800-171 for protecting controlled unclassified data as well as addressed any critical and severe vulnerabilities on our containers as provided by MITRE’s Common Vulnerabilities and Exposures (CVE) list.
 
 ## First Time Login
 
@@ -57,7 +58,10 @@ First you will need to register for your account and create a password in the Sa
 Please play the video to see a calculator add 2+2 _This is just an example video to see how video works in environment_
 
 <video width="320" height="240" controls>
-  <source src="/static/img/calculator.mp4" type="video/mp4"></source>
+  <source
+    src={require("../static/img/calculator.mp4").default}
+    type="video/mp4"
+  ></source>
 </video>
 
 ### Security and Password Management
