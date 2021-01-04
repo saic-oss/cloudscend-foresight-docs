@@ -11,28 +11,14 @@ You are able to use your own instance of Metabase to create your desired analyti
 
 ## Sage Database
 
-| Table Name                   | Description                                                                                                                                                          |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **app_analysis_loe_results** | Table containing the data needed to calculate the App Analysis Effort and the Calculated effort values. Most of these values will be found on multiple Sage reports. |
+| Table Name                   | Description                                                           |
+| ---------------------------- | --------------------------------------------------------------------- |
+| **app_analysis_loe_results** | Table containing the data needed to calculate the Migration Estimate. |
 
 | Field Name                                 | Data Type     | Description                                                       |
 | ------------------------------------------ | ------------- | ----------------------------------------------------------------- |
 | P\* id                                     | INTEGER       | Table specific key                                                |
 | \* app_global_id                           | VARCHAR2(255) | Application Global ID used as application key across Sage tables  |
-| cloud_readiness_index_score                | INTEGER       | Cloud Readiness Calculated Index Score                            |
-| cloud_blocker_bucket_score                 | INTEGER       | Cloud Blocker Calculated Score from AA Details                    |
-| software_quality_score                     | INTEGER       | Software Quality Calculated Score from AA Details                 |
-| sloc_score                                 | INTEGER       | SLOC Calculated Score from AA Details                             |
-| security_vulnerabilitites_score            | INTEGER       | Security Vulnerabilities Calculated Score from AA Details         |
-| technology_obsolescence_score              | INTEGER       | Technology Obsolescence Calculated Score from AA Details          |
-| technology_debt_score                      | INTEGER       | Technical Debt Calculated Score from AA Details                   |
-| software_metrics_score                     | INTEGER       | Overall Software Calculated Score from AA Details                 |
-| system_category_score                      | INTEGER       | System Category Score from AA Details Summary                     |
-| interfaces_score                           | INTEGER       | Interfaces Score from AA Details Summary                          |
-| database_score                             | INTEGER       | Database Score from AA Details Summary                            |
-| authentication_score                       | INTEGER       | Authentication Calculated Score from AA Details Summary           |
-| cloudone_considerations_score              | INTEGER       | ARE THESE CLOUD ONE SPECIFIC                                      |
-| cloudone_blockers_score                    | INTEGER       | ARE THESE CLOUD ONE SPECIFIC                                      |
 | estimated_survey_app_analysis_effort_hours | INTEGER       | Estimated AA effort hours from AA Summary                         |
 | estimated_app_analysis_effort_cost         | INTEGER       | Estimated AA effort cost from AA Summary                          |
 | estimated_app_analysis_effort_bucket       | VARCHAR2(10)  | Estimated AA effort bucket from AA Summary                        |
@@ -49,9 +35,9 @@ You are able to use your own instance of Metabase to create your desired analyti
 | actual_migration_effort_cost               | INTEGER       | Actual Refactor Cost entered by user when complete                |
 | estimated_app_analysis_total_score         | INTEGER       | Total Calculated Score from AA Details Summary                    |
 
-| Table Name                             | Description                                                                       |
-| -------------------------------------- | --------------------------------------------------------------------------------- |
-| **app_cast_highlight_tech_properties** | Table containing data for major CAST Highlight results needed to populate reports |
+| Table Name                             | Description                                             |
+| -------------------------------------- | ------------------------------------------------------- |
+| **app_cast_highlight_tech_properties** | Table containing data for major CAST Highlight metrics. |
 
 | Field Name                                               | Data Type     | Description                                                                                                                                            |
 | -------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -78,21 +64,9 @@ You are able to use your own instance of Metabase to create your desired analyti
 | app_cast_highlight_obsolescence_nearly_outdated          | INTEGER       | CAST HL Nearly Outdated Obsolescence Index. Obsolesence information informs you of the number of frameworks that are obsolete and need remediation     |
 | app_cast_highlight_obsolescence_not_outdated             | INTEGER       | CAST HL Not Outdated Obsolescence Index.                                                                                                               |
 
-| Table Name                   | Description                                                         |
-| ---------------------------- | ------------------------------------------------------------------- |
-| **app_artifacts_s3_records** | Table contains information regarding uploaded application artifacts |
-
-| Field Name     | Data Type     | Description                                                      |
-| -------------- | ------------- | ---------------------------------------------------------------- |
-| \*id           | INTEGER       | Table specific key                                               |
-| \*file_name    | VARCHAR2(255) | Name of the uploaded artifact file                               |
-| \*app_global_d | VARCHAR2(255) | Application Global ID used as application key across Sage tables |
-| \*s3_location  | VARCHAR2(255) | S3 locations where the file is stored                            |
-| \*bucket_name  | VARCHAR2(255) | Bucket Name where file is stored                                 |
-
-| Table Name                                | Description                                                      |
-| ----------------------------------------- | ---------------------------------------------------------------- |
-| **app_cast_highlight_technologies_slocs** | Table contains data regarding SLOC by technology per application |
+| Table Name                                | Description                                                       |
+| ----------------------------------------- | ----------------------------------------------------------------- |
+| **app_cast_highlight_technologies_slocs** | Table contains data regarding SLOC by technology per application. |
 
 | Field Name                | Data Type     | Description                                                         |
 | ------------------------- | ------------- | ------------------------------------------------------------------- |
@@ -102,9 +76,9 @@ You are able to use your own instance of Metabase to create your desired analyti
 | slocs                     | INTEGER       | Number of Source Lines of Code                                      |
 | cloud_readiness_supported | CHAR(1)       | Indicator showing if cloud readiness is supported for this language |
 
-| Table Name      | Description                                                                            |
-| --------------- | -------------------------------------------------------------------------------------- |
-| **app_history** | Table contains data showing history and location of source code uploads by application |
+| Table Name      | Description                                                                             |
+| --------------- | --------------------------------------------------------------------------------------- |
+| **app_history** | Table contains data showing history and location of source code uploads by application. |
 
 | Field Name       | Data Type      | Description                                                      |
 | ---------------- | -------------- | ---------------------------------------------------------------- |
@@ -113,9 +87,9 @@ You are able to use your own instance of Metabase to create your desired analyti
 | git_tag          | VARCHAR2 (255) | GIT location for uploaded source code                            |
 | upload_timestamp | TIMESTAMP      | Date/Time the instance of the source code was uploaded           |
 
-| Table Name  | Description                                                          |
-| ----------- | -------------------------------------------------------------------- |
-| **app_org** | Table contains data regarding application ownership and organization |
+| Table Name  | Description                                                           |
+| ----------- | --------------------------------------------------------------------- |
+| **app_org** | Table contains data regarding application ownership and organization. |
 
 | Field Name          | Data Type      | Description                                                      |
 | ------------------- | -------------- | ---------------------------------------------------------------- |
@@ -127,9 +101,9 @@ You are able to use your own instance of Metabase to create your desired analyti
 | eff_date            | DATE           | Date application was onboarded                                   |
 | end_date            | DATE           |                                                                  |
 
-| Table Name                | Description                                                                                   |
-| ------------------------- | --------------------------------------------------------------------------------------------- |
-| **app_sonarqube_metrics** | Table contains data regarding technical debt and vulnerabilities determined by SonarQube scan |
+| Table Name                | Description                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------- |
+| **app_sonarqube_metrics** | Table contains data regarding technical debt and vulnerabilities determined by SonarQube scan. |
 
 | Field Name            | Data Type                                                                       | Description                                                                                                                                    |
 | --------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -138,35 +112,9 @@ You are able to use your own instance of Metabase to create your desired analyti
 | technical_debt_rating | NUMBER                                                                          | Techinical Debt rating for application received from SonarQube scan - 1.0 means very low technical debt and 5.0 means very high technical debt |
 | vulnerability_count   | INTEGER                                                                         | Vulnerability count from SonarQube scan                                                                                                        |
 
-| Table Name               | Description                                                               |
-| ------------------------ | ------------------------------------------------------------------------- |
-| **app_survey_responses** | Table contains the responses received for survey questions by application |
-
-| Field Name                 | Data Type      | Description                                                      |
-| -------------------------- | -------------- | ---------------------------------------------------------------- |
-| P \* table_id              | INTEGER        | Table specific key                                               |
-| \* app_global_id           | VARCHAR2 (255) | Application Global ID used as application key across Sage tables |
-| app_question_id            | INTEGER        | Question ID from other table to reference                        |
-| app_question_response_num  | INTEGER        | Question Response number to reference other table                |
-| response_date              | DATE           | Date Survey was Completed                                        |
-| survey_num                 | INTEGER        |                                                                  |
-| app_question_response_text | VARCHAR2 (255) | Question Response text                                           |
-
-| Table Name            | Description                                                           |
-| --------------------- | --------------------------------------------------------------------- |
-| **app_survey_status** | Table contains data regarding current status of survey by application |
-
-| Field Name       | Data Type      | Description           |
-| ---------------- | -------------- | --------------------- |
-| P \* table_id    | INTEGER        | Table specific key    |
-| \* app_global_id | VARCHAR2 (255) | Application Global ID |
-| completion_date  | DATE           | Date Survey Completed |
-| survey_num       | INTEGER        |                       |
-| survey_status    | VARCHAR2 (255) |                       |
-
-| Table Name      | Description                                      |
-| --------------- | ------------------------------------------------ |
-| **application** | Table contains main application data information |
+| Table Name      | Description                                       |
+| --------------- | ------------------------------------------------- |
+| **application** | Table contains main application data information. |
 
 | Field Name         | Data Type      | Description                                                      |
 | ------------------ | -------------- | ---------------------------------------------------------------- |
@@ -180,59 +128,3 @@ You are able to use your own instance of Metabase to create your desired analyti
 | \* project_manager | VARCHAR2 (255) | Application Project Manager entered during Onboarding            |
 | artifact_url       | VARCHAR2 (255) | URL to location of stored artifacts                              |
 | app_owner          | VARCHAR2 (255) | Application Owner entered during Onboarding                      |
-
-| Table Name             | Description                                      |
-| ---------------------- | ------------------------------------------------ |
-| **cloud_one_blockers** | Table contains data regarding cloud one blockers |
-
-| Field Name             | Data Type     | Description |
-| ---------------------- | ------------- | ----------- |
-| P \* id                | INTEGER       |             |
-| \* app_global_id       | VARCHAR2 (40) |             |
-| non_compliant_services | INTEGER       |             |
-| ports_protocols        | INTEGER       |             |
-| eff_date               | DATE          |             |
-| end_date               | DATE          |             |
-
-| Table Name         | Description                                                              |
-| ------------------ | ------------------------------------------------------------------------ |
-| **cocomo_results** | Table contains data representing the COCOMO model outputs by application |
-
-| Field Name                | Data Type     | Description                                                      |
-| ------------------------- | ------------- | ---------------------------------------------------------------- |
-| \*id                      | INTEGER       | Table specific key                                               |
-| effort_estimation         | NUMBER        |                                                                  |
-| app_global_id             | VARCHAR2(255) | Application Global ID used as application key across Sage tables |
-| model_version             | INTEGER       |                                                                  |
-| eff_date                  | DATE          |                                                                  |
-| end_date                  | DATE          |                                                                  |
-| eaf                       | NUMBER        |                                                                  |
-| esloc                     | NUMBER        |                                                                  |
-| exponent                  | NUMBER        |                                                                  |
-| rely                      | NUMBER        |                                                                  |
-| cplx                      | NUMBER        |                                                                  |
-| sloctoesloc               | NUMBER        |                                                                  |
-| aaf                       | NUMBER        |                                                                  |
-| su                        | NUMBER        |                                                                  |
-| dm                        | NUMBER        |                                                                  |
-| cm                        | NUMBER        |                                                                  |
-| cost_estimation_status    | VARCHAR2(255) |                                                                  |
-| rev_design_modified       | NUMBER        |                                                                  |
-| rev_code_modified         | NUMBER        |                                                                  |
-| rev_understanding_penalty | NUMBER        |                                                                  |
-| rev_reliable_factor       | NUMBER        |                                                                  |
-| rev_complex_factor        | NUMBER        |                                                                  |
-| rev_equivalent_sloc       | NUMBER        |                                                                  |
-| rev_effort_estimation     | NUMBER        |                                                                  |
-
-| Table Name           | Description                                                                        |
-| -------------------- | ---------------------------------------------------------------------------------- |
-| **survey_responses** | Table contains data regarding survey questions and answers received by application |
-
-| Field Name       | Data Type      | Description                                                      |
-| ---------------- | -------------- | ---------------------------------------------------------------- |
-| P \* id          | INTEGER        | Table specific key                                               |
-| \* app_global_id | VARCHAR2 (255) | Application Global ID used as application key across Sage tables |
-| \* question      | VARCHAR2 (255) | Survey Question                                                  |
-| \* answer        | VARCHAR2 (255) | Survey Answer                                                    |
-| \* response_date | DATE           | Date Survey was completed                                        |
