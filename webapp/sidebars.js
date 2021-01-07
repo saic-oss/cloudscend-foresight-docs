@@ -18,13 +18,13 @@ module.exports = {
         label: "Sage Installation Guide",
         items: [
           "sage-install-intro",
-          "sage-install-EKS",
-          "sage-install-ECS",
-          {
-            type: "category",
-            label: "Installing Sage On-Prem or in Other Clouds",
-            items: ["sage-install-docker-engine", "sage-install-kubernetes"],
-          },
+          "sage-install-EKS", //,
+          //"sage-install-ECS",
+          //{
+          //  type: "category",
+          //  label: "Installing Sage On-Prem or in Other Clouds",
+          //  items: ["sage-install-docker-engine", "sage-install-kubernetes"],
+          //},
         ],
       },
       {
