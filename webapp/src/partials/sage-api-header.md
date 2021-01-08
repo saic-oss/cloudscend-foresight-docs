@@ -10,7 +10,7 @@ sidebar_label: Sage API Guide
 import ApiRequest from "@site/src/components/api-request";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import useBaseUrl from '@docusaurus/useBaseUrl';
+import useBaseUrl from "@docusaurus/useBaseUrl";
 
 # Sage API Guide
 
