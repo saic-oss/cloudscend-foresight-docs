@@ -409,23 +409,162 @@ At any time while viewing the Sage Results you may download a copy of the report
 
 For our App Portfolio, we have partnered with CAST Highlight to provide you the ability to quickly view and analyze your entire portfolio of applications. This will assist you in making decisions about which applications should be your next cloud migration effort as well as showing you trends and issues over time.
 
-### App Portfolio Dashboard
+### App Portfolio Panel
 
-In order to access your App Portfolio Dashboard, follow these steps:
+In order to access your App Portfolio Panel, follow these steps:
 
-**1. Select App Portfolio from the Sage Home screen or from the Dashboards list on the main menu bar**
+**1. Select App Portfolio from the Sage Home screen or from the Panels list on the main menu bar**
 
 ![App Portfolio Menu](/img/AppPortfolioMenu.png)
 
-**MORE APP PORTOLIO HERE**
+The App Portfolio will open and provide you with extensive dashboard options that allow you to see your entire application portfolio's health, composition, technical debt and cloud readiness along with many other insights that may interest you.
+
+![App Portfolio Main](/img/AppPortfolioMain.png)
+
+Once you have opened the App Portfolio panel, you will be presented with some key information regarding your application portfolio.
+
+At the top of your screen, you will see:
+
+- Overall Software Health Score
+- Overall Cloud Readiness score
+- Overall Open Source Safety score
+- Number of appliations
+- Number of FTE associated with those application
+- Total number of lines of code in your portfolio
+
+In the next section of the page, you will be provided with some Quick Portfolio Insights:
+
+- Top 5 most business critical applications
+- Top 5 most complex applications
+- Top 5 best CloudyReady candidates
+- Top 5 Applications with the highest open source risk
+
+The next section of the page provides you with a list of the top 20 code insights or list of recurring potential deficiencies in your source code.
+
+And finally, at the bottom of the page, you will find a list of the most recently onboarded applications with the following pieces of data provided:
+
+- Application name
+- ROAR index
+- Software Resiliency index
+- Software Agility index
+- Software Elegance index
+- Technical Debt
+- Number of lines of source code
+
+You can select any of the pieces of data on this page and bring up more details. The table below provides information regarding what dashboard or data will be shown when you select the data on this page.
+
+| Data Link Selected          | Dashboard or Data Displayed                                      |
+| --------------------------- | ---------------------------------------------------------------- |
+| Software Health             | Business Impact Dashboard                                        |
+| Cloud Ready                 | CloudReady Dashboard                                             |
+| Open Source Safety          | Software Composition Dashboard                                   |
+| Onboarded Applications      | Health Distribution Dashboard                                    |
+| Currently Running Campaign  | Trends Dashboard                                                 |
+| Total FTE                   | Software Maintenance Dashboard                                   |
+| Lines of Code               | Portfolio Demographics Dashboard                                 |
+| Any single Application name | Overall Dashboard with all key data for the selected application |
+| Business Impact             | Business Impact Dashboard                                        |
+| Software Elegance           | Business Impact Dashboard                                        |
+| CloudReady                  | CloudReady Dashboard                                             |
+| Software Composition        | Software Composition Dashboard                                   |
+| Any single Code Insight     | List of applications with this potential deficiency              |
+
+**2. If you would like to go to a specific dashboard, select Dashboards at the top of the App Portfolio panel, you will see the many different dashboards available to view.**
+
+![App Portfolio Dashboard](/img/AppPortfolioDashboardsMenu.png)
+
+Below is a list of of dashboards and general description of the type of data displayed.
+
+| Dashboard              | Data Displayed                                                                                                          |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Health Factor Mapping  | Scatter graph of Short Term and Mid Term Software Health Data                                                           |
+| Health Distribution    | List of all applications with SR, SA, or SE data                                                                        |
+| Software Composition   | Scatter graph of Open Source Safety, bar charts of Components, lists of Vulnerabilities, pie and bar charts of Licenses |
+| Technical Debt         | Bar chart of Technical Debt Distribution information                                                                    |
+| Trends                 | Health Factors, Code Size, Maintenance, CloudReady, Open Source across time                                             |
+| Application Results    | List of all applications with all major index values                                                                    |
+| Business Impact        | Scatter graph of Health Factors and Technical Debt values correlated with Business Impact ranking                       |
+| CloudReady             | Scatter graph of Cloud Readiness correlated with Business Impact. Also contains lists of cloud blockers and insights    |
+| Portfolio Demographics | Pie Charts of Software Health values correlated with Technologies and Business Impact                                   |
+| Software Maintenance   | Bar graph of distribution of FTE across applications                                                                    |
+
+**3. If you would like to filter your results on the home dashboard or any other dashboard, select the filter icon next to search field.**
+
+![App Portfolio Filter Icon](/img/AppPortfolioFilterIcon.png)
+
+**4. The filter options will now be shown. Of primary interest here, you can filter on technologies to narrow down your results to specific languages.**
+
+![App Portfolio Filter](/img/AppPortfolioFilter.png)
 
 :::tip
-If you need more information regarding CAST Highlight Dashboard capabilities, see the [CAST Highlight documentation](https://doc.casthighlight.com/).
+If you need more assistance or information on the Dashboard capabilities, click on the [Help](https://doc.casthighlight.com/) link located beside the Dashboards on the App Portfolio menu bar.
 :::
 
 ## Continuous Assessment
 
-### Continuous Assessment Dashboard
+Continuous assessment allow you the opportunity to monitor the health and technical debt of applications before and after migrations. You can watch for trends and keep track on your applications over the course of their lifetime by reviewing the metrics provided in our Continuous Assessment panel.
+
+### Continuous Assessment Panel
+
+The Continuous Assessment panel provides a quick view of key CAST Highlight and SonarQube metrics in one place.
+
+**1. Select Continuous Assessment from the Sage Home screen or from the Panels list on the main menu bar.**
+
+![Continuous Assessment](/img/ContinuousAssessmentSelection.png)
+
+This will bring up the Continuous Assessment page.
+
+![Continuous Assessment Home](/img/ContinuousAssessmentHome.png)
+
+From here, you will be able to view all the CAST Highlight metrics in the top dashboard and all the SonarQube metrics in the bottom dashboard.
+
+For information on viewing the CAST Highlight metrics, see the [App Portfolio documentation](#app-portfolio).
+
+SonarQube metrics are displayed based on an alpha and/or color scale - A (Dark Green), B (Light Green), C (Orange), D (Dark Orange), E (Red)
+
+**2. You can filter your SonarQube results using the filters to the left of the report. With these filters you can narrow down your report to only the applications that meet the criteria that most interests you.**
+
+![Continuous Assessment Filter](/img/ContinuousAssessmentFilter.png)
+
+**3. You can click on an application name and it will take you to more detailed data screens.**
+
+![Continuous Assessment App](/img/ContinuousAssessmentApp.png)
+
+**4. If you would like to see more details about any field from this view, simply click on the data value. In the instance shown below, we have clicked the '2d' vaue for Debt.**
+
+![Continuous Assessment App Debt](/img/ContinuousAssessmentAppDebt.png)
+
+In this case, we will be shown all the technical debt details for this application.
+
+![Continuous Assessment App Debt Details](/img/ContinuousAssessmentAppDebtDetails.png)
+
+**5. In order to see your trends over time, you will see there is a tab for New Code which will show you any newly added bugs, vulnerabilites, hotspots or debt that have been added with the most recent upload and scan of the code. This will allow you to see if newly changed code is causing your technical debt to rise.**
+
+![Continuous Assessment New Code](/img/ContinuousAssessmentNewCode.png)
+
+**6. You can see more detailed data for an individual application by using the menu bar options.**
+
+![Continuous Assessment Menu Bar](/img/ContinuousAssessmentMenuBar.png)
+
+**7. By selecting any item in the detailed list or graph, you will be taken to the actual code in question.**
+
+![Continuous Assessment Details](/img/ContinuousAssessmentDetails.png)
+
+![Continuous Assessment Code](/img/ContinuousAssessmentCodeDetails.png)
+
+As you can see, the details provide you with the information as to why this shown code is an issue, how critical the issue is, and an estimate for correcting the problem. If your application has a Security Hotspot, this detailed view will show you the code in question and also provide you a list of actual Common Vulnerabilities and Exposures that your code could experience.
+
+:::tip
+Click on the word SonarQube in the top menu bar to return to the home screen showing all your applications at any time.
+:::
+
+### Continuous Assessment Using CI/CD Pipeline
+
+The Sage product has built in APIs that allow you to set up your CI/CD pipeline to automatically upload new source code as new builds are pushed. This will ensure that all of your most recent changes have been scanned, analyzed and are part of your application portfolio's history. You will be able to quickly see trends and issues and take action before any issue become too time consuming.
+
+You can configure your CI/CD pipeline to create a zip file of your source code that meets the [Sage source code packaging requirements](sage-ops-standard-guidelines.mdx#system-tuning) and then call our source code uploader API to automatically upload your source code into Sage.
+
+See our [Sage API Guide](sage-api.mdx) for details on how to use our APIs.
 
 ## Knowledge Discovery
 
@@ -439,12 +578,13 @@ Sage provides you a few basic charts and graphs representing some of your applic
 
 ![Knowledge Discovery](/img/KnowledgeDiscoveryClick.png)
 
-This will bring up the Sage Analytics Dashboard.
+This will bring up the Sage Knowledge Discovery Dashboard.
 
 ![Sage Analytics Dashboard](/img/SageMetabaseDashboard.png)
 
-From here you can see the representation of four sets of data:
+From here you can see the representation of five sets of data:
 
+- Technical Debt by Date
 - Cloud Readiness by Language
 - Cloud Readiness by Functional Organization and Technology
 - Cloud Readiness by Technology and Application
