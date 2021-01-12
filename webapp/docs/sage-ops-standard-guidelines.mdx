@@ -9,7 +9,7 @@ sidebar_label: Standard Operation Guidelines
 
 ## User Management
 
-When you install the Sage product, an instance of KeyCloak will be installed. KeyCloak is an identity and security management solution that you will securely store all your Sage user information.
+When you install the Sage product, an instance of Keycloak will be installed. Keycloak is an identity and security management solution that you will securely store all your Sage user information.
 
 ### Roles and Access
 
@@ -36,7 +36,7 @@ Whether you are creating your own account or setting a new password, you must se
 
 All first time users of Sage will need to create and setup an account.
 
-Users will need to register for your account and create a password in the Sage KeyCloak instance.
+Users will need to register for your account and create a password in the Sage Keycloak instance.
 
 **1. Open a web browser and go the the Sage site. _Not sure about this step - how do they get to the Sage site_**
 
@@ -48,13 +48,17 @@ Users will need to register for your account and create a password in the Sage K
 
 **3. Enter your name, email, username and desired password, making sure to confirm your password by entering it a second time to register for a Sage account. Note: All passwords must follow the [password guidelines](#security-and-password-management) above.**
 
-![KeyCloak Register](/img/KeyCloakRegister.png)
+![KeyCloak Register](/img/KeyCloakRegisterScreen.png)
 
-**5. Click Register to create your user account.**
+**4. Click Register to create your user account.**
 
 ![KeyCloak Register Click](/img/KeyCloakRegisterClick.png)
 
-**6. Once you have created your account, you are ready to login and begin [managing applications](sage-managing-apps.mdx).**
+**5. Once you have created your account, you are ready to login and begin [managing applications](sage-managing-apps.mdx).**
+
+:::important
+Keycloak administration does not do the same field validation that the new user screens perform. If you decide to try to add users from the admin console, it is critical that you enter all required user data. The required user data is user first name, user last name, user email, user password.
+:::
 
 ## System Tuning
 
@@ -132,6 +136,12 @@ Sages provides support for most common programming languages. Below is a list of
    - Check with any 3rd party vendor's license requirements.
 7. Remove any .gitignore files if present in your source code; the typical .gitignore file will remove packages/assemblies/DLLs which your solution compiles against when ingested into Sage.
 8. Source code should have all required configuration so that it can be build locally using MSBuild 14.0 or higher for optimal analysis.
+
+:::note
+
+Sage requires your source code to be compressed into a zip file before uploading. However, it is possible for you to configure your CI pipeline to create an appropriate zip file of your source code and then call our source code uploader API to automatically upload your source code into Sage.
+
+:::
 
 ### Storage configuration
 
