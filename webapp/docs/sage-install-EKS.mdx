@@ -29,9 +29,14 @@ sidebar_label: Installing Sage to Amazon EKS
   - https://github.com/roboll/helmfile#installation
 - License Key
   - This will be provided by SAIC
-- If processing Windows .NET Code, you must install Window ReportService
+- If processing Windows .NET Code, you must install Windows Report Service
   - If you are using AWS: download Sage Windows Report Service AMI from the AWS Marketplace
   - If you are not using AWS: Reach out to SAIC help desk for Sage Windows Report Service app
+  - Windows Server Minimum requirements:
+    - Windows Server 2019 - DataCenter, Enterprise, Standard, or Core
+    - 1 CPU
+    - 2GB RAM
+    - 50 GB drive space on C:\
 - If any of your source code is written in ColdFusion, you must also download and install [CFLint](https://github.com/stepstone-tech/sonar-coldfusion/releases/tag/2.0.0).
 - **Explain different plugins for different versions of SonarQube (like CFLint, TypeScript, Java, etc)**
 - **NEED INPUT FROM TEAM**
@@ -53,7 +58,22 @@ sidebar_label: Installing Sage to Amazon EKS
 8. Install Elasticsearch
 9. Install Kibana
 10. Install Fluentd
-11. **NEED INPUT FROM TEAM**
+11. Install Windows Report Service (optional)
+    1. Install the app and dependencies (only required if not using the Report Service AMI from AWS Marketplace)
+       1. Copy the Windows Report Service App zip file to a Windows Server 2019 machine.
+       2. Extract the contents of the zip file to a temp folder.
+       3. Start an Administrator elevated Command Prompt.
+       4. Change (cd) to the location of the zip file's extracted temp folder.
+       5. Run `powershell -File .\install-prereqs.ps1`
+          1. Content will be installed for .Net Framework 4.8, SonarScanner for MSBuild .NET, Visual Studio 2019 Build Tools, amd Java 11 JDK.
+          2. The files will be be downloaded and saved to C:\AMaaS\temp.
+          3. After the .Net Framework 4.8 install, the computer may reboot.
+             If it does, run `powershell -File .\install-prereqs.ps1` again to make sure the installation has completed.
+    2. Run `powershell -File .\configure-startup.ps1` and provide the requested information.
+       This step creates a start-report-service.bat file in C:\AMaaS with the provided values.
+    3. To start the Windows Report Service, run `C:\AMaaS\start-report-service.bat`.
+       Note: make sure port 8080 is exposed and addressable for the "normal" Java Report Service to access.
+12. **NEED INPUT FROM TEAM**
 
 ## Configure Cluster Level Applications
 
