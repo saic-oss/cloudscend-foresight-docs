@@ -1,12 +1,12 @@
 module.exports = {
   someSidebar: {
-    Sage: [
+    CloudScendForesight: [
       {
         type: "category",
-        label: "Sage Users Guide",
+        label: "CloudScend Foresight Users Guide",
         items: [
-          "sage-intro",
           "sage-cloud-app-mod-overview",
+          "sage-intro",
           "sage-getting-started",
           "sage-managing-apps",
           "sage-api-guide",
@@ -15,7 +15,7 @@ module.exports = {
       },
       {
         type: "category",
-        label: "Sage Installation Guide",
+        label: "CloudScend Foresight Installation Guide",
         items: [
           "sage-install-intro",
           "sage-install-EKS", //,
@@ -29,10 +29,10 @@ module.exports = {
       },
       {
         type: "category",
-        label: "Sage Operations Guide",
+        label: "CloudScend Foresight Operations Guide",
         items: [
-          "sage-ops-general",
           "sage-ops-overview",
+          "sage-ops-general",
           "sage-ops-standard-guidelines",
           "sage-ops-diagnostic",
         ],

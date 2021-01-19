@@ -1,11 +1,11 @@
 ---
 id: sage-install-ECS
-title: Installing Sage to AWS ECS
-hide_title: Installing Sage to AWS ECS
-sidebar_label: Installing Sage to AWS ECS
+title: Installing CloudScend Foresight to AWS ECS
+hide_title: Installing CloudScend Foresight to AWS ECS
+sidebar_label: Installing CloudScend Foresight to AWS ECS
 ---
 
-# Installing Sage to AWS ECS
+# Installing CloudScend Foresight to AWS ECS
 
 ## Assumptions for AWS ECS Installation
 
@@ -24,7 +24,7 @@ sidebar_label: Installing Sage to AWS ECS
 
 ## Technical Requirements for AWS ECS Installation
 
-Before performing your ECS Sage installation, ensure your environment is set with the following:
+Before performing your ECS CloudScend Foresight installation, ensure your environment is set with the following:
 
 - AWS ECS Environment
 - EC2 instance
@@ -40,14 +40,14 @@ Before performing your ECS Sage installation, ensure your environment is set wit
 - **Explain different plugins for different versions of SonarQube (like CFLint, TypeScript, Java, etc)**
 - **NEED INPUT FROM TEAM**
 
-## Steps for Configuring and Installing Sage in AWS ECS Environment
+## Steps for Configuring and Installing CloudScend Foresight in AWS ECS Environment
 
 ### General configuration steps
 
 **Environment Variables ???? (perhaps this should be somewhere else or isn't valid)**
 **ANY OTHER GENERAL CONFIGURATIONS???**
 
-Before installing Sage, you must ensure your AWS Environment is setup correctly for an ECS Cluster. Below is an overview of the services required by the ECS cluster.
+Before installing CloudScend Foresight, you must ensure your AWS Environment is setup correctly for an ECS Cluster. Below is an overview of the services required by the ECS cluster.
 
 ![ECS Cluster](/img/ECS.png)
 
@@ -96,11 +96,11 @@ Additional information on installing AWS CLI is available at [AWS Amazon](https:
 
 9. Navigate to the code repository to obtain the json files which are the ECS task definitions. Each application service has a json for EC2 and Fargate deployment respectively.
 
-### Configure your ECS Cluster and Install Sage
+### Configure your ECS Cluster and Install CloudScend Foresight
 
-1. Obtain your deployment code repository from the [Sage ECS Deployment location](PUT A LINK IN HERE?).
+1. Obtain your deployment code repository from the [CloudScend Foresight ECS Deployment location](PUT A LINK IN HERE?).
 
-2. Deployment order of Sage containers:
+2. Deployment order of CloudScend Foresight containers:
 
    - Commondata Database
    - Commondata Backend
@@ -120,7 +120,7 @@ Additional information on installing AWS CLI is available at [AWS Amazon](https:
    - Gitlab
    - Sonarqube
 
-3. Create the ECS Task definitions based on your ECS type and Sage deployment order.
+3. Create the ECS Task definitions based on your ECS type and CloudScend Foresight deployment order.
 
 :::note
 ECS may be deployed with two different ECS types:
@@ -132,7 +132,7 @@ ECS may be deployed with two different ECS types:
 
 :::
 
-- Regardless of your ECS type, you will need to create a task definitions for each Sage json file.
+- Regardless of your ECS type, you will need to create a task definitions for each CloudScend Foresight json file.
 - Use awsvpc networking mode
   - Your containers in the task will share an ENI using a common network stack. Port mappings can only specify container ports (any existing host port specifications will be removed).
 
@@ -396,4 +396,4 @@ If you need assistance with sensitive data secrets, refer to this [AWS Documenta
 
 ## Troubleshooting and Support
 
-If you experience issues with your installation or need support with your Sage installation, please refer to the [Sage Operations Guide](sage-operations-guide.mdx).
+If you experience issues with your installation or need support with your CloudScend Foresight installation, please refer to the [CloudScend Foresight Operations Guide](sage-operations-guide.mdx).

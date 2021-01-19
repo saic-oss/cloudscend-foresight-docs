@@ -1,6 +1,6 @@
-# Sage by SAIC
+# CloudScend Foresight by SAIC
 
-Sage Documentation site powered by Docusaurus and published to GitHub Pages. Contains a User Guide, Installation Guide, and an Operations Guide for using Sage.
+CloudScend Foresight Documentation site powered by Docusaurus and published to GitHub Pages. Contains a User Guide, Installation Guide, and an Operations Guide for using CloudScend Foresight.
 
 See the [webapp](./webapp) directory for the Docusaurus code
 
