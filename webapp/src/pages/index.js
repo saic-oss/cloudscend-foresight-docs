@@ -72,7 +72,7 @@ function Home() {
                 "button button--outline button--secondary button--lg",
                 styles.getStarted
               )}
-              to={useBaseUrl("docs/sage-intro")}
+              to={useBaseUrl("docs/foresight-cloud-app-mod-overview")}
             >
               Get Started
             </Link>
