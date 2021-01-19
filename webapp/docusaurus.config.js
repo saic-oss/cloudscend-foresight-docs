@@ -2,7 +2,7 @@ module.exports = {
   title: "CloudScend Foresight by SAIC",
   tagline: "Embodiment of Cloud Migration Best Practices",
   url: "https://saic-oss.github.io",
-  baseUrl: process.env.HELP_BASE_URL || "/foresight-docs/",
+  baseUrl: process.env.HELP_BASE_URL || "/sage-docs/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
