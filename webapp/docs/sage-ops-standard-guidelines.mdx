@@ -9,11 +9,11 @@ sidebar_label: Standard Operation Guidelines
 
 ## User Management
 
-When you install the Sage product, an instance of Keycloak will be installed. Keycloak is an identity and security management solution that you will securely store all your Sage user information.
+When you install the CloudScend Foresight product, an instance of Keycloak will be installed. Keycloak is an identity and security management solution that you will securely store all your CloudScend Foresight user information.
 
 ### Roles and Access
 
-The **Sage_User** role is for all users. This role can perform all Sage functionality including the following:
+The **Sage_User** role is for all users. This role can perform all CloudScend Foresight functionality including the following:
 
 - Onboard applications
 - Upload Source Code
@@ -23,7 +23,7 @@ The **Sage_User** role is for all users. This role can perform all Sage function
 
 ### Security and Password Management
 
-Whether you are creating your own account or setting a new password, you must select a password for Sage that meets the following criteria:
+Whether you are creating your own account or setting a new password, you must select a password for CloudScend Foresight that meets the following criteria:
 
 - Must have a minimum length of 8 characters
 - Must contain at least one upper case character
@@ -34,11 +34,11 @@ Whether you are creating your own account or setting a new password, you must se
 
 ### Add a New User Account
 
-All first time users of Sage will need to create and setup an account.
+All first time users of CloudScend Foresight will need to create and setup an account.
 
-Users will need to register for your account and create a password in the Sage Keycloak instance.
+Users will need to register for your account and create a password in the CloudScend Foresight Keycloak instance.
 
-**1. Open a web browser and go the the Sage site. _Not sure about this step - how do they get to the Sage site_**
+**1. Open a web browser and go the the CloudScend Foresight site. _Not sure about this step - how do they get to the CloudScend Foresight site_**
 
 ![Keycloak Login](/img/KeyCloakLogin.png)
 
@@ -46,7 +46,7 @@ Users will need to register for your account and create a password in the Sage K
 
 ![Keycloak Register Link](/img/KeyCloakRegisterLink.png)
 
-**3. Enter your name, email, username and desired password, making sure to confirm your password by entering it a second time to register for a Sage account. Note: All passwords must follow the [password guidelines](#security-and-password-management) above.**
+**3. Enter your name, email, username and desired password, making sure to confirm your password by entering it a second time to register for a CloudScend Foresight account. Note: All passwords must follow the [password guidelines](#security-and-password-management) above.**
 
 ![Keycloak Register](/img/KeyCloakRegisterScreen.png)
 
@@ -64,11 +64,11 @@ Keycloak administration does not do the same field validation that the new user 
 
 ### Packaging Source Code
 
-The Sage product requires uploading the source code of the application to be analyzed in order to provide you with the data regarding the health and cloud readiness of your application. The code should be packaged as a zip file for uploading. The source code folder should be assembled using the following guidelines to ensure optimal analysis.
+The CloudScend Foresight product requires uploading the source code of the application to be analyzed in order to provide you with the data regarding the health and cloud readiness of your application. The code should be packaged as a zip file for uploading. The source code folder should be assembled using the following guidelines to ensure optimal analysis.
 
 #### Source Code Supported Languages
 
-Sages provides support for most common programming languages. Below is a list of the current languages that are either fully or partially supported by the Sage product.
+CloudScend Foresight provides support for most common programming languages. Below is a list of the current languages that are either fully or partially supported by the CloudScend Foresight product.
 
 | Language      | Assessment Report  | Technical Debt Report | Cost Estimation Report | Cloud Readiness Report |
 | ------------- | ------------------ | --------------------- | ---------------------- | ---------------------- |
@@ -117,7 +117,7 @@ Sages provides support for most common programming languages. Below is a list of
    - \*.gz
    - \*.bak
 7. When creating zip file from source code from an existing Git repository, if the repository contains LFS files, do not use the “Download source code” option from the browser. LFS files will not be included in this zip file and, therefore, will not be uploaded. Instead, clone the Git repository and create a zip file from the local download.
-8. The Sage product can support .zip files as large as 2GB. If after preparing your source code per these instructions, your .zip file is larger than 2GB please contact the Sage Help Desk for assistance processing the larger file.
+8. The CloudScend Foresight product can support .zip files as large as 2GB. If after preparing your source code per these instructions, your .zip file is larger than 2GB please contact the SAIC Help Desk for assistance processing the larger file.
 
 #### Specific Guidelines for Java Applications
 
@@ -130,16 +130,16 @@ Sages provides support for most common programming languages. Below is a list of
 2. Web Application projects are supported. Legacy Web Site projects are not.
 3. Projects targeting multiple frameworks and using preprocessor directives could have slightly inaccurate metrics (lines of code, complexity, etc.) because the metrics are calculated only from the first of the built targets.
 4. Zip file for source code upload must contain a \*.sln (Microsoft Visual Studio Solution File) in root directory which then links to the projects to be scanned.
-   - If there are multiple \*.sln files, create a separate zip file and onboard as a separate application in Sage.
+   - If there are multiple \*.sln files, create a separate zip file and onboard as a separate application in CloudScend Foresight.
 5. Make sure to include the source code includes all .csproj files with links to the files to be scanned.
 6. Make sure to include packages/assemblies/DLLs which your solution uses to compiles.
    - Check with any 3rd party vendor's license requirements.
-7. Remove any .gitignore files if present in your source code; the typical .gitignore file will remove packages/assemblies/DLLs which your solution compiles against when ingested into Sage.
+7. Remove any .gitignore files if present in your source code; the typical .gitignore file will remove packages/assemblies/DLLs which your solution compiles against when ingested into CloudScend Foresight.
 8. Source code should have all required configuration so that it can be build locally using MSBuild 14.0 or higher for optimal analysis.
 
 :::note
 
-Sage requires your source code to be compressed into a zip file before uploading. However, it is possible for you to configure your CI pipeline to create an appropriate zip file of your source code and then call our source code uploader API to automatically upload your source code into Sage.
+CloudScend Foresight requires your source code to be compressed into a zip file before uploading. However, it is possible for you to configure your CI pipeline to create an appropriate zip file of your source code and then call our source code uploader API to automatically upload your source code into CloudScend Foresight.
 
 :::
 

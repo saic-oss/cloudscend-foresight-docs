@@ -1,5 +1,5 @@
 module.exports = {
-  title: "Sage by SAIC",
+  title: "CloudScend Foresight by SAIC",
   tagline: "Embodiment of Cloud Migration Best Practices",
   url: "https://saic-oss.github.io",
   baseUrl: process.env.HELP_BASE_URL || "/sage-docs/",
@@ -31,15 +31,15 @@ module.exports = {
           title: "Docs",
           items: [
             {
-              label: "Sage Users Guide",
+              label: "CloudScend Foresight Users Guide",
               to: "docs/sage-intro",
             },
             {
-              label: "Sage Installation Guide",
+              label: "CloudScend Foresight Installation Guide",
               to: "docs/sage-install-intro/",
             },
             {
-              label: "Sage Operations Guide",
+              label: "CloudScend Foresight Operations Guide",
               to: "docs/sage-ops-overview/",
             },
           ],
