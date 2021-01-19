@@ -17,7 +17,7 @@ module.exports = {
       },
       items: [
         {
-          to: "docs/sage-intro",
+          to: "docs/foresight-cloud-app-mod-overview",
           activeBasePath: "docs",
           label: "Documentation 🚧",
           position: "left",
@@ -32,15 +32,15 @@ module.exports = {
           items: [
             {
               label: "CloudScend Foresight Users Guide",
-              to: "docs/sage-intro",
+              to: "docs/foresight-cloud-app-mod-overview",
             },
             {
               label: "CloudScend Foresight Installation Guide",
-              to: "docs/sage-install-intro/",
+              to: "docs/foresight-install-intro/",
             },
             {
               label: "CloudScend Foresight Operations Guide",
-              to: "docs/sage-ops-overview/",
+              to: "docs/foresight-ops-overview/",
             },
           ],
         },
@@ -49,7 +49,7 @@ module.exports = {
           items: [
             {
               label: "FAQs",
-              to: "docs/sage-faqs/",
+              to: "docs/foresight-faqs/",
             },
             {
               label: "GitHub",

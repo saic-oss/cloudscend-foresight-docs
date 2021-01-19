@@ -1,5 +1,5 @@
 ---
-id: sage-managing-apps
+id: foresight-managing-apps
 title: Managing Your Applications
 hide_title: Managing Your Applications
 sidebar_label: Managing Your Applications
@@ -208,7 +208,7 @@ You can use the Filter option above the list of applications to search for your 
 ### Uploading Source Code
 
 Now that you have entered your information and taken the survey, it's time to upload your application source code. You will want to upload your source code to begin your migration estimate but you may upload your code at any other time as well. You will want to upload your source code throughout your refactoring process to keep track of your progress and keep on top of any new issues that have been created by your refactoring.
-For detailed information regarding packaging your source code for uploading, refer to the [CloudScend Foresight Operations Guide](/docs/sage-ops-standard-guidelines#packaging-source-code).
+For detailed information regarding packaging your source code for uploading, refer to the [CloudScend Foresight Operations Guide](/docs/foresight-ops-standard-guidelines#packaging-source-code).
 
 **1. Select the Upload Source Code icon.**
 
@@ -631,9 +631,9 @@ Click on the word SonarQube in the top menu bar to return to the home screen sho
 
 The CloudScend Foresight product has built in APIs that allow you to set up your CI/CD pipeline to automatically upload new source code as new builds are pushed. This will ensure that all of your most recent changes have been scanned, analyzed and are part of your application portfolio's history. You will be able to quickly see trends and issues and take action before any issue become too time consuming.
 
-You can configure your CI/CD pipeline to create a zip file of your source code that meets the [CloudScend Foresight source code packaging requirements](sage-ops-standard-guidelines.mdx#system-tuning) and then call our source code uploader API to automatically upload your source code into CloudScend Foresight.
+You can configure your CI/CD pipeline to create a zip file of your source code that meets the [CloudScend Foresight source code packaging requirements](foresight-ops-standard-guidelines.mdx#system-tuning) and then call our source code uploader API to automatically upload your source code into CloudScend Foresight.
 
-See our [CloudScend Foresight API Guide](sage-api.mdx) for details on how to use our APIs.
+See our [CloudScend Foresight API Guide](foresight-api.mdx) for details on how to use our APIs.
 
 ## Knowledge Discovery
 
@@ -690,7 +690,7 @@ Here are some examples of questions regarding your application portfolio and the
 | 7. Which applications have the most cloud blockers?                                               | app_org.app_global_id<br></br>app_cast_highlight_tech_properties.app_cast_app_name<br></br>app_cast_highlight_tech_properties.app_cast_highlight_cloud_blocker_index                                                                                                                                                                                            |
 | 8. Which applications have the largest SLOC and highest technical debt?                           | app_org.app_global_id<br></br>app_cast_highlight_tech_properties.app_cast_app_name<br></br>app_cast_highlight_tech_properties.app_cast_software_sloc_count<br></br>app_cast_highlight_tech_properties.app_cast_highlight_tech_debt                                                                                                                              |
 
-You are able to use your own instance of Metabase or any other Business Intelligence product to create your desired analytics using CloudScend Foresight data. We have provided read only access to the database tables below so you can create charts, graphs and perform analysis with the CloudScend Foresight data. The read only account information was provided with your CloudScend Foresight licenses. You can use the [CloudScend Foresight Data Dictionary](sage-data-dictionary.mdx) to determine what data is available to you. Below are the basic steps you can take to create your own analytics using Metabase.
+You are able to use your own instance of Metabase or any other Business Intelligence product to create your desired analytics using CloudScend Foresight data. We have provided read only access to the database tables below so you can create charts, graphs and perform analysis with the CloudScend Foresight data. The read only account information was provided with your CloudScend Foresight licenses. You can use the [CloudScend Foresight Data Dictionary](foresight-data-dictionary.mdx) to determine what data is available to you. Below are the basic steps you can take to create your own analytics using Metabase.
 
 **1. From the Metabase admin menu, add a database.**
 
