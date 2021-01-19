@@ -1,8 +1,8 @@
 ---
-id: sage-api-guide
-title: Sage API Guide
-hide_title: Sage API Guide
-sidebar_label: Sage API Guide
+id: foresight-api-guide
+title: CloudScend Foresight API Guide
+hide_title: CloudScend Foresight API Guide
+sidebar_label: CloudScend Foresight API Guide
 ---
 
 <!-- Run npm run build-api-doc after modifying this header -->
@@ -12,30 +12,30 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
-# Sage API Guide
+# CloudScend Foresight API Guide
 
 ## Introduction
 
-The Sage API provides access to endpoints you can use to integrate into your own tools.
+The CloudScend Foresight API provides access to endpoints you can use to integrate into your own tools.
 
-The most important endpoints of the Sage API have been organized below into feature areas.
+The most important endpoints of the CloudScend Foresight API have been organized below into feature areas.
 
 ## Base URL
 
-All URLs referenced in the documentation start with a base URL variable which represents the protocol and host name of the applicable Sage API service. For example `https://sage-api-backend.example.com`.
+All URLs referenced in the documentation start with a base URL variable which represents the protocol and host name of the applicable CloudScend Foresight API service. For example `https://foresight-api-backend.example.com`.
 
-The default `baseURL` variable should point to the Sage backend API service. `sourceCodeUploaderBaseUrl` should point to the Sage Source Code Uploader API service.
+The default `baseURL` variable should point to the CloudScend Foresight backend API service. `sourceCodeUploaderBaseUrl` should point to the CloudScend Foresight Source Code Uploader API service.
 
 ## Authentication
 
-All endpoints require authentication and are secured using [Keycloak](https://www.keycloak.org/). Sage uses OAuth2 for authentication and authorization of the API.
+All endpoints require authentication and are secured using [Keycloak](https://www.keycloak.org/). CloudScend Foresight uses OAuth2 for authentication and authorization of the API.
 OAuth2 is a protocol designed to let third-party applications authenticate to perform actions as a user, without getting the user's password.
 There are several libraries available that implement the protocol, and a good list can be found at the [OAuth2](https://oauth.net/2/) home page.
-Through the use of OAuth2, you'll go through the process of obtaining a token and then you'll use that token in every request made to the Sage API to verify your identity.
+Through the use of OAuth2, you'll go through the process of obtaining a token and then you'll use that token in every request made to the CloudScend Foresight API to verify your identity.
 
-Sage API servers accept Bearer tokens through the HTTP Authorization header in requests. Bearer tokens allow requests to authenticate using an access key, such as a JSON Web Token (JWT).
+CloudScend Foresight API servers accept Bearer tokens through the HTTP Authorization header in requests. Bearer tokens allow requests to authenticate using an access key, such as a JSON Web Token (JWT).
 
-The example below shows how to automate processes by requesting a token from Keycloak, extracting the token, and passing the token to the Sage backend,
+The example below shows how to automate processes by requesting a token from Keycloak, extracting the token, and passing the token to the CloudScend Foresight backend,
 which would be suitable for a CI/CD pipeline.
 
 ```bash
@@ -46,8 +46,8 @@ echo "Requesting authentication"
 RESULT=`curl -s --location --request POST \
 "$KEYCLOAK_BASE_URL/auth/realms/appmod/protocol/openid-connect/token" \
 --data-urlencode 'grant_type=password' \
---data-urlencode "username=$SAGE_USERNAME" \
---data-urlencode "password=$SAGE_PASSWORD" \
+--data-urlencode "username=$FORESIGHT_USERNAME" \
+--data-urlencode "password=$FORESIGHT_PASSWORD" \
 --data-urlencode 'grant_type=password' \
 --data-urlencode 'client_id=sage'`
 echo $RESULT
@@ -56,30 +56,30 @@ TOKEN=`echo $RESULT | sed 's/.*access_token":"//g' | sed 's/".*//g'`
 echo "Extracted token"
 echo $TOKEN
 
-curl $SAGE_API_BASE_URL/sage/application/ -H "Authorization: bearer $TOKEN"
+curl $FORESIGHT_API_BASE_URL/sage/application/ -H "Authorization: bearer $TOKEN"
 ```
 
 ## Postman Collection
 
 The quickest way to get started is to use our Postman request collection. The following steps will help you get up and running.
 
-1. **Import the Sage Postman Collection**
+1. **Import the CloudScend Foresight Postman Collection**
 
    - <a
-     href={useBaseUrl("/data/sage-api.postman_collection.json")}
+     href={useBaseUrl("/data/foresight-api.postman_collection.json")}
      download
      className="button button--primary"
      > Download Postman Collection
      > </a>
-   - From Postman, Import -> Select downloaded sage postman collection
+   - From Postman, Import -> Select downloaded Foresight postman collection
 
 2. **Configure Postman Environment**
 
    - Setup a new environment in Postman. Click New -> Environment.
-   - Name the new environment _Sage API_
+   - Name the new environment _Foresight API_
    - Add the following variables:
-     - baseUrl: _enter the Sage Backend API URL_
-     - sourceCodeUploaderBaseUrl: _enter the Sage Source Code Uploader Base URL_
+     - baseUrl: _enter the CloudScend Foresight Backend API URL_
+     - sourceCodeUploaderBaseUrl: _enter the CloudScend Foresight Source Code Uploader Base URL_
      - loginBaseUrl: _enter the Keycloak service base url_
    - Click Add to create
 
@@ -89,8 +89,8 @@ The quickest way to get started is to use our Postman request collection. The fo
    - To request an access token, fill out the fields in the Configure New Token section. There are several ways to configure based on the Grant Type you want to use. For the Password Credentials grant type enter the following details:
      - Access Token URL: {{loginBaseUrl}}/auth/realms/appmod/protocol/openid-connect/token
      - Client ID: sage
-     - Username: {{SAGE_USERNAME}}
-     - Password: {{SAGE_PASSWORD}}
+     - Username: {{FORESIGHT_USERNAME}}
+     - Password: {{FORESIGHT_PASSWORD}}
      - Scope: openid email profile
      - Client Authentication: Send as Basic Auth header
    - Click Get New Access Token
