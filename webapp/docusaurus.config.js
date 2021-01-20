@@ -2,12 +2,12 @@ module.exports = {
   title: "CloudScend Foresight by SAIC",
   tagline: "Embodiment of Cloud Migration Best Practices",
   url: "https://saic-oss.github.io",
-  baseUrl: process.env.HELP_BASE_URL || "/sage-docs/",
+  baseUrl: process.env.HELP_BASE_URL || "/cloudscend-foresight-docs/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "saic-oss", // Usually your GitHub org/user name.
-  projectName: "sage-docs", // Usually your repo name.
+  projectName: "cloudscend-foresight-docs", // Usually your repo name.
   themeConfig: {
     navbar: {
       title: " ",
