@@ -1,6 +1,6 @@
 module.exports = {
   someSidebar: {
-    CloudScendForesight: [
+    "CloudScend Foresight": [
       {
         type: "category",
         label: "CloudScend Foresight Users Guide",
