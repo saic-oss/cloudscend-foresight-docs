@@ -207,7 +207,7 @@ You can use the Filter option above the list of applications to search for your 
 
 ### Uploading Source Code
 
-Now that you have entered your information and taken the survey, it's time to upload your application source code. You will want to upload your source code to begin your migration estimate but you may upload your code at any other time as well. You will want to upload your source code throughout your refactoring process to keep track of your progress and keep on top of any new issues that have been created by your refactoring.
+Now that you have entered your information and taken the survey, it's time to upload your application source code. You will want to upload your source code to begin your migration estimate but you may upload your code at any other time as well. You will want to upload your source code throughout your refactoring process to keep track of your progress and keep on top of any new issues that have been created by your refactoring. While you can upload source code multiple times in a day, only the data from the last scan of the day will be used in any trend dashboards or continuous assessment views. To ensure you have data points for your trends, upload your source code at least 24 hours apart.
 For detailed information regarding packaging your source code for uploading, refer to the [CloudScend Foresight Operations Guide](/docs/foresight-ops-standard-guidelines#packaging-source-code).
 
 **1. Select the Upload Source Code icon.**
@@ -368,13 +368,13 @@ Perform the following steps to create your migration estimates.
 
 ![Migration Estimate](../static/img/ClickMigrationEst.png)
 
-**2. The Migration Estimate tool will process your application immediately and show you the estimated time and refactoring cost to migrate your application to the cloud.**
+**2. The Migration Estimate tool will process your application immediately and show you the estimated time and cost to perform application analysis and refactoring in order to migrate your application to the cloud.**
 
 ![Migration Estimate](/img/MigrationEstimate.png)
 
-Once you have run the Migration Estimates, you can also use the Interactive Calculator if you would like to see what effect different inputs would have on your estimate.
+This shows you the calculated time in hours and calculated cost based on derived COCOMO parameters as well as the time and cost calculated by the ML model. If you would like to see what the COCOMO model would calculate with different parameters, you can use the Interactive Calculator to create a custom estimate.
 
-**3. If you are interested in using custom values for your COCOMO model parameters, select the Interactive Calculator icon on the Migration Estimate screen**
+**3. If you are interested in using custom values for your COCOMO model parameters, select the Interactive Calculator icon on the Migration Estimate screen.**
 
 ![Interactive Calculator Icon](/img/InteractiveCalculatorIcon.png)
 
@@ -439,6 +439,10 @@ At any time while viewing the CloudScend Foresight Results you may download a co
 
 ![Migration Actuals](/img/MigrationActuals.png)
 
+Once you save your actual values for bucket, hours and cost, your CloudScend Foresight Results reports will be updated to reflect the values you entered.
+
+![Migration Actuals Reported](/img/SageResultsWithActuals.png)
+
 ### Update Application Information
 
 If at any time you need to update your application acronym, organization or any of your POC information, you can do so easily by utilizing View App Info. To access your editable application information, follow the steps below.
@@ -488,6 +492,10 @@ In order to access your App Portfolio Panel, follow these steps:
 
 The App Portfolio will open and provide you with extensive dashboard options that allow you to see your entire application portfolio's health, composition, technical debt and cloud readiness along with many other insights that may interest you.
 
+:::important
+The entire App Portfolio Panel is interactive. You can select any item or insight and drill down to find out to which applications each metric pertains. You should spend some time finding the dashboard views that provide you with the data and metrics that matter most to you.
+:::
+
 ![App Portfolio Main](/img/AppPortfolioMain.png)
 
 Once you have opened the App Portfolio panel, you will be presented with some key information regarding your application portfolio.
@@ -503,10 +511,10 @@ At the top of your screen, you will see:
 
 In the next section of the page, you will be provided with some Quick Portfolio Insights:
 
-- Top 5 most business critical applications
-- Top 5 most complex applications
-- Top 5 best Cloudy Ready candidates
-- Top 5 applications with the highest open source risk
+- Top 5 most business critical applications - These are your applications with the highest Business Impact
+- Top 5 most complex applications - These are applications with the lowest Software Elegance score
+- Top 5 best Cloudy Ready candidates - These are applications with the highest CloudReady score
+- Top 5 applications with the highest open source risk - These are applications with lowest Open Source Safety
 
 The next section of the page provides you with a list of the top 20 code insights or list of recurring potential deficiencies in your source code.
 
@@ -544,29 +552,29 @@ You can select any of the pieces of data on this page and bring up more details.
 
 Below is a list of of dashboards and general description of the type of data displayed.
 
-| Dashboard              | Data Displayed                                                                                                          |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Health Factor Mapping  | Scatter graph of Short Term and Mid Term Software Health Data                                                           |
-| Health Distribution    | List of all applications with SR, SA, or SE data                                                                        |
-| Software Composition   | Scatter graph of Open Source Safety, bar charts of Components, lists of Vulnerabilities, pie and bar charts of Licenses |
-| Technical Debt         | Bar chart of Technical Debt Distribution information                                                                    |
-| Trends                 | Health Factors, Code Size, Maintenance, CloudReady, Open Source across time                                             |
-| Application Results    | List of all applications with all major index values                                                                    |
-| Business Impact        | Scatter graph of Health Factors and Technical Debt values correlated with Business Impact ranking                       |
-| CloudReady             | Scatter graph of Cloud Readiness correlated with Business Impact. Also contains lists of cloud blockers and insights    |
-| Portfolio Demographics | Pie Charts of Software Health values correlated with Technologies and Business Impact                                   |
-| Software Maintenance   | Bar graph of distribution of FTE across applications                                                                    |
+| Dashboard              | Data Displayed                                                                                                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Health Factor Mapping  | Scatter graph of Short Term and Mid Term Software Health Data                                                                                                               |
+| Health Distribution    | List of all applications with SR, SA, or SE data                                                                                                                            |
+| Software Composition   | Scatter graph of Open Source Safety, bar charts of Components, lists of Vulnerabilities, pie and bar charts of Licenses                                                     |
+| Technical Debt         | Bar chart of Technical Debt Distribution information                                                                                                                        |
+| Trends                 | Health Factors, Code Size, Maintenance, CloudReady, Open Source across time. _Note, to see trends accurately, ensure source code uploads are done at least 24 hours apart._ |
+| Application Results    | List of all applications with all major index values                                                                                                                        |
+| Business Impact        | Scatter graph of Health Factors and Technical Debt values correlated with Business Impact ranking                                                                           |
+| CloudReady             | Scatter graph of Cloud Readiness correlated with Business Impact. Also contains lists of cloud blockers and insights                                                        |
+| Portfolio Demographics | Pie Charts of Software Health values correlated with Technologies and Business Impact                                                                                       |
+| Software Maintenance   | Bar graph of distribution of FTE across applications                                                                                                                        |
 
 **3. If you would like to filter your results on the home dashboard or any other dashboard, select the filter icon next to search field.**
 
 ![App Portfolio Filter Icon](/img/AppPortfolioFilterIcon.png)
 
-**4. The filter options will now be shown. Of primary interest here, you can filter on technologies to narrow down your results to specific languages.**
+**4. The filter options will now be shown. Of primary interest here, you can filter on technologies to narrow down your results to specific languages. If you filter on one or more languages, you dashboards will only show data for application that use that technology.**
 
 ![App Portfolio Filter](/img/AppPortfolioFilter.png)
 
 :::tip
-If you need more assistance or information on the Dashboard capabilities, click on the [Help](https://doc.casthighlight.com/) link located beside the Dashboards on the App Portfolio menu bar.
+If you need more assistance or information on the dashboard capabilities, click on the [Help](https://doc.casthighlight.com/) link located beside the Dashboards on the App Portfolio menu bar.
 :::
 
 ## Continuous Assessment
@@ -586,6 +594,10 @@ This will bring up the Continuous Assessment page.
 ![Continuous Assessment Home](/img/ContinuousAssessmentHome.png)
 
 From here, you will be able to view all the CAST Highlight metrics in the top dashboard and all the SonarQube metrics in the bottom dashboard.
+
+:::note
+In order to see trends you will need to have at least 24 hours between source code uploads. If multiple uploads are done in a day, the trends dashboard will use the data from the last scan of that day for its data point.
+:::
 
 For information on viewing the CAST Highlight metrics, see the [App Portfolio documentation](#app-portfolio).
 
