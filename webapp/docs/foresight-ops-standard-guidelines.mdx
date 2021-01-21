@@ -157,50 +157,50 @@ CloudScend Foresight requires your source code to be compressed into a zip file 
 
 ### Actual Bucket Criteria
 
-Once you are done with an app analysis or refactor, you will need to enter your actual bucket, hours and cost amounts.  This will allow not only you to track your work across time, it will also provide important input into the CloudScend Foresight machine learning estimation model.  By providing these actual values to CloudScend Foresight, you will be helping to ensure your future estimations are based on real world data.  While your cost and hours are very specific numbers, the bucket value you select should be based on criteria about your application.  Please follow the chart below to help you select your actual bucket value.
+Once you are done with an app analysis or refactor, you will need to enter your actual bucket, hours and cost amounts. This will allow not only you to track your work across time, it will also provide important input into the CloudScend Foresight machine learning estimation model. By providing these actual values to CloudScend Foresight, you will be helping to ensure your future estimations are based on real world data. While your cost and hours are very specific numbers, the bucket value you select should be based on criteria about your application. Please follow the chart below to help you select your actual bucket value.
 
-|Simple Bucket Criteria|
-|------------------------|
-|Existing Cloud App or 3-Tier Web App|
-|No Databases or 1-2 Databases with no Stored Procs or DB Links|
-|HTTPS Based Interfaces only|
-|CRI 75-80|
-|No Cloud Migration Blockers|
-|Uses PIV Authentication, SAML|
-|None of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools|
-|Negligible Technical Debt (<$100,000)|
-|Low SLOC Count (<40k)|
+| Simple Bucket Criteria                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------- |
+| Existing Cloud App or 3-Tier Web App                                                                                |
+| No Databases or 1-2 Databases with no Stored Procs or DB Links                                                      |
+| HTTPS Based Interfaces only                                                                                         |
+| CRI 75-80                                                                                                           |
+| No Cloud Migration Blockers                                                                                         |
+| Uses PIV Authentication, SAML                                                                                       |
+| None of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools |
+| Negligible Technical Debt (<$100,000)                                                                               |
+| Low SLOC Count (<40k)                                                                                               |
 
-|Medium Bucket Criteria|
-|----------------------|
-|2-4 Databases with a few Stored Procs and/or DB Links|
-|Very Few Non-HTTPS Based Interfaces|
-|CRI 65-75|
-|No Cloud Migration Blockers|
-|Uses PIV-based Authentication, SAML/JWT|
-|None or one of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools|
-|Medium Technical Debt ($100,000 - $350,000)|
-|Medium SLOC Count (40k - 70k)|
+| Medium Bucket Criteria                                                                                                     |
+| -------------------------------------------------------------------------------------------------------------------------- |
+| 2-4 Databases with a few Stored Procs and/or DB Links                                                                      |
+| Very Few Non-HTTPS Based Interfaces                                                                                        |
+| CRI 65-75                                                                                                                  |
+| No Cloud Migration Blockers                                                                                                |
+| Uses PIV-based Authentication, SAML/JWT                                                                                    |
+| None or one of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools |
+| Medium Technical Debt ($100,000 - $350,000)                                                                                |
+| Medium SLOC Count (40k - 70k)                                                                                              |
 
-|Complex Bucket Criteria|
-|-----------------------|
-|5 or more Databases with both Stored Procs and DB Links|
-|Many Non-HTTPS Based Interfaces|
-|CRI < 65|
-|1-2 Cloud Migration Blockers|
-|Uses Non-PIV-based Authentication, JWT or Other Token|
-|One or two of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools|
-|Large Technical Debt ($350,000 - $700,000)|
-|Large SLOC Count (70k – 300k)|
+| Complex Bucket Criteria                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------- |
+| 5 or more Databases with both Stored Procs and DB Links                                                                   |
+| Many Non-HTTPS Based Interfaces                                                                                           |
+| CRI < 65                                                                                                                  |
+| 1-2 Cloud Migration Blockers                                                                                              |
+| Uses Non-PIV-based Authentication, JWT or Other Token                                                                     |
+| One or two of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools |
+| Large Technical Debt ($350,000 - $700,000)                                                                                |
+| Large SLOC Count (70k – 300k)                                                                                             |
 
-|Outlier Bucket Criteria|
-|-----------------------|
-|Very Large number of Non-HTTPS Based Interfaces|
-|Numerous Cloud Migration Blockers|
-|Uses Non-PIV-based Authentication, Other Token|
-|Most or all of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools|
-|Extreme Technical Debt (>$700,000)|
-|Extreme SLOC Count (>300k)|
+| Outlier Bucket Criteria                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------- |
+| Very Large number of Non-HTTPS Based Interfaces                                                                            |
+| Numerous Cloud Migration Blockers                                                                                          |
+| Uses Non-PIV-based Authentication, Other Token                                                                             |
+| Most or all of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools |
+| Extreme Technical Debt (>$700,000)                                                                                         |
+| Extreme SLOC Count (>300k)                                                                                                 |
 
 ### Storage configuration
 
