@@ -2,10 +2,12 @@
 id: foresight-install-EKS
 title: Installing CloudScend Foresight to Amazon EKS
 hide_title: Installing CloudScend Foresight to Amazon EKS
-sidebar_label: Installing CloudScend Foresight to Amazon EKS
+sidebar_label: Installing CloudScend Foresight v1.0.0 to Amazon EKS
 ---
 
 # Installing CloudScend Foresight to Amazon EKS
+
+This section of the Installation Guide will provide instructions for installing CloudScend Foresight v1.0.0 in an Amazon EKS enviornment.
 
 ## Assumptions for Amazon EKS Installation
 
@@ -28,10 +30,11 @@ sidebar_label: Installing CloudScend Foresight to Amazon EKS
 - Helmfile
   - https://github.com/roboll/helmfile#installation
 - License Key
-  - This will be provided by SAIC
+  - This will be provided by SAIC via email
+  - Place the emailed license.txt file in the same folder where as your helm charts. The installation scripts will need this file in order to successfully install your license.
 - If processing Windows .NET Code, you must install Windows Report Service
   - If you are using AWS: download CloudScend Foresight Windows Report Service AMI from the AWS Marketplace
-  - If you are not using AWS: Reach out to SAIC help desk for CloudScend Foresight Windows Report Service app
+  - If you are not using AWS: Reach out to SAIC service desk for CloudScend Foresight Windows Report Service app
   - Windows Server Minimum requirements:
     - Windows Server 2019 - DataCenter, Enterprise, Standard, or Core
     - 1 CPU
@@ -95,4 +98,4 @@ sidebar_label: Installing CloudScend Foresight to Amazon EKS
 
 ## Troubleshooting and Support
 
-If you experience issues with your installation or need support with your CloudScend Foresight installation, please contact the CloudScend Foresight help desk by phone at 1-866-411-4227 – option 3 or email foresight-support@saic.com.
+If you experience issues with your installation or need support with your CloudScend Foresight installation, please contact the CloudScend Foresight service desk by phone at 1-866-411-4227 – option 3 or email foresight-support@saic.com.

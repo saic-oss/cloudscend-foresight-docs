@@ -23,17 +23,32 @@ When you receive an error or if a page doesn't render completely, you should fol
 
 **3. If you are still unsuccessful at performing your desired task, it's time to check the logs.**
 
-## Error Log Location
+## Viewing Error Logs
 
 As an administrator there may be times when you need to examine the logs for possible assistance with an error. To view the logs, follow these steps:
 
-**1. Log on to CloudScend Foresight and perform the step that is failing.**
+To view application level logs:
 
-**2. After the error has happened...**
+_*Some instructions here from team on use of Lens to view application level logs.*_
 
-**3. Review and investigate the logs....**
+To view Kubernetes level logs, you may need the assistance of your Kubernetes administrator in order to follow these steps:
 
-_Show Log Window Here_
+_*1. Some instructions here from team on how to view Kubernetes logs.*_
+
+To view Windows Report Service error logs:
+
+_*Some instructions here from team on how to view Windows Report Service logs.*_
+
+## Error Messages
+
+Error messages received in logs may point to one of the components deployed with CloudScend Foresight. When this happens, you can refer to the error tracking information for each component.
+
+| Component Error Tracking Information                                                  |
+| ------------------------------------------------------------------------------------- |
+| [GitLab Error Tracking](https://docs.gitlab.com/ee/operations/error_tracking.html)    |
+| [SonarQube Troubleshooting](https://docs.sonarqube.org/latest/setup/troubleshooting/) |
+| [Postgres Error Codes](https://www.postgresql.org/docs/10/errcodes-appendix.html)     |
+| [Keycloak Server administration](https://www.keycloak.org/docs/8.0/server_admin/)     |
 
 ## Detail Corrections for Possible Issues
 
@@ -42,5 +57,3 @@ _Show Log Window Here_
 If your App Portfolio or Continuous Assessment panels are not rendering, there is a link at the bottom of the page that you can use to try to access the dashboard differently. Selecting this link may allow you to access the panels without issues.
 
 ![Panel Not Working](/img/DashboardNotWorking.png)
-
-## Error Messages
