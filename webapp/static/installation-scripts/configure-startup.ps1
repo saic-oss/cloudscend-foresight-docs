@@ -1,4 +1,4 @@
-Write-Host "CloudScend Foresight Windows Report Service Configure Startup Script"
+Write-Output "CloudScend Foresight Windows Report Service Configure Startup Script"
 
 $installDir = "C:\AMaaS"
 $batchFile = "$($installDir)\start-report-service.bat"
@@ -22,7 +22,7 @@ if(!(Test-Path $gitLabDir -PathType Container)) {
 Copy-Item -Path "reportservice.jar" -Destination $installDir
 
 
-Write-Host "Creating $($batchFile)"
+Write-Output "Creating $($batchFile)"
 Set-Content $batchFile "
 set JAVA_HOME=$($installDir)\openjdk\openjdk-11.0.9.1_1
 
@@ -51,4 +51,4 @@ set JAVA_EXE=%JAVA_HOME%\bin\java.exe
  reportservice.jar
  "
 
-Write-Host "configure-startup.ps1 finished."
+Write-Output "configure-startup.ps1 finished."

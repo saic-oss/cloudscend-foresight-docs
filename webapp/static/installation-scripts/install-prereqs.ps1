@@ -24,65 +24,65 @@ if(!(Test-Path $tempDir -PathType Container)) {
 
 
 # Begin Java 11 JDK install
-Write-Host "Testing if the JDK is installed at $($javaInstallDir)."
+Write-Output "Testing if the JDK is installed at $($javaInstallDir)."
 if(!(Test-Path $javaInstallDir -PathType Container)) {
-    Write-Host "JDK is not installed."
-    Write-Host "Testing if the JDK installer is present."
+    Write-Output "JDK is not installed."
+    Write-Output "Testing if the JDK installer is present."
     if(!(Test-Path $java11JdkInstaller -PathType Leaf)) {
-        Write-Host "JDK installer is not present. Downloading Java 11 JDK installer to $($java11JdkInstaller)"
+        Write-Output "JDK installer is not present. Downloading Java 11 JDK installer to $($java11JdkInstaller)"
 
         Invoke-WebRequest -Uri "https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.9.1%2B1/OpenJDK11U-jdk_x64_windows_11.0.9.1_1.zip" `
             -OutFile $java11JdkInstaller
     }
-    Write-Host "Extracting the JDK archive."
+    Write-Output "Extracting the JDK archive."
     Expand-Archive -Path $java11JdkInstaller -DestinationPath $javaInstallDir
 
-    Write-Host "Testing if the JDK is in the system PATH."
+    Write-Output "Testing if the JDK is in the system PATH."
     $oldEnvPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
     #-match/-notmatch uses regular expressions, so double backslashes are required.
     if($oldEnvPath -notmatch "C:\\AMaaS\\openjdk\\openjdk-11.0.9.1_1") {
-        Write-Host "Adding $($javaInstallDir)\openjdk-11.0.9.1_1 to the System PATH."
+        Write-Output "Adding $($javaInstallDir)\openjdk-11.0.9.1_1 to the System PATH."
         $newEnvPath = "$($javaInstallDir)\openjdk-11.0.9.1_1\bin;$($oldEnvPath)"
         Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newEnvPath
-        Write-Host 'Verifying java install ...'
+        Write-Output 'Verifying java install ...'
 
         #Update current running environment's PATH in order to test that javac and java are configured properly
         $env:Path =  [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-        Write-Host '  javac --version'
+        Write-Output '  javac --version'
         javac --version
-        Write-Host '  java --version';
+        Write-Output '  java --version';
         java --version;
     }
-    Write-Host "Java 11 JDK install finished."
+    Write-Output "Java 11 JDK install finished."
 }
 else {
-    Write-Host "  Found."
+    Write-Output "  Found."
 }
 # End Java 11 JDK install
 
 
 
 # Begin .NET Framework 4.8 install
-Write-Host "Testing if the .NET Framework 4.8 is installed by inspecting the registry at HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full"
+Write-Output "Testing if the .NET Framework 4.8 is installed by inspecting the registry at HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full"
 # Refer to https://docs.microsoft.com/en-us/dotnet/framework/deployment/deployment-guide-for-developers
 $runNetInstall = "false";
 if(Test-Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" -PathType Container) {
 
-    Write-Host "  Found .NET has been installed. Checking the version."
+    Write-Output "  Found .NET has been installed. Checking the version."
     $netRelease = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' -Name Release).Release
     #Check to make sure .net 4.8 (release 528040) or greater is installed.  If not, then install.
     if($netRelease -lt 528040) {
-        Write-Host "  Found old version of .NET 4. Will install 4.8."
+        Write-Output "  Found old version of .NET 4. Will install 4.8."
         $runNetInstall = "true";
     }
 }
 else {
-    Write-Host "  Registry key not found, will install .NET."
+    Write-Output "  Registry key not found, will install .NET."
     $runNetInstall = "true";
 }
 
 if($runNetInstall -eq "true") {
-    Write-Host "Testing if the .NET Framework 4.8 installer is present."
+    Write-Output "Testing if the .NET Framework 4.8 installer is present."
     if(!(Test-Path $net48Installer -PathType Leaf)) {
         Write-Output "Downloading .NET Framework 4.8 to $($net48Installer)"
         #https://go.microsoft.com/fwlink/?linkid=2088631
@@ -97,7 +97,7 @@ if($runNetInstall -eq "true") {
 
 }
 else {
-    Write-Host "  Found."
+    Write-Output "  Found."
 }
 # End .NET Framework 4.8 install
 
@@ -105,10 +105,10 @@ else {
 
 
 # Begin VS 2019 Build Tools install
-Write-Host "Testing if VS 2019 Build Tools are installed at $($buildInstallDir)."
+Write-Output "Testing if VS 2019 Build Tools are installed at $($buildInstallDir)."
 if(!(Test-Path $buildInstallDir -PathType Container)) {
-    Write-Host "Build Tools are not installed."
-    Write-Host "Testing if build tools are downloaded."
+    Write-Output "Build Tools are not installed."
+    Write-Output "Testing if build tools are downloaded."
     if(!(Test-Path $vsBuildToolsInstaller -PathType Leaf)) {
         Write-Output "Build tools are not downloaded. Downloading Visual Studio 2019 build tools to $($vsBuildToolsInstaller)."
         Invoke-WebRequest -Uri "https://download.visualstudio.microsoft.com/download/pr/9b3476ff-6d0a-4ff8-956d-270147f21cd4/ccfb9355f4f753315455542f966025f96de734292d3908c8c3717e9685b709f0/vs_BuildTools.exe" `
@@ -131,55 +131,55 @@ if(!(Test-Path $buildInstallDir -PathType Container)) {
         "--remove Microsoft.VisualStudio.Component.Windows10SDK.14393", `
         "--remove Microsoft.VisualStudio.Component.Windows81SDK"
 #>
-    Write-Host "VS 2019 Build Tools finished."
+    Write-Output "VS 2019 Build Tools finished."
 }
 else {
-    Write-Host "  Found."
+    Write-Output "  Found."
 }
 # End VS 2019 Build Tools install
 
 
 
 # Begin SonarScanner for .NET Framework 4.6+ install for SonarQube integration
-Write-Host "Testing if SonarScanner for .NET Framework 4.6+ is installed at $($sonarScannerInstallDir)."
+Write-Output "Testing if SonarScanner for .NET Framework 4.6+ is installed at $($sonarScannerInstallDir)."
 if(!(Test-Path $sonarScannerInstallDir -PathType Container)) {
-    Write-Host "SonarScanner is not installed."
-    Write-Host "Testing if SonarScanner is downloaded."
+    Write-Output "SonarScanner is not installed."
+    Write-Output "Testing if SonarScanner is downloaded."
     if(!(Test-Path $sonarScannerInstaller -PathType Leaf)) {
         Write-Output "SonarScanner for .NET 4.6+ is not downloaded. Downloading to $($sonarScannerInstaller)."
         Invoke-WebRequest -Uri "https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.0.4.24009/sonar-scanner-msbuild-5.0.4.24009-net46.zip" `
             -OutFile $sonarScannerInstaller
     }
-    Write-Host "Extracting the SonarScanner for .NET  archive."
+    Write-Output "Extracting the SonarScanner for .NET  archive."
     Expand-Archive -Path $sonarScannerInstaller -DestinationPath $sonarScannerInstallDir
 
-    Write-Host "SonarScanner for .NET Framework 4.6+ finished."
+    Write-Output "SonarScanner for .NET Framework 4.6+ finished."
 }
 else {
-    Write-Host "  Found."
+    Write-Output "  Found."
 }
 # End SonarScanner for .NET Framework 4.6+ install for SonarQube integration
 
 
 
 # Begin nuget install for MSBuild integration
-Write-Host "Testing if nuget for MSBuild integration is installed at $($amaasInstallDir)."
+Write-Output "Testing if nuget for MSBuild integration is installed at $($amaasInstallDir)."
 if(!(Test-Path "$($amaasInstallDir)\nuget.exe" -PathType Leaf)) {
-    Write-Host "nuget is not installed. Downloading to $($amaasInstallDir)."
+    Write-Output "nuget is not installed. Downloading to $($amaasInstallDir)."
 
     Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" `
         -OutFile "$($amaasInstallDir)\nuget.exe"
 
-    Write-Host "SonarScanner for .NET Framework 4.6+ finished."
+    Write-Output "SonarScanner for .NET Framework 4.6+ finished."
 }
 else {
-    Write-Host "  Found."
+    Write-Output "  Found."
 }
 # End nuget install for MSBuild integration
 
 
 # Begin Git install
-Write-Host "Testing if Git is downloaded at $($gitInstaller)."
+Write-Output "Testing if Git is downloaded at $($gitInstaller)."
 if(!(Test-Path $gitInstaller -PathType Leaf)) {
     Write-Output "Git installer not downloaded. Downloading to $($gitInstaller)."
     Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.30.0.windows.1/Git-2.30.0-64-bit.exe" `
@@ -189,16 +189,16 @@ if(!(Test-Path $gitInstaller -PathType Leaf)) {
 
     Start-Process -FilePath $gitInstaller -Wait -ArgumentList "/silent /log /norestart "
 
-    Write-Host "Git installer finished."
+    Write-Output "Git installer finished."
 }
 else {
-    Write-Host "  Found."
+    Write-Output "  Found."
 }
 # End Git install
 
 
 # Begin .Net 4.8 DevPack install
-Write-Host "Testing if .Net 4.8 DevPack is downloaded at $($net48DevPack)."
+Write-Output "Testing if .Net 4.8 DevPack is downloaded at $($net48DevPack)."
 if(!(Test-Path $net48DevPack -PathType Leaf)) {
     Write-Output ".NET 4.8 DevPack not downloaded. Downloading to $($net48DevPack)."
     Invoke-WebRequest -Uri "https://download.visualstudio.microsoft.com/download/pr/014120d7-d689-4305-befd-3cb711108212/0307177e14752e359fde5423ab583e43/ndp48-devpack-enu.exe" `
@@ -208,12 +208,12 @@ if(!(Test-Path $net48DevPack -PathType Leaf)) {
 
     Start-Process -FilePath $net48DevPack -Wait -ArgumentList "/install /quiet /norestart "
 
-    Write-Host ".Net 4.8 Devpack installation started. Please wait for 15 minutes before rebooting."
+    Write-Output ".Net 4.8 Devpack installation started. Please wait for 15 minutes before rebooting."
 }
 else {
-    Write-Host "  Found."
+    Write-Output "  Found."
 }
 # End .Net 4.8 DevPack install
 
 
-Write-Host "install-preqs.ps1 finished executing."
+Write-Output "install-preqs.ps1 finished executing."
