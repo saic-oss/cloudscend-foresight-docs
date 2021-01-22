@@ -65,9 +65,10 @@ This section of the Installation Guide will provide instructions for installing 
     1. Install the app and dependencies (only required if not using the Report Service AMI from AWS Marketplace)
        1. Copy the Windows Report Service App zip file to a Windows Server 2019 machine.
        2. Extract the contents of the zip file to a temp folder.
-       3. Start an Administrator elevated Command Prompt.
-       4. Change (cd) to the location of the zip file's extracted temp folder.
-       5. Run `powershell -File .\install-prereqs.ps1`
+       3. Download the [install-prereqs.ps1](/static/installation-scripts/install-prereqs.ps1) and [configure-startup.ps1](/static/installation-scripts/configure-startup.ps1) powershell scripts to the same temp folder.
+       4. Start an Administrator elevated Command Prompt.
+       5. Change (cd) to the location of the zip file's extracted temp folder.
+       6. Run `powershell -File .\install-prereqs.ps1`
           1. Content will be installed for .Net Framework 4.8, SonarScanner for MSBuild .NET, Visual Studio 2019 Build Tools, amd Java 11 JDK.
           2. The files will be be downloaded and saved to C:\AMaaS\temp.
           3. After the .Net Framework 4.8 install, the computer may reboot.
