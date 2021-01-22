@@ -11,13 +11,17 @@ sidebar_label: Standard Operation Guidelines
 
 Once you have purchased CloudScend Foresight, you will receive an email with your license and other key pieces of data that will be needed to complete installation, setup or normal operations. Please safeguard this information for your use only.
 
+### License Location
+
+Before beginning installation procedures, place the license.txt file in the same folder as your helm charts. The installation scripts will need this file in order to successfully install your license.
+
 ### Reaching Your App Tier Maximum
 
 Once you have onboarded and processed your maximum number of applications allowed for the App Tier you purchased, you will not be able to continue to process new applications. You will receive the message below when you reach your maximum.
 
 ![Max App Reached](/img/MaxNumAppReached.png)
 
-Once you receive this message, you will need to work with your administrator to purchase a higher App Tier and get a new CloudScend Foresight license. You can do this by returning to the AWS Marketplace. If you need any assistance or have questions, please contact the CloudScend Foresight help desk at 1-866-411-4227 – option 3 or email foresight-support@saic.com.
+Once you receive this message, you will need to work with your administrator to purchase a higher App Tier and get a new CloudScend Foresight license. You can do this by returning to the AWS Marketplace. If you need any assistance or have questions, please contact the CloudScend Foresight service desk at 1-866-411-4227 – option 3 or email foresight-support@saic.com.
 
 ## User Management
 
@@ -147,7 +151,7 @@ CloudScend Foresight provides support for most common programming languages. Bel
 6. Make sure to include packages/assemblies/DLLs which your solution uses to compiles.
    - Check with any 3rd party vendor's license requirements.
 7. Remove any .gitignore files if present in your source code; the typical .gitignore file will remove packages/assemblies/DLLs which your solution compiles against when ingested into CloudScend Foresight.
-8. Source code should have all required configuration so that it can be build locally using MSBuild 14.0 or higher for optimal analysis.
+8. Source code should have all required configuration so that it can be built locally using MSBuild 14.0 or higher for optimal analysis.
 
 :::note
 
@@ -236,3 +240,11 @@ kubectl cp -n keycloak keycloak/keycloak-0:/opt/jboss/keycloak/sage-keycloak-dev
 **5.Edit the JSON as required (More information to come)**
 
 **6. To restore the instance, import the JSON via the UI using the Keycloak Admin User**
+
+### Postgres Database Backup and Restore
+
+CloudScend Foresight installs and creates multiple Postgres databases that are used throughout our product. In order to backup your Postgres databases that are filled with CloudScend Foresight data, you should review and follow these [instructions provided by Postgres](https://www.postgresql.org/docs/10/backup.html). You will want to make sure you are following these steps for your CloudScend Foresight database as well as your SonarQube database.
+
+### GitLab Backup and Restore
+
+An instance of GitLab is also included with your CloudScend Foresight installation. In order to backup your GitLab instance that is created and filled with your uploaded source code from CloudScend Foresight, you should review and follow these [instructions provided by GitLab](https://docs.gitlab.com/ee/raketasks/backup_restore.html).
