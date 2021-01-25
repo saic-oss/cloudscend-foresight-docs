@@ -10,9 +10,9 @@ sidebar_label: Managing Your Applications
 Once you have logged into CloudScend Foresight, you will be presented with the CloudScend Foresight home page. From the CloudScend Foresight home page you can select what actions you would like to perform. You can choose the following:
 
 - Add new applications through [Onboarding](#onboarding) tasks.
-- View your application portfolio dashboards from the [App Portfolio](#app-portfolio)
-- Upload source code, artifacts, enter surveys and run migration estimates from the [App Analyzer](#app-analyzer)
-- Learn more about your application's code health and technical debt over the course of their lifetime through [Continuous Assessment](#continuous-assessment)
+- View your application portfolio dashboards from the [App Portfolio](#app-portfolio).
+- Upload source code, artifacts, enter surveys and run migration estimates from the [App Analyzer](#app-analyzer).
+- Learn more about your application's code health and technical debt over the course of their lifetime through [Continuous Assessment](#continuous-assessment).
 - Perform data mining on your own to answer questions about your app portfolio using our [Knowledge Discovery](#knowledge-discovery) option.
 
 ![CloudScend Foresight Home](/img/SageHomePage.png)
@@ -90,8 +90,8 @@ The table below provides you with the survey questions and possible answers so y
 | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | What is the system type                                                                                                    | Legacy System<br></br>Cloud System                                                                            |
 | What is the architecture of the system?                                                                                    | Web System (n-Tier)<br></br>Thick Client System<br></br>Mainframe System                                      |
-| How many HTTPS-based/443 interface does the system use with external systems?                                              | 0-50                                                                                                          |
-| How many non HTTPS-based/443 interface does the system use (e.g., TCP, UDP, SMTP) with external systems?                   | 0-50                                                                                                          |
+| How many HTTPS/443-based external system interfaces does the system use?                                                   | 0-50                                                                                                          |
+| How many non HTTPS/443-based external system interfaces does the system use (e.g., TCP, UDP, SMTP)?                        | 0-50                                                                                                          |
 | What is the primary database type for this system?                                                                         | Self-Managed (MySQL, Postgres, Oracle, etc)<br></br>CSP Managed (AWS RDS, Azure SQL, etc)<br></br>No Database |
 | How many primary databases are associated with this system?                                                                | 0-20                                                                                                          |
 | What primary database components are used for this system?                                                                 | DB Links<br></br>Stored Procs<br></br>Both<br></br>None                                                       |
@@ -100,28 +100,28 @@ The table below provides you with the survey questions and possible answers so y
 | What secondary database components are used for this system?                                                               | DB Links<br></br>Stored Procs<br></br>Both<br></br>None                                                       |
 | Does this system integrate with a CAC/PIV for user authentication?                                                         | Yes<br></br>No                                                                                                |
 | What Single Sign-On token does the system use?                                                                             | SAML<br></br>OIDC/JWT<br></br>Other                                                                           |
-| Does the system use Shared Filesystems or Shared Caching?                                                                  | Yes<br></br>No                                                                                                |
+| Does this system use shared filesystems/shared caching?                                                                    | Yes<br></br>No                                                                                                |
 | Does this system use messaging based products (e.g. MQSeries, RabbitMQ)?                                                   | Yes<br></br>No                                                                                                |
 | Does this system have a need for real-time data synchronization?                                                           | Yes<br></br>No                                                                                                |
 | Does this system use ERP that must be migrated to cloud with the system?                                                   | Yes<br></br>No                                                                                                |
 | Does this system use other 3rd party software that must be migrated to cloud with the system (COTS, open source software)? | Yes<br></br>No                                                                                                |
 | Who is your preferred CSP (e.g., AWS, Azure)?                                                                              | AWS<br></br>Azure<br></br>Other (e.g. Google)                                                                 |
-| What is a lower range value of Refactor Coverage? Please consult this question with migration team.                        | 0-100%                                                                                                        |
-| What is a upper range value of Refactor Coverage? Please consult this question with migration team.                        | 0-100%                                                                                                        |
+| What is a lower range value of Refactor Coverage? Please consult this question with migration team.                        | 1-100%                                                                                                        |
+| What is a upper range value of Refactor Coverage? Please consult this question with migration team.                        | 1-100%                                                                                                        |
 
 **Business Impact Questions**
 
-| Survey Question                                                                                   | Possible Answers                                                            |
-| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| The number of major releases delivered over the last 12 months                                    | Less than 4<br></br>4 to 6<br></br>7 to 12<br></br>More than 12             |
-| Is this application in line with the organization's future technology direction?                  | Yes<br></br>No                                                              |
-| The average number of people (FTE) that worked on the code over the last 12 months?               | 0-9999                                                                      |
-| Does the application serve internal or external users?                                            | External<br></br>Internal users or business processes<br></br>Both          |
-| What is the approximate number of end users?                                                      | Less than 100<br></br>100 to 500<br></br>501 to 2500<br></br>More than 2500 |
-| Could failure of this application lead to disruption?                                             | Low<br></br>Medium<br></br>High<br></br>Very High                           |
-| Could failure of this application lead to loss of revenue, business opportunity or mission goals? | Low<br></br>Medium<br></br>High<br></br>Very High                           |
-| Could failure of this application lead to harm of the organization's public image?                | Low<br></br>Medium<br></br>High<br></br>Very High                           |
-| Could failure of this application lead to loss of customer confidence?                            | Low<br></br>Medium<br></br>High<br></br>Very High                           |
+| Survey Question                                                                                    | Possible Answers                                                            |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| What is the number of major releases delivered over the last 12 months?                            | Less than 4<br></br>4 to 6<br></br>7 to 12<br></br>More than 12             |
+| Is this application in line with the organization's future technology direction?                   | Yes<br></br>No                                                              |
+| What is the average number of people (FTE) that worked on the code over the last 12 months?        | 0-9999                                                                      |
+| Does the application serve internal or external users?                                             | External<br></br>Internal users or business processes<br></br>Both          |
+| What is the approximate number of end users?                                                       | Less than 100<br></br>100 to 500<br></br>501 to 2500<br></br>More than 2500 |
+| Could failure of this application lead to disruption?                                              | Low<br></br>Medium<br></br>High<br></br>Very High                           |
+| Could failure of this application lead to loss of revenue, business opportunity, or mission goals? | Low<br></br>Medium<br></br>High<br></br>Very High                           |
+| Could failure of this application lead to harm of the organization's public image?                 | Low<br></br>Medium<br></br>High<br></br>Very High                           |
+| Could failure of this application lead to loss of customer confidence?                             | Low<br></br>Medium<br></br>High<br></br>Very High                           |
 
 #### Accessing and Completing the Survey
 
@@ -186,10 +186,11 @@ Once you have completed the setup of your application, you will want to perform 
 - Uploading your source code
 - Uploading any application artifacts
 - Completing or re-taking the survey
+- Viewing your four analysis reports
 - Running migration estimates
 - Editing your application information
 
-**From the CloudScend Foresight home screen, you will select App Analyzer or from the main menu bar you can go to Dashboards -> App Analyzer.**
+**From the CloudScend Foresight home screen, you will select App Analyzer or from the main menu bar you can select App Analyzer.**
 
 ![App Analyzer](/img/SageHomeAppAnalyzer.png)
 

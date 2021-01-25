@@ -13,7 +13,7 @@ module.exports = {
       title: " ",
       logo: {
         alt: "SAIC Logo",
-        src: "img/SAIC_RI_logo_R_RGB_sm.png",
+        src: "/img/CloudScendForesight.png",
       },
       items: [
         {
@@ -53,12 +53,18 @@ module.exports = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/saic-oss/sage-docs",
+              href: "https://github.com/saic-oss/cloudscend-foresight-docs",
             },
           ],
         },
       ],
-      copyright: "© 2021 SAIC",
+      logo: {
+        alt: "CloudScend Foresight is powered by SAIC",
+        src: "img/SAIC_logo_white_sm.png",
+        href: "https://saic.com",
+      },
+
+      copyright: "© 2021 SAIC - CloudScend Foresight is powered by SAIC",
     },
   },
   presets: [
@@ -67,8 +73,8 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          editUrl:
-            "https://github.com/saic-oss/sage-docs/edit/main/webapp/docs/",
+          // editUrl:
+          //   "https://github.com/saic-oss/cloudscend-foresight/edit/main/webapp/docs/",
         },
         blog: {
           showReadingTime: true,
