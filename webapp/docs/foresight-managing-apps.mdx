@@ -208,7 +208,7 @@ You can filter your search for a specific application by entering the applicatio
 
 ### Uploading Source Code
 
-Now that you have entered your information and taken the survey, it's time to upload your application source code. You will want to upload your source code to begin your migration estimate but you may upload your code at any other time as well. You will want to upload your source code throughout your refactoring process to keep track of your progress and keep on top of any new issues that have been created by your refactoring. While you can upload source code multiple times in a day, only the data from the last scan of the day will be used in any trend dashboards or continuous assessment views. To ensure you have data points for your trends, upload your source code at least 24 hours apart.
+Now that you have entered your information and taken the survey, it's time to upload your application source code. You will want to upload your source code to begin your migration estimate but you may upload your code at any other time as well. You will want to upload your source code throughout your refactoring process to keep track of your progress and keep on top of any new issues that have been created by your refactoring. While you can upload source code multiple times in a day, only the data from the last scan of the day will be used in any trend dashboards or continuous assessment views. To ensure you have data points for your trends, upload your source code on different calendar dates.
 For detailed information regarding packaging your source code for uploading, refer to the [CloudScend Foresight Operations Guide](foresight-ops-standard-guidelines.mdx#system-tuning).
 
 **1. Select the Upload Source Code icon.**
@@ -511,7 +511,7 @@ At the top of your screen, you will see:
 - Overall Cloud Readiness score
 - Overall Open Source Safety score
 - Number of applications
-- Number of FTE associated with those application
+- Number of Full-Time Equivalent (FTE) associated with those application
 - Total number of lines of code in your portfolio
 
 In the next section of the page, you will be provided with some Quick Portfolio Insights:
@@ -526,7 +526,7 @@ The next section of the page provides you with a list of the top 20 code insight
 And finally, at the bottom of the page, you will find a list of the most recently onboarded applications with the following pieces of data provided:
 
 - Application name
-- ROAR index
+- ROAR (Ranking of Application Risks) index
 - Software Resiliency index
 - Software Agility index
 - Software Elegance index
@@ -557,24 +557,45 @@ You can select any of the pieces of data on this page and bring up more details.
 
 Below is a list of of dashboards and general description of the type of data displayed.
 
-| Dashboard              | Data Displayed                                                                                                                                                              |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Health Factor Mapping  | Scatter graph of Short Term and Mid Term Software Health Data                                                                                                               |
-| Health Distribution    | List of all applications with SR, SA, or SE data                                                                                                                            |
-| Software Composition   | Scatter graph of Open Source Safety, bar charts of Components, lists of Vulnerabilities, pie and bar charts of Licenses                                                     |
-| Technical Debt         | Bar chart of Technical Debt Distribution information                                                                                                                        |
-| Trends                 | Health Factors, Code Size, Maintenance, CloudReady, Open Source across time. _Note, to see trends accurately, ensure source code uploads are done at least 24 hours apart._ |
-| Application Results    | List of all applications with all major index values                                                                                                                        |
-| Business Impact        | Scatter graph of Health Factors and Technical Debt values correlated with Business Impact ranking                                                                           |
-| CloudReady             | Scatter graph of Cloud Readiness correlated with Business Impact. Also contains lists of cloud blockers and insights                                                        |
-| Portfolio Demographics | Pie Charts of Software Health values correlated with Technologies and Business Impact                                                                                       |
-| Software Maintenance   | Bar graph of distribution of FTE across applications                                                                                                                        |
+| Dashboard              | Data Displayed                                                                                                                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Health Factor Mapping  | Scatter graph of Short Term and Mid Term Software Health Data                                                                                                                   |
+| Health Distribution    | List of all applications with SR, SA, or SE data                                                                                                                                |
+| Software Composition   | Scatter graph of Open Source Safety, bar charts of Components, lists of Vulnerabilities, pie and bar charts of Licenses                                                         |
+| Technical Debt         | Bar chart of Technical Debt Distribution information                                                                                                                            |
+| Trends                 | Health Factors, Code Size, Maintenance, CloudReady, Open Source across time. _Note, to see trends accurately, ensure source code uploads are done on different calendar dates._ |
+| Application Results    | List of all applications with all major index values                                                                                                                            |
+| Business Impact        | Scatter graph of Health Factors and Technical Debt values correlated with Business Impact ranking                                                                               |
+| CloudReady             | Scatter graph of Cloud Readiness correlated with Business Impact. Also contains lists of cloud blockers and insights                                                            |
+| Portfolio Demographics | Pie Charts of Software Health values correlated with Technologies and Business Impact                                                                                           |
+| Software Maintenance   | Bar graph of distribution of FTE across applications                                                                                                                            |
 
-**3. If you would like to filter your results on the home dashboard or any other dashboard, select the filter icon next to search field.**
+**3. If you would like to search for a specific application, you can use the search option at the top of the screen. Here you simply start entering the name that you entered during Onboarding and select it from the list.**
+
+![Portfolio Search](/img/AppPortfolioSearch.png)
+
+All of the information for the application you entered will now be shown to you in an overiew with eight tabs of detailed information.
+
+![Portfolio Search Results](/img/AppPortfolioSearchResults.png)
+
+Those eight tabs contain the information described in the table below.
+
+| Tab                  | Data Displayed                                                                    |
+| -------------------- | --------------------------------------------------------------------------------- |
+| Overview             | Overall scores for all major categories and key application metrics               |
+| Survey               | Business Impact survey answers submitted with the application                     |
+| Health Distribution  | Overall Software Resiliency, Agility, and Elegance scores broken down by language |
+| Code Insights        | Top code improvement issues and best candidates for code improvement              |
+| Trends               | Chart of Software Resiliency, Agility, and Elegance scores over time              |
+| CloudReady           | CloudReady score, number of Blockers and Roadblocks                               |
+| Benchmark            | Charts your application key metrics against others in your portfolio              |
+| Software Composition | Number of Vulnerabilities and License Compliance risks                            |
+
+**4. If you would like to filter your results on the home dashboard or any other dashboard, select the filter icon next to search field.**
 
 ![App Portfolio Filter Icon](/img/AppPortfolioFilterIcon.png)
 
-**4. The filter options will now be shown. Of primary interest here, you can filter on technologies to narrow down your results to specific languages. If you filter on one or more languages, you dashboards will only show data for application that use that technology.**
+**5. The filter options will now be shown. Of primary interest here, you can filter on technologies to narrow down your results to specific languages. If you filter on one or more languages, you dashboards will only show data for application that use that technology.**
 
 ![App Portfolio Filter](/img/AppPortfolioFilter.png)
 
@@ -584,7 +605,7 @@ If you need more assistance or information on the dashboard capabilities, click 
 
 ## Continuous Assessment
 
-Continuous assessment allow you the opportunity to monitor the health and technical debt of applications before and after migrations. You can watch for trends and keep track on your applications over the course of their lifetime by reviewing the metrics provided in our Continuous Assessment panel.
+Continuous assessment allows you the opportunity to monitor the health and technical debt of applications before and after migrations. You can watch for trends and keep track on your applications over the course of their lifetime by reviewing the metrics provided in our Continuous Assessment panel.
 
 ### Continuous Assessment Panel
 
@@ -601,22 +622,28 @@ This will bring up the Continuous Assessment page.
 From here, you will be able to view all the CAST Highlight metrics in the top dashboard and all the SonarQube metrics in the bottom dashboard.
 
 :::note
-In order to see trends you will need to have at least 24 hours between source code uploads. If multiple uploads are done in a day, the trends dashboard will use the data from the last scan of that day for its data point.
+In order to see trends you will need to have source code uploads performed on different calendar dates. If multiple uploads are done in a day, the trends dashboard will use the data from the last scan of that day for its data point.
 :::
 
 For information on viewing the CAST Highlight metrics, see the [App Portfolio documentation](#app-portfolio).
 
 SonarQube metrics are displayed based on an alpha and/or color scale - A (Dark Green), B (Light Green), C (Orange), D (Dark Orange), E (Red)
 
-**2. You can filter your SonarQube results using the filters to the left of the report. With these filters you can narrow down your report to only the applications that meet the criteria that most interests you.**
+**2. If you would like to search for a specific application, you can use the search option at the top of the SonarQube metrics. Here you simply start entering the name that you entered during Onboarding and select it from the list.**
+
+![Search](/img/ContinuousAssessmentSearch.png)
+
+This will bring back results for that application specifically.
+
+**3. If you don't want to search for a specific application, you can filter your SonarQube results using the filters to the left of the report. With these filters you can narrow down your report to only the applications that meet the criteria that most interests you.**
 
 ![Continuous Assessment Filter](/img/ContinuousAssessmentFilter.png)
 
-**3. You can click on an application name and it will take you to more detailed data screens.**
+**4. You can click on an application name and it will take you to more detailed data screens.**
 
 ![Continuous Assessment App](/img/ContinuousAssessmentApp.png)
 
-**4. If you would like to see more details about any field from this view, simply click on the data value. In the instance shown below, we have clicked the '2d' vaue for Debt.**
+**5. If you would like to see more details about any field from this view, simply click on the data value. In the instance shown below, we have clicked the '2d' value for Debt.**
 
 ![Continuous Assessment App Debt](/img/ContinuousAssessmentAppDebt.png)
 
@@ -624,15 +651,15 @@ In this case, we will be shown all the technical debt details for this applicati
 
 ![Continuous Assessment App Debt Details](/img/ContinuousAssessmentAppDebtDetails.png)
 
-**5. In order to see your trends over time, you will see there is a tab for New Code which will show you any newly added bugs, vulnerabilities, hotspots or debt that have been added with the most recent upload and scan of the code. This will allow you to see if newly changed code is causing your technical debt to rise.**
+**6. In order to view trends over time, there is a tab for New Code which will show any newly added bugs, vulnerabilities,hotspots or debt that have been added with the most recent upload and code scan. Thus, the effect of any newly changed code that is causing your technical debt to rise.**
 
 ![Continuous Assessment New Code](/img/ContinuousAssessmentNewCode.png)
 
-**6. You can see more detailed data for an individual application by using the menu bar options.**
+**7. You can see more detailed data for an individual application by using the menu bar options.**
 
 ![Continuous Assessment Menu Bar](/img/ContinuousAssessmentMenuBar.png)
 
-**7. By selecting any item in the detailed list or graph, you will be taken to the actual code in question.**
+**8. By selecting any item in the detailed list or graph, you will be taken to the actual code in question.**
 
 ![Continuous Assessment Details](/img/ContinuousAssessmentDetails.png)
 

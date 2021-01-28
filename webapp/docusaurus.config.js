@@ -19,7 +19,7 @@ module.exports = {
         {
           to: "docs/foresight-cloud-app-mod-overview",
           activeBasePath: "docs",
-          label: "Documentation 🚧",
+          label: "Documentation",
           position: "left",
         },
       ],

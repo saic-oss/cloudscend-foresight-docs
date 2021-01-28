@@ -25,21 +25,71 @@ When you receive an error or if a page doesn't render completely, you should fol
 
 ## Viewing Error Logs
 
-As an administrator there may be times when you need to examine the logs for possible assistance with an error. To view the logs, follow these steps:
+As an administrator there may be times when you need to examine the logs for possible assistance with an error. There are three types of log files at differing levels that you may need to view - application log files, Kubernetes log files and if installed Windows Report Service log files. You can follow the steps below to access any of those logs.
 
-To view application level logs:
+**To view application level logs we suggest you follow these steps:**
 
-_*Some instructions here from team on use of Lens to view application level logs.*_
+1. Download and install Lens: https://k8slens.dev/.
+2. Get AWS into your terminal PATH (you can use Brew to install it)
+   - Run brew install awscli to install awscli into your terminal path.
+   ```
+   brew install awscli
+   ```
+   - If you don't want to or cannot use brew, there are other options discussed here: https://stackoverflow.com/questions/26574232/aws-cli-path-settings.
+3. Contact your AWS admin to get an AWS account setup and loaded in
+   - You will need:
+     - An access Key on AWS - either create one or update the IAM user's key. This should be a CSV but preferably given to user secure channels.
+     - The admin needs to add you into the AWS cluster.
+4. Setup your account information into the aws cli
+
+   - Run aws configure in your terminal and it will prompt you for four items.
+
+   ```
+   $ aws configure
+   AWS Access Key ID [*******]
+   AWS Secret Key Access [*****]
+   Default Region Name [us-east-1]
+   Default Output format [json]
+   ```
+
+   - The AWS Access Key ID and Secret Key Access items can be found on the Access key document provided to you by the admin from step 3.
+   - Default Region Name: us-east-1
+   - Default output format: json
+
+5. Set up the cluster into Kubeconfig.
+   - Run aws eks update-kubeconfig --name appmod-commercial to automatically update your Kubeconfig.
+   ```
+   aws eks update-kubeconfig --name appmod-commercial
+   ```
+6. Start up Lens and then add the cluster using the "add cluster"/+ button (should have a notification on it).
+   - Make sure that the cluster you choose is the name of your CloudScend Foresight cluster.
+7. Once you have the cluster setup, it should look something like this:
+   ![Lens](/img/Lens.png)
+8. Click "Workloads" → "Pods"
+   - For Foresight-Dev specific pods, go to the sort bar for namespaces and enter "foresight-dev".
+     ![Lens Pod Namespace](/img/LensPodNamespace.png)
+   - Click on the pod name for which you would like to see logs. A sidebar menu should pop up similar to the one below.
+     ![Lens Side Bar](/img/LensSideBar.png)
+   - Select the log icon on the menu bar to the top right of the screen to open the log file.
+     ![Lens Menu Bar](/img/LensLogMenu.png)
+9. Review the log files for errors and information to determine the cause of the issue you are experiencing. If you are contacting the SAIC service desk, be sure to save off the logs and provide them to your support contact in order to facilitate a quicker resolution to your issue.
+
+:::note
+There are many pods installed with CloudScend Foresight. You may need to look for errors in multiple pods to find the errors you are experiencing. When working with a support technician, you may be directed to provide logs for multiple pods.
+:::
 
 To view Kubernetes level logs, you may need the assistance of your Kubernetes administrator in order to follow these steps:
 
 _*1. Some instructions here from team on how to view Kubernetes logs.*_
 
-To view Windows Report Service error logs:
+**To view Windows Report Service level logs, we suggest you follow the steps below.**
 
-_*Some instructions here from team on how to view Windows Report Service logs.*_
+1. Use a Remote Desktop Protocol (RDP) such as Windows Remote Desktop Connection to connect to your environment’s Reports Service for Windows server/EC2 instance.
+2. Assuming the Reports Service for Windows service was configured and the C:\AMaaS\start-report-service.bat file is running, view the results of the command in the command window.
 
 ## Error Messages
+
+### Additional Component Support
 
 Error messages received in logs may point to one of the components deployed with CloudScend Foresight. When this happens, you can refer to the error tracking information for each component.
 
@@ -50,10 +100,678 @@ Error messages received in logs may point to one of the components deployed with
 | [Postgres Error Codes](https://www.postgresql.org/docs/10/errcodes-appendix.html)     |
 | [Keycloak Server administration](https://www.keycloak.org/docs/8.0/server_admin/)     |
 
-## Detail Corrections for Possible Issues
+## Details for Possible Issues
 
 ### App Portfolio and Continuous Assessment not rendering
 
 If your App Portfolio or Continuous Assessment panels are not rendering, there is a link at the bottom of the page that you can use to try to access the dashboard differently. Selecting this link may allow you to access the panels without issues.
 
 ![Panel Not Working](/img/DashboardNotWorking.png)
+
+### Windows Report Service Log Examples and Troubleshooting
+
+Each of the examples below shows the logged information for the specific scenario. With the exception of the Successful Startup example, the output is triggered after uploading source code to a Foresight application in the App Analyzer page.
+
+#### Successful Startup
+
+The following log example illustrates a successful startup of the report service.
+
+```
+C:\AMaaS\start-report-service.bat:
+C:\AMaaS>set JAVA_HOME=C:\AMaaS\openjdk\openjdk-11.0.9.1_1
+
+C:\AMaaS>set JAVA_EXE=C:\AMaaS\openjdk\openjdk-11.0.9.1_1\bin\java.exe
+
+C:\AMaaS>C:\AMaaS\openjdk\openjdk-11.0.9.1_1\bin\java.exe    -Dserver.port=8080 -DGIT_SERVER_URL=https://gitlab.****.****.****  -DGIT_USER=****  -DGIT_PASSWORD=****  -DGIT_USER_EMAIL=***@****.****  -DGIT_LOCAL_DIR=C:\AMaaS\gitlab  -DSONAR_AUTHTYPE=TOKEN  -DSONAR_IPADDR=sonarqube.****.****.****  -DSONAR_URL=https://sonarqube. ****.****.****  -DSONAR_LOGIN=****  -DSONAR_PASSWORD=****  -DSONARQUBE_DIR=C:\AMaaS\sonar-scanner-msbuild-net46\sonar-scanner-4.4.0.2170\bin  -DSAGE_URL=https://NotUsedInWindowsReportServiceButMustBePresent  -DSAGE_PORT=443  -DWINDOWS_SONARSCANNER_MSBUILD_DIR=C:\AMaaS\sonar-scanner-msbuild-net46  -DWINDOWS_MSBUILD_DIR=C:\AMaaS\BuildTools\msbuild\current\bin  -DWINDOWS_NUGETEXE_DIR=C:\AMaaS  -jar  reportservice.jar
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.4.RELEASE)
+
+2021-01-26 15:25:18.630  INFO 4900 --- [           main] c.s.i.r.ReportserviceApplication         : Starting ReportserviceApplication on EC2AMAZ-**** with PID 4900 (C:\AMaaS\reportservice.jar started by Administrator in C:\AMaaS)
+2021-01-26 15:25:18.740 DEBUG 4900 --- [           main] c.s.i.r.ReportserviceApplication         : Running with Spring Boot v2.3.4.RELEASE, Spring v5.2.9.RELEASE
+2021-01-26 15:25:18.740  INFO 4900 --- [           main] c.s.i.r.ReportserviceApplication         : No active profile set, falling back to default profiles: default
+2021-01-26 15:25:25.786  INFO 4900 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2021-01-26 15:25:25.849  INFO 4900 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37ms. Found 0 JPA repository interfaces.
+2021-01-26 15:25:27.211  INFO 4900 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@1b11ef33' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-01-26 15:25:27.230  INFO 4900 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-01-26 15:25:29.403  INFO 4900 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-01-26 15:25:29.544  INFO 4900 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-01-26 15:25:29.544  INFO 4900 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.38]
+2021-01-26 15:25:29.669  INFO 4900 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-01-26 15:25:29.669  INFO 4900 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 10695 ms
+2021-01-26 15:25:30.653  WARN 4900 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-01-26 15:25:32.486  INFO 4900 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-01-26 15:25:32.642  INFO 4900 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-01-26 15:25:32.782  WARN 4900 --- [           main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=org.apache.derby.jdbc.EmbeddedDriver was not found, trying direct instantiation.
+2021-01-26 15:25:33.533  INFO 4900 --- [           main] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Driver does not support get/set network timeout for connections. (Feature not implemented: No details.)
+2021-01-26 15:25:33.533  INFO 4900 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-01-26 15:25:34.281  INFO 4900 --- [         task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-01-26 15:25:35.595  INFO 4900 --- [         task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.21.Final
+2021-01-26 15:25:36.720  INFO 4900 --- [         task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-01-26 15:25:37.675  INFO 4900 --- [         task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.DerbyTenSevenDialect
+2021-01-26 15:25:38.987  INFO 4900 --- [         task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-01-26 15:25:39.003  INFO 4900 --- [         task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-01-26 15:25:43.233  INFO 4900 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2091833, org.springframework.security.web.context.SecurityContextPersistenceFilter@1d98daa0, org.springframework.security.web.header.HeaderWriterFilter@d611f1c, org.springframework.web.filter.CorsFilter@7bc58891, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@e8e0dec, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@a18649a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@54336976, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3b2e5c0d, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@3ee69ad8, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@f679798, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6411504a, org.springframework.security.web.session.SessionManagementFilter@a7cf42f, org.springframework.security.web.access.ExceptionTranslationFilter@45b32dfe, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4215e133]
+2021-01-26 15:25:43.561  INFO 4900 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-01-26 15:25:43.701  INFO 4900 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-01-26 15:25:43.701  INFO 4900 --- [           main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositoriesà
+2021-01-26 15:25:43.701  INFO 4900 --- [           main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2021-01-26 15:25:43.733  INFO 4900 --- [           main] c.s.i.r.ReportserviceApplication         : Started ReportserviceApplication in 28.168 seconds (JVM running for 42.643)
+2021-01-26 15:27:28.818  INFO 4900 --- [io-8080-exec-10] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-26 15:27:28.818  INFO 4900 --- [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-01-26 15:27:28.834  INFO 4900 --- [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed initialization in 16 ms
+
+
+```
+
+#### Successful Build
+
+Below is an example of the output of a successful build and scan of an application's source code.
+
+```
+2021-01-27 00:01:36.558  INFO 2116 --- [io-8080-exec-10] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-27 00:01:36.558  INFO 2116 --- [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-01-27 00:01:36.573  INFO 2116 --- [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed initialization in 15 ms
+2021-01-27 00:01:36.886  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Deleting C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be and all subdirectories
+2021-01-27 00:01:36.886  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Deletion of C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be result=true
+2021-01-27 00:01:36.901  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Pulling into C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be
+2021-01-27 00:01:36.917  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.GitRepoManager        : Verifying local directory C:\AMaaS\gitlab
+2021-01-27 00:01:36.917  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.name oauth
+2021-01-27 00:01:36.995 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 00:01:37.011 ERROR 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-27 00:01:37.011  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.email ****@****.****
+2021-01-27 00:01:37.073 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 00:01:37.073 ERROR 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-27 00:01:37.073  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git ls-remote https://oauth:****@gitlab.****.****.****/advisor/400e544d-1642-40f6-8d8d-6cec0a3738be/TAG-21.01.27.000117.git
+2021-01-27 00:01:37.542 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 00:01:37.542  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : aeef7b1805d591052d147968c191393063ba9758    HEAD
+2021-01-27 00:01:37.542  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : aeef7b1805d591052d147968c191393063ba9758    refs/heads/master
+2021-01-27 00:01:37.558  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git clone https://oauth:****@gitlab.*****.****.com/advisor/400e544d-1642-40f6-8d8d-6cec0a3738be/TAG-21.01.27.000117.git 400e544d-1642-40f6-8d8d-6cec0a3738be
+2021-01-27 00:01:38.231 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 00:01:38.247 ERROR 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : Cloning into '400e544d-1642-40f6-8d8d-6cec0a3738be'...
+2021-01-27 00:01:38.247  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be]$ git status
+2021-01-27 00:01:38.325 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 00:01:38.325  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : On branch master
+2021-01-27 00:01:38.340  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : Your branch is up to date with 'origin/master'.
+2021-01-27 00:01:38.340  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      :
+2021-01-27 00:01:38.340  INFO 2116 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : nothing to commit, working tree clean
+2021-01-27 00:01:38.340  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      :  Completed download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository successfully to C:\AMaaS\gitlab
+2021-01-27 00:01:38.356  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqube.****.****.****, /d:sonar.login=****, /k:****, /n:russtest01]
+2021-01-27 00:01:38.372  INFO 2116 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be]# [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://****.****.****.***, /d:sonar.login=****, /k:****, /n:russtest01]
+2021-01-27 00:01:38.559  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : SonarScanner for MSBuild 5.0.4
+2021-01-27 00:01:38.606  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Using the .NET Framework version of the Scanner for MSBuild
+2021-01-27 00:01:38.950  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Pre-processing started.
+2021-01-27 00:01:39.012  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Preparing working directories...
+2021-01-27 00:01:39.075  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:01:39.075  Updating build integration targets...
+2021-01-27 00:01:39.951  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:01:39.951  Fetching analysis configuration settings...
+2021-01-27 00:01:40.483  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:01:40.483  Provisioning analyzer assemblies for cs...
+2021-01-27 00:01:40.498  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:01:40.483  Installing required Roslyn analyzers...
+2021-01-27 00:01:41.639  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:01:41.639  Provisioning analyzer assemblies for vbnet...
+2021-01-27 00:01:41.639  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:01:41.639  Installing required Roslyn analyzers...
+2021-01-27 00:01:41.686  INFO 2116 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:01:41.686  Pre-processing succeeded.
+2021-01-27 00:01:41.701  INFO 2116 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 0
+2021-01-27 00:01:41.701  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-begin exitValue=0
+2021-01-27 00:01:41.701  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\nuget.exe, restore, .]
+2021-01-27 00:01:41.701  INFO 2116 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be]# [C:\AMaaS\nuget.exe, restore, .]
+2021-01-27 00:01:43.945  INFO 2116 --- [      Thread-18] c.s.i.r.controller.StreamGobbler         : MSBuild auto-detection: using msbuild version '16.8.3.61104' from 'C:\AMaaS\BuildTools\MSBuild\Current\bin'.
+2021-01-27 00:01:49.058  INFO 2116 --- [      Thread-18] c.s.i.r.controller.StreamGobbler         : Nothing to do. None of the projects in this solution specify any packages for NuGet to restore.
+2021-01-27 00:01:49.074  INFO 2116 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 0
+2021-01-27 00:01:49.074  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Nuget.exe restore . exitValue=0
+2021-01-27 00:01:49.074  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\BuildTools\msbuild\current\bin\MSBuild.exe, /t:Rebuild, /tv:Current, /p:VisualStudioVersion=16.0]
+2021-01-27 00:01:49.074  INFO 2116 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be]# [C:\AMaaS\BuildTools\msbuild\current\bin\MSBuild.exe, /t:Rebuild, /tv:Current, /p:VisualStudioVersion=16.0]
+2021-01-27 00:01:49.183  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET Framework
+2021-01-27 00:01:49.183  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Copyright (C) Microsoft Corporation. All rights reserved.
+2021-01-27 00:01:49.183  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:01:49.199  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Building the projects in this solution one at a time. To enable parallel build, please add the "-m" switch.
+2021-01-27 00:01:49.262  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Build started 1/27/2021 12:01:49 AM.
+2021-01-27 00:01:49.574  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Project "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication.sln" on node 1 (Rebuild target(s)).
+2021-01-27 00:01:49.574  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : ValidateSolutionConfiguration:
+2021-01-27 00:01:49.574  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Building solution configuration "Debug|Any CPU".
+2021-01-27 00:01:49.715  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Project "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication.sln" (1) is building "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj" (2) on node 1 (Rebuild target(s)).
+2021-01-27 00:01:49.715  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CoreClean:
+2021-01-27 00:01:49.715  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "obj\Debug\".
+2021-01-27 00:01:49.730  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : PrepareForBuild:
+2021-01-27 00:01:49.746  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "bin\Debug\".
+2021-01-27 00:01:51.185  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : GenerateBindingRedirects:
+2021-01-27 00:01:51.185  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   No suggested binding redirects from ResolveAssemblyReferences.
+2021-01-27 00:01:51.201  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : SonarQubeCategoriseProject:
+2021-01-27 00:01:51.201  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplication.csproj) Categorizing project as test or product code...
+2021-01-27 00:01:51.420  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplication.csproj) Project categorized. SonarQubeTestProject=False
+2021-01-27 00:01:51.420  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CreateProjectSpecificDirs:
+2021-01-27 00:01:51.420  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\conf\0".
+2021-01-27 00:01:51.576  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : SonarQubeImportBeforeInfo:
+2021-01-27 00:01:51.576  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplication) SonarQube.Integration.ImportBefore.targets was loaded
+2021-01-27 00:01:51.670  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CoreCompile:
+2021-01-27 00:01:51.685  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\BuildTools\msbuild\current\bin\Roslyn\csc.exe /noconfig /nowarn:1701,1702 /fullpaths /nostdlib+ /platform:anycpu32bitpreferred /errorreport:prompt /warn:4 /define:DEBUG;TRACE /highentropyva+ /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Net.Http.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\SomeConsoleApplication.exe /ruleset:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\conf\SonarQubeRoslyn-cs.ruleset /errorlog:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\bin\Debug\SomeConsoleApplication.exe.RoslynCA.json /subsystemversion:6.00 /target:exe /warnaserror- /utf8output /langversion:7.3 /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\0\Google.Protobuf.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\0\SonarAnalyzer.CFG.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\0\SonarAnalyzer.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\1\Google.Protobuf.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\1\SonarAnalyzer.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.dll /additionalfile:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\conf\cs\SonarLint.xml /additionalfile:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\conf\0\ProjectOutFolderPath.txt Program.cs Properties\AssemblyInfo.cs "obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs"
+2021-01-27 00:01:51.685  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Using shared compilation with compiler from directory: C:\AMaaS\BuildTools\msbuild\current\bin\Roslyn
+2021-01-27 00:02:00.416  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\Properties\AssemblyInfo.cs(2,1): warning S1128: Remove this unnecessary 'using'. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 00:02:00.416  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\Program.cs(4,18): warning S1118: Add a 'protected' constructor or the 'static' keyword to the class declaration. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 00:02:00.432  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\Program.cs(21,28): warning S3400: Remove this method and declare a constant for this value. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 00:02:00.432  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\Program.cs(9,17): warning S2583: Change this condition so that it does not always evaluate to 'true'; some subsequent code is never executed. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 00:02:00.448  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : _CopyAppConfigFile:
+2021-01-27 00:02:00.448  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Copying file from "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\App.config" to "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\bin\Debug\SomeConsoleApplication.exe.config".
+2021-01-27 00:02:00.448  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CopyFilesToOutputDirectory:
+2021-01-27 00:02:00.448  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Copying file from "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\obj\Debug\SomeConsoleApplication.exe" to "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\bin\Debug\SomeConsoleApplication.exe".
+2021-01-27 00:02:00.448  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   SomeConsoleApplication -> C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\bin\Debug\SomeConsoleApplication.exe
+2021-01-27 00:02:00.448  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Copying file from "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\obj\Debug\SomeConsoleApplication.pdb" to "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\bin\Debug\SomeConsoleApplication.pdb".
+2021-01-27 00:02:00.479  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : WriteSonarQubeProjectData:
+2021-01-27 00:02:00.479  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplication.csproj) Number of files to analyse: 3. The list of files to be analyzed is in C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\out\0\FilesToAnalyze.txt.
+2021-01-27 00:02:00.510  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplication.csproj) Project processed successfully
+2021-01-27 00:02:00.510  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Done Building Project "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj" (Rebuild target(s)).
+2021-01-27 00:02:00.526  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Project "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication.sln" (1) is building "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj" (3) on node 1 (Rebuild target(s)).
+2021-01-27 00:02:00.526  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CoreClean:
+2021-01-27 00:02:00.526  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "obj\Debug\".
+2021-01-27 00:02:01.229  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : PrepareForBuild:
+2021-01-27 00:02:01.229  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "bin\Debug\".
+2021-01-27 00:02:01.651  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : ResolveAssemblyReferences:
+2021-01-27 00:02:01.651  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Primary reference "Microsoft.VisualStudio.QualityTools.UnitTestFramework".
+2021-01-27 00:02:01.651  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\BuildTools\msbuild\current\bin\Microsoft.Common.CurrentVersion.targets(2123,5): warning MSB3245: Could not resolve this reference. Could not locate the assembly "Microsoft.VisualStudio.QualityTools.UnitTestFramework". Check to make sure the assembly exists on disk. If this reference is required by your code, you may get compilation errors. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.651  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           For SearchPath "C:\Program Files (x86)\Common Files\microsoft shared\VSTT\16.0\UITestExtensionPackages".
+2021-01-27 00:02:01.651  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Common Files\microsoft shared\VSTT\16.0\UITestExtensionPackages\Microsoft.VisualStudio.QualityTools.UnitTestFramework.winmd", but it didn't exist.
+2021-01-27 00:02:01.651  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Common Files\microsoft shared\VSTT\16.0\UITestExtensionPackages\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll", but it didn't exist.
+2021-01-27 00:02:01.651  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Common Files\microsoft shared\VSTT\16.0\UITestExtensionPackages\Microsoft.VisualStudio.QualityTools.UnitTestFramework.exe", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           For SearchPath "{TargetFrameworkDirectory}".
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.VisualStudio.QualityTools.UnitTestFramework.winmd", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.VisualStudio.QualityTools.UnitTestFramework.exe", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Facades\Microsoft.VisualStudio.QualityTools.UnitTestFramework.winmd", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Facades\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Facades\Microsoft.VisualStudio.QualityTools.UnitTestFramework.exe", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           For SearchPath "{Registry:Software\Microsoft\.NETFramework,v4.8,AssemblyFoldersEx}".
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered AssemblyFoldersEx locations.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           For SearchPath "{GAC}".
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "Microsoft.VisualStudio.QualityTools.UnitTestFramework", which was not found in the GAC.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           For SearchPath "{RawFileName}".
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered treating "Microsoft.VisualStudio.QualityTools.UnitTestFramework" as a file name, but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           For SearchPath "bin\Debug\".
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.winmd", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll", but it didn't exist.
+2021-01-27 00:02:01.666  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           Considered "bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.exe", but it didn't exist.
+2021-01-27 00:02:01.682  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   AssemblyFoldersEx location: "{Registry:Software\Microsoft\.NETFramework,v4.8,AssemblyFoldersEx}"
+2021-01-27 00:02:01.682  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:01.682  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           C:\Program Files\Microsoft SDKs\Azure\.NET SDK\v2.9\bin\plugins\Diagnostics\
+2021-01-27 00:02:01.682  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           C:\Program Files\Microsoft SDKs\Azure\.NET SDK\v2.9\ref\Caching\
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           C:\Program Files\Microsoft SDKs\Azure\.NET SDK\v2.9\ref
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :           C:\Program Files (x86)\Microsoft Chart Controls\Assemblies
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : SonarQubeCategoriseProject:
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplicationTest.csproj) Categorizing project as test or product code...
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplicationTest.csproj) project has the MSTest project type guid -> test project
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplicationTest.csproj) Project categorized. SonarQubeTestProject=true
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CreateProjectSpecificDirs:
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\conf\1".
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : SonarQubeImportBeforeInfo:
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Sonar: (SomeConsoleApplicationTest) SonarQube.Integration.ImportBefore.targets was loaded
+2021-01-27 00:02:01.698  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CoreCompile:
+2021-01-27 00:02:01.760  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\BuildTools\msbuild\current\bin\Roslyn\csc.exe /noconfig /nowarn:1701,1702 /fullpaths /nostdlib+ /errorreport:prompt /warn:4 /define:DEBUG;TRACE /highentropyva+ /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll" /reference:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\bin\Debug\SomeConsoleApplication.exe /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\SomeConsoleApplicationTest.dll /ruleset:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\conf\SonarQubeRoslyn-cs-test.ruleset /errorlog:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\bin\Debug\SomeConsoleApplicationTest.dll.RoslynCA.json /subsystemversion:6.00 /target:library /warnaserror- /utf8output /langversion:7.3 /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\0\Google.Protobuf.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\0\SonarAnalyzer.CFG.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\0\SonarAnalyzer.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\1\Google.Protobuf.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\1\SonarAnalyzer.dll /analyzer:C:\Users\Administrator\AppData\Local\Temp\2\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.dll /additionalfile:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\conf\cs\SonarLint.xml /additionalfile:C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\conf\1\ProjectOutFolderPath.txt ProgramTests.cs Properties\AssemblyInfo.cs "obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs"
+2021-01-27 00:02:01.760  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Using shared compilation with compiler from directory: C:\AMaaS\BuildTools\msbuild\current\bin\Roslyn
+2021-01-27 00:02:01.852  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(2,17): error CS0234: The type or namespace name 'VisualStudio' does not exist in the namespace 'Microsoft' (are you missing an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.852  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(7,6): error CS0246: The type or namespace name 'TestClassAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(7,6): error CS0246: The type or namespace name 'TestClass' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(10,10): error CS0246: The type or namespace name 'TestMethodAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(10,10): error CS0246: The type or namespace name 'TestMethod' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(20,10): error CS0246: The type or namespace name 'TestMethodAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(20,10): error CS0246: The type or namespace name 'TestMethod' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Done Building Project "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj" (Rebuild target(s)) -- FAILED.
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Done Building Project "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication.sln" (Rebuild target(s)) -- FAILED.
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Build FAILED.
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication.sln" (Rebuild target) (1) ->
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj" (Rebuild target) (2) ->
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : (CoreCompile target) ->
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\Properties\AssemblyInfo.cs(2,1): warning S1128: Remove this unnecessary 'using'. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 00:02:01.868  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\Program.cs(4,18): warning S1118: Add a 'protected' constructor or the 'static' keyword to the class declaration. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 00:02:01.884  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\Program.cs(21,28): warning S3400: Remove this method and declare a constant for this value. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\Program.cs(9,17): warning S2583: Change this condition so that it does not always evaluate to 'true'; some subsequent code is never executed. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 00:02:01.899  INFO 2116 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 1
+2021-01-27 00:02:01.899  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : MSBuild.exe-rebuild exitValue=1
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication.sln" (Rebuild target) (1) ->
+2021-01-27 00:02:01.899  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, end, /d:sonar.login=****]
+2021-01-27 00:02:01.899  INFO 2116 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be]# [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, end, /d:sonar.login=****]
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj" (Rebuild target) (3) ->
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : (ResolveAssemblyReferences target) ->
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\BuildTools\msbuild\current\bin\Microsoft.Common.CurrentVersion.targets(2123,5): warning MSB3245: Could not resolve this reference. Could not locate the assembly "Microsoft.VisualStudio.QualityTools.UnitTestFramework". Check to make sure the assembly exists on disk. If this reference is required by your code, you may get compilation errors. [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication.sln" (Rebuild target) (1) ->
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : "C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj" (Rebuild target) (3) ->
+2021-01-27 00:02:01.899  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : (CoreCompile target) ->
+2021-01-27 00:02:01.915  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(2,17): error CS0234: The type or namespace name 'VisualStudio' does not exist in the namespace 'Microsoft' (are you missing an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.930  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(7,6): error CS0246: The type or namespace name 'TestClassAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.930  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(7,6): error CS0246: The type or namespace name 'TestClass' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.946  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(10,10): error CS0246: The type or namespace name 'TestMethodAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.946  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(10,10): error CS0246: The type or namespace name 'TestMethod' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.962  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(20,10): error CS0246: The type or namespace name 'TestMethodAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.993  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\ProgramTests.cs(20,10): error CS0246: The type or namespace name 'TestMethod' could not be found (are you missing a using directive or an assembly reference?) [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj]
+2021-01-27 00:02:01.993  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:01.993  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :     5 Warning(s)
+2021-01-27 00:02:01.993  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :     7 Error(s)
+2021-01-27 00:02:01.993  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : SonarScanner for MSBuild 5.0.4
+2021-01-27 00:02:02.009  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : Using the .NET Framework version of the Scanner for MSBuild
+2021-01-27 00:02:02.009  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 00:02:02.009  INFO 2116 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Time Elapsed 00:00:12.60
+2021-01-27 00:02:02.055  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : Post-processing started.
+2021-01-27 00:02:02.477  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : Calling the TFS Processor executable...
+2021-01-27 00:02:02.790  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : The TFS Processor has finished
+2021-01-27 00:02:02.790  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : Calling the SonarScanner CLI...
+2021-01-27 00:02:03.126  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Scanner configuration file: C:\AMaaS\sonar-scanner-msbuild-net46\sonar-scanner-4.4.0.2170\bin\..\conf\sonar-scanner.properties
+2021-01-27 00:02:03.126  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Project root configuration file: C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\out\sonar-project.properties
+2021-01-27 00:02:03.189  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: SonarScanner 4.4.0.2170
+2021-01-27 00:02:03.189  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Java 11.0.9.1 Oracle Corporation (64-bit)
+2021-01-27 00:02:03.189  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Windows Server 2019 10.0 amd64
+2021-01-27 00:02:03.658  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: User cache: C:\Users\Administrator\.sonar\cache
+2021-01-27 00:02:04.210  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Scanner configuration file: C:\AMaaS\sonar-scanner-msbuild-net46\sonar-scanner-4.4.0.2170\bin\..\conf\sonar-scanner.properties
+2021-01-27 00:02:04.226  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Project root configuration file: C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\out\sonar-project.properties
+2021-01-27 00:02:04.257  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Analyzing on SonarQube server 8.5.1
+2021-01-27 00:02:04.273  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Default locale: "en_US", source code encoding: "windows-1252" (analysis is platform dependent)
+2021-01-27 00:02:05.352  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load global settings
+2021-01-27 00:02:05.540  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load global settings (done) | time=203ms
+2021-01-27 00:02:05.556  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Server id: 0407B84C-AXc4HoHBjJYnyo7nPCyz
+2021-01-27 00:02:05.556  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: User cache: C:\Users\Administrator\.sonar\cache
+2021-01-27 00:02:05.556  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load/download plugins
+2021-01-27 00:02:05.556  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load plugins index
+2021-01-27 00:02:05.634  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load plugins index (done) | time=78ms
+2021-01-27 00:02:05.922  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load/download plugins (done) | time=366ms
+2021-01-27 00:02:06.578  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Process project properties
+2021-01-27 00:02:06.594  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Process project properties (done) | time=16ms
+2021-01-27 00:02:06.610  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Execute project builders
+2021-01-27 00:02:06.688  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Execute project builders (done) | time=94ms
+2021-01-27 00:02:06.703  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Project key: 400e544d-1642-40f6-8d8d-6cec0a3738be
+2021-01-27 00:02:06.703  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Base dir: C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication
+2021-01-27 00:02:06.703  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Working dir: C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\out\.sonar
+2021-01-27 00:02:06.875  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load project settings for component key: '400e544d-1642-40f6-8d8d-6cec0a3738be'
+2021-01-27 00:02:06.922  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load project settings for component key: '400e544d-1642-40f6-8d8d-6cec0a3738be' (done) | time=47ms
+2021-01-27 00:02:07.016  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load quality profiles
+2021-01-27 00:02:07.094  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load quality profiles (done) | time=94ms
+2021-01-27 00:02:07.110  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load active rules
+2021-01-27 00:02:08.095  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load active rules (done) | time=985ms
+2021-01-27 00:02:08.174  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Indexing files...
+2021-01-27 00:02:08.174  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Project configuration:
+2021-01-27 00:02:09.470  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Indexing files of module 'SomeConsoleApplication'
+2021-01-27 00:02:09.470  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO:   Base dir: C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication
+2021-01-27 00:02:09.470  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO:   Source paths: Program.cs, Properties/AssemblyInfo.cs, App.config
+2021-01-27 00:02:09.486  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load project repositories
+2021-01-27 00:02:09.517  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load project repositories (done) | time=31ms
+2021-01-27 00:02:09.549  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Indexing files of module 'russtest01'
+2021-01-27 00:02:09.549  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO:   Base dir: C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\SomeConsoleApplication
+2021-01-27 00:02:09.549  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: 3 files indexed
+2021-01-27 00:02:09.549  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: 0 files ignored because of scm ignore settings
+2021-01-27 00:02:09.549  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Quality profile for cs: Sonar way
+2021-01-27 00:02:09.549  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: ------------- Run sensors on module SomeConsoleApplication
+2021-01-27 00:02:09.658  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load metrics repository
+2021-01-27 00:02:09.705  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Load metrics repository (done) | time=47ms
+2021-01-27 00:02:10.974  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor CSS Rules [cssfamily]
+2021-01-27 00:02:10.974  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+2021-01-27 00:02:10.974  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor CSS Rules [cssfamily] (done) | time=0ms
+2021-01-27 00:02:10.974  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2021-01-27 00:02:10.989  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2021-01-27 00:02:11.005  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2021-01-27 00:02:11.224  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=15ms
+2021-01-27 00:02:11.255  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor C# Properties [csharp]
+2021-01-27 00:02:11.271  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2021-01-27 00:02:11.286  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor JavaXmlSensor [java]
+2021-01-27 00:02:11.364  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor JavaXmlSensor [java] (done) | time=0ms
+2021-01-27 00:02:11.364  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor HTML [web]
+2021-01-27 00:02:11.364  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor HTML [web] (done) | time=32ms
+2021-01-27 00:02:11.380  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor VB.NET Properties [vbnet]
+2021-01-27 00:02:11.411  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor VB.NET Properties [vbnet] (done) | time=0ms
+2021-01-27 00:02:11.411  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: ------------- Run sensors on module russtest01
+2021-01-27 00:02:11.411  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor CSS Rules [cssfamily]
+2021-01-27 00:02:11.411  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+2021-01-27 00:02:11.442  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor CSS Rules [cssfamily] (done) | time=0ms
+2021-01-27 00:02:11.442  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor JaCoCo XML Report Importer [jacoco]
+2021-01-27 00:02:11.442  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+2021-01-27 00:02:11.552  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+2021-01-27 00:02:11.614  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+2021-01-27 00:02:11.677  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor C# Properties [csharp]
+2021-01-27 00:02:11.677  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor C# Properties [csharp] (done) | time=0ms
+2021-01-27 00:02:11.677  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor JavaXmlSensor [java]
+2021-01-27 00:02:11.677  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor JavaXmlSensor [java] (done) | time=0ms
+2021-01-27 00:02:11.677  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor VB.NET Properties [vbnet]
+2021-01-27 00:02:11.677  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor VB.NET Properties [vbnet] (done) | time=0ms
+2021-01-27 00:02:11.692  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: ------------- Run sensors on project
+2021-01-27 00:02:11.755  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor C# [csharp]
+2021-01-27 00:02:11.755  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Importing results from 5 proto files in 'C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be\.sonarqube\out\0\output-cs'
+2021-01-27 00:02:11.771  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Importing 1 Roslyn report
+2021-01-27 00:02:11.786  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor C# [csharp] (done) | time=250ms
+2021-01-27 00:02:11.786  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor Zero Coverage Sensor
+2021-01-27 00:02:11.817  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Sensor Zero Coverage Sensor (done) | time=16ms
+2021-01-27 00:02:11.833  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: SCM Publisher SCM provider for this project is: git
+2021-01-27 00:02:11.833  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: SCM Publisher 2 source files to be analyzed
+2021-01-27 00:02:11.849  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: SCM Publisher 2/2 source files have been analyzed (done) | time=265ms
+2021-01-27 00:02:11.854  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: CPD Executor Calculating CPD for 2 files
+2021-01-27 00:02:11.855  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: CPD Executor CPD calculation finished (done) | time=15ms
+2021-01-27 00:02:11.856  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Analysis report generated in 157ms, dir size=94 KB
+2021-01-27 00:02:11.981  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Analysis report compressed in 132ms, zip size=16 KB
+2021-01-27 00:02:12.106  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Analysis report uploaded in 109ms
+2021-01-27 00:02:12.106  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: ANALYSIS SUCCESSFUL, you can browse https://sonarqube. ****.****.****/dashboard?id=400e544d-1642-40f6-8d8d-6cec0a3738be
+2021-01-27 00:02:12.106  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+2021-01-27 00:02:12.106  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: More about the report processing at https://sonarqube. ****.****.****/api/ce/task?id=AXdBJcv_cBT6LDqKbyrE
+2021-01-27 00:02:12.106  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Analysis total time: 6.059 s
+2021-01-27 00:02:12.121  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: ------------------------------------------------------------------------
+2021-01-27 00:02:12.121  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: EXECUTION SUCCESS
+2021-01-27 00:02:12.121  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: ------------------------------------------------------------------------
+2021-01-27 00:02:12.121  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Total time: 8.995s
+2021-01-27 00:02:12.168  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: Final Memory: 8M/30M
+2021-01-27 00:02:12.168  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : INFO: ------------------------------------------------------------------------
+2021-01-27 00:02:12.715  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : The SonarScanner CLI has finished
+2021-01-27 00:02:12.715  INFO 2116 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : 00:02:12.715  Post-processing succeeded.
+2021-01-27 00:02:12.731  INFO 2116 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 0
+2021-01-27 00:02:12.731  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-end exitValue=0
+2021-01-27 00:02:12.731  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-end exitValue=0
+2021-01-27 00:02:12.731  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Deleting C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be and all subdirectories
+2021-01-27 00:02:12.778  INFO 2116 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Deletion of C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be result=true
+2021-01-27 00:02:12.778 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.service.SonarQubeAPIService      : GET URL: https://sonarqube. ****.****.****/api/ce/component?component=400e544d-1642-40f6-8d8d-6cec0a3738be
+2021-01-27 00:02:13.231 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.service.SonarQubeAPIService      : Response: {"queue":[{"organization":"default-organization","id":"AXdBJcv_cBT6LDqKbyrE","type":"REPORT","componentId":"AXdBBkKBcBT6LDqKbyqo","componentKey":"400e544d-1642-40f6-8d8d-6cec0a3738be","componentName":"russtest01","componentQualifier":"TRK","status":"IN_PROGRESS","submittedAt":"Wed Jan 27 00:02:12 UTC 2021","logs":false}],"current":{"organization":"default-organization","id":"AXdBBkOkcBT6LDqKbyqz","type":"REPORT","componentId":"AXdBBkKBcBT6LDqKbyqo","componentKey":"400e544d-1642-40f6-8d8d-6cec0a3738be","componentName":"russtest01","componentQualifier":"TRK","analysisId":"AXdBBkizforo0_06s98p","status":"SUCCESS","submittedAt":"2021-01-26T23:27:45+0000","startedAt":"2021-01-26T23:27:46+0000","finishedAt":null,"executionTimeMs":2526,"logs":false,"errorMessage":null,"errorType":null,"hasErrorStacktrace":false,"hasScannerContext":true}}
+2021-01-27 00:02:13.247  INFO 2116 --- [io-8080-exec-10] c.s.i.r.service.SonarQubeAPIService      : IN_PROGRESS
+2021-01-27 00:02:15.249 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.service.SonarQubeAPIService      : GET URL: https://sonarqube. ****.****.****/api/ce/component?component=400e544d-1642-40f6-8d8d-6cec0a3738be
+2021-01-27 00:02:15.343 DEBUG 2116 --- [io-8080-exec-10] c.s.i.r.service.SonarQubeAPIService      : Response: {"queue":[],"current":{"organization":"default-organization","id":"AXdBJcv_cBT6LDqKbyrE","type":"REPORT","componentId":"AXdBBkKBcBT6LDqKbyqo","componentKey":"400e544d-1642-40f6-8d8d-6cec0a3738be","componentName":"russtest01","componentQualifier":"TRK","analysisId":"AXdBJc_Nforo0_06tBmY","status":"SUCCESS","submittedAt":"2021-01-27T00:02:12+0000","startedAt":"2021-01-27T00:02:12+0000","finishedAt":null,"executionTimeMs":1753,"logs":false,"errorMessage":null,"errorType":null,"hasErrorStacktrace":false,"hasScannerContext":true}}
+2021-01-27 00:02:15.343  INFO 2116 --- [io-8080-exec-10] c.s.i.r.service.SonarQubeAPIService      : SUCCESS 
+
+```
+
+#### GitLab Integration Issues
+
+The following examples display typical issues when connecting to the GitLab server if the GitLab server does not have a valid certificate, if the URL is incorrect, or if the credentials for reading from Gitlab are incorrect.
+
+##### Certificate Issues
+
+The solution to fixing the problem shown in this log is to make sure a valid certificate is installed on the GitLab server or importing appropriate root CA and intermediate certificates for the GitLab server certificate into the Windows server. Refer to https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/working-with-certificates for more information.
+
+```
+2021-01-27 00:22:31.633  INFO 1160 --- [nio-8080-exec-9] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-27 00:22:31.633  INFO 1160 --- [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-01-27 00:22:31.664  INFO 1160 --- [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed initialization in 31 ms
+2021-01-27 00:22:31.992  INFO 1160 --- [nio-8080-exec-9] c.s.i.r.w.s.WindowsSonarQubeService      : Pulling into C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be
+2021-01-27 00:22:32.018  INFO 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.GitRepoManager        : Verifying local directory C:\AMaaS\gitlab
+2021-01-27 00:22:32.043  INFO 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.name oauth
+2021-01-27 00:22:32.124 DEBUG 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 00:22:32.124 ERROR 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-27 00:22:32.124  INFO 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.email ****@****.****
+2021-01-27 00:22:32.186 DEBUG 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 00:22:32.202 ERROR 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-27 00:22:32.202  INFO 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git ls-remote https://oauth:****@gitlab.****.****.com/advisor/400e544d-1642-40f6-8d8d-6cec0a3738be/TAG-21.01.27.002213.git
+2021-01-27 00:22:32.374 DEBUG 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 00:22:32.374 ERROR 1160 --- [nio-8080-exec-9] c.s.i.r.gitmanager.ExecShellCommand      : fatal: unable to access 'https://gitlab2.***.****.***/advisor/400e544d-1642-40f6-8d8d-6cec0a3738be/TAG-21.01.27.002213.git/': schannel: SEC_E_UNTRUSTED_ROOT (0x80090325) - The certificate chain was issued by an authority that is not trusted.
+2021-01-27 00:22:32.374  INFO 1160 --- [nio-8080-exec-9] c.s.i.r.w.s.WindowsSonarQubeService      :  Download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository unsuccessful. See log for more details.
+2021-01-27 00:22:32.389 ERROR 1160 --- [nio-8080-exec-9] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.Exception:  Download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository unsuccessful. See log for more details.] with root cause
+
+java.lang.Exception:  Download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository unsuccessful. See log for more details.
+
+```
+
+##### Incorrect DNS name, username, or password
+
+The solution to fixing the problem shown in this log is to edit the start-report-service.bat file and use correct values. Also verify network traffic is open between the Windows server and the GitLab server.
+
+```
+2021-01-26 23:28:20.655  INFO 5500 --- [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-01-26 23:28:20.702  INFO 5500 --- [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed initialization in 31 ms
+2021-01-26 23:31:08.979  INFO 5500 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Pulling into C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be
+2021-01-26 23:31:09.011  INFO 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.GitRepoManager        : Verifying local directory C:\AMaaS\gitlab
+2021-01-26 23:31:09.042  INFO 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.name <username>
+2021-01-26 23:31:10.043 DEBUG 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-26 23:31:10.043 ERROR 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-26 23:31:10.043  INFO 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.email ****@****.****
+2021-01-26 23:31:10.106 DEBUG 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-26 23:31:10.106 ERROR 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-26 23:31:10.106  INFO 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git ls-remote https://<username>:<password>@gitlab.****.****.****/advisor/400e544d-1642-40f6-8d8d-6cec0a3738be/TAG-21.01.26.233050.git
+2021-01-26 23:31:12.704 DEBUG 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-26 23:31:12.704 ERROR 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : remote: HTTP Basic: Access denied
+2021-01-26 23:31:12.704 ERROR 5500 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : fatal: Authentication failed for 'https://****.****.****.****/advisor/400e544d-1642-40f6-8d8d-6cec0a3738be/TAG-21.01.26.233050.git/'
+2021-01-26 23:31:12.704  INFO 5500 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      :  Download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository unsuccessful. See log for more details.
+2021-01-26 23:31:12.719 ERROR 5500 --- [io-8080-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.Exception:  Download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository unsuccessful. See log for more details.] with root cause
+
+java.lang.Exception:  Download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository unsuccessful. See log for more details.
+        at com.saic.irad.reportservice.windows.service.WindowsSonarQubeService.getSonarQubeScan(WindowsSonarQubeService.java:85) ~[classes!/:na]
+        at com.saic.irad.reportservice.windows.controller.WindowsController.getSonarQubeScan(WindowsController.java:27) ~[classes!/:na]
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+        at …
+
+```
+
+#### Unable to connect to SonarQube server
+
+The solution to fixing the problem shown in this log is to edit the start-report-service.bat file and use correct values. Also verify network traffic is open between the Windows server and the SonarQube server.
+
+```
+2021-01-27 00:49:47.122  INFO 2408 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      :  Completed download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository successfully to C:\AMaaS\gitlab
+2021-01-27 00:49:47.153  INFO 2408 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqubeadsf.com, /d:sonar.login=aasdfasdf, /k:asdfasdfasdf, /n:russtest01]
+2021-01-27 00:49:47.153  INFO 2408 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be]# [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqubeadsf.com, /d:sonar.login=aasdfasdf, /k:asdfasdfasdf, /n:russtest01]
+2021-01-27 00:49:47.263  INFO 2408 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : SonarScanner for MSBuild 5.0.4
+2021-01-27 00:49:47.278  INFO 2408 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Using the .NET Framework version of the Scanner for MSBuild
+2021-01-27 00:49:47.341  INFO 2408 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Pre-processing started.
+2021-01-27 00:49:47.341  INFO 2408 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Preparing working directories...
+2021-01-27 00:49:47.372  INFO 2408 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:49:47.372  Updating build integration targets...
+2021-01-27 00:49:47.513 ERROR 2408 --- [      Thread-14] c.s.i.r.controller.StreamGobbler         : 00:49:47.513  Failed to request and parse 'https://sonarqubeadsf.com/api/server/version': An error occurred while sending the request.
+2021-01-27 00:49:47.513 ERROR 2408 --- [      Thread-14] c.s.i.r.controller.StreamGobbler         : 00:49:47.513  An error occurred while sending the request.
+2021-01-27 00:49:47.513 ERROR 2408 --- [      Thread-14] c.s.i.r.controller.StreamGobbler         : 00:49:47.513  Pre-processing failed. Exit code: 1
+2021-01-27 00:49:47.528  INFO 2408 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 1
+2021-01-27 00:49:47.528  INFO 2408 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-begin exitValue=1
+2021-01-27 00:49:47.560 ERROR 2408 --- [io-8080-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.Exception: SonarScanner.MSBuild.exe-begin failed.] with root cause
+
+java.lang.Exception: SonarScanner.MSBuild.exe-begin failed.
+        at com.saic.irad.reportservice.windows.service.WindowsSonarQubeService.scanProjectSource(WindowsSonarQubeService.java:127) ~[classes!/:na]
+
+```
+
+#### Unable to authenticate to SonarQubeserver
+
+The solution to fixing the problem shown in this log is to edit the start-report-service.bat file and use correct values.
+
+```
+2021-01-27 00:53:27.649  INFO 2140 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      :  Completed download of project 400e544d-1642-40f6-8d8d-6cec0a3738be from git repository successfully to C:\AMaaS\gitlab
+2021-01-27 00:53:27.711  INFO 2140 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqube. ****.****.****, /d:sonar.login=****, /k: ****, /n:russtest01]
+2021-01-27 00:53:27.711  INFO 2140 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\400e544d-1642-40f6-8d8d-6cec0a3738be]# [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqube.****.****.****, /d:sonar.login=bad, /k:worse, /n:russtest01]
+2021-01-27 00:53:27.774  INFO 2140 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : SonarScanner for MSBuild 5.0.4
+2021-01-27 00:53:27.774  INFO 2140 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Using the .NET Framework version of the Scanner for MSBuild
+2021-01-27 00:53:27.852  INFO 2140 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Pre-processing started.
+2021-01-27 00:53:27.852  INFO 2140 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Preparing working directories...
+2021-01-27 00:53:27.883  INFO 2140 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 00:53:27.883  Updating build integration targets...
+2021-01-27 00:53:28.024 ERROR 2140 --- [      Thread-14] c.s.i.r.controller.StreamGobbler         : 00:53:28.024  The token you provided doesn't have sufficient rights to check license.
+2021-01-27 00:53:28.024 ERROR 2140 --- [      Thread-14] c.s.i.r.controller.StreamGobbler         : 00:53:28.024  Pre-processing failed. Exit code: 1
+2021-01-27 00:53:28.040  INFO 2140 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 1
+2021-01-27 00:53:28.040  INFO 2140 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-begin exitValue=1
+2021-01-27 00:53:28.055 ERROR 2140 --- [io-8080-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.Exception: SonarScanner.MSBuild.exe-begin failed.] with root cause
+
+java.lang.Exception: SonarScanner.MSBuild.exe-begin failed.
+        at com.saic.irad.reportservice.windows.service.WindowsSonarQubeService.scanProjectSource(WindowsSonarQubeService.java:127) ~[classes!/:na]
+
+```
+
+#### Unsuccessful build of source code
+
+The following shows output of unsuccessful builds if the zip file uploaded to Foresight is not structured properly or contains projects which are targeting a version of the .NET Framework that Foresight in conjunction with SonarScanner for MSBuild 4.6+ does not support.
+
+##### Solution file not present at the top level of the content
+
+The solution to the problem shown in this log is to make sure a .sln file is at the top level in the zip file.
+
+```
+2021-01-27 16:32:36.944  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : Pulling into C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c
+2021-01-27 16:32:36.944  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.GitRepoManager        : Verifying local directory C:\AMaaS\gitlab
+2021-01-27 16:32:36.944  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.name oauth
+2021-01-27 16:32:36.991 DEBUG 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 16:32:36.991 ERROR 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-27 16:32:36.991  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.email ****@****.****
+2021-01-27 16:32:37.054 DEBUG 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 16:32:37.054 ERROR 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-27 16:32:37.054  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git ls-remote https://oauth: ****@gitlab. ****.****.****/advisor/ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c/TAG-21.01.27.163222.git
+2021-01-27 16:32:37.399 DEBUG 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 16:32:37.399  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : 2e120ca02d8a3e21909a7cd4caaeb3cbdcaa841b    HEAD
+2021-01-27 16:32:37.414  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : 2e120ca02d8a3e21909a7cd4caaeb3cbdcaa841b    refs/heads/master
+2021-01-27 16:32:37.414  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git clone https://oauth: ****@gitlab. ****.****.****/advisor/ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c/TAG-21.01.27.163222.git ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c
+2021-01-27 16:32:38.057 DEBUG 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 16:32:38.057 ERROR 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : Cloning into 'ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c'...
+2021-01-27 16:32:38.057  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]$ git status
+2021-01-27 16:32:38.119 DEBUG 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 16:32:38.119  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : On branch master
+2021-01-27 16:32:38.119  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : Your branch is up to date with 'origin/master'.
+2021-01-27 16:32:38.119  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      :
+2021-01-27 16:32:38.119  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.gitmanager.ExecShellCommand      : nothing to commit, working tree clean
+2021-01-27 16:32:38.119  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      :  Completed download of project ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c from git repository successfully to C:\AMaaS\gitlab
+2021-01-27 16:32:38.119  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqube.****. ****.****, /d:sonar.login=****, /k: ****, /n:russtest02]
+2021-01-27 16:32:38.119  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]# [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqube. ****.****.****, /d:sonar.login=****, /k: ****, /n:russtest02]
+2021-01-27 16:32:38.182  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : SonarScanner for MSBuild 5.0.4
+2021-01-27 16:32:38.182  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : Using the .NET Framework version of the Scanner for MSBuild
+2021-01-27 16:32:38.244  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : Pre-processing started.
+2021-01-27 16:32:38.244  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : Preparing working directories...
+2021-01-27 16:32:38.275  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : 16:32:38.275  Updating build integration targets...
+2021-01-27 16:32:38.447  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : 16:32:38.447  Fetching analysis configuration settings...
+2021-01-27 16:32:38.932  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : 16:32:38.932  Provisioning analyzer assemblies for cs...
+2021-01-27 16:32:38.932  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : 16:32:38.932  Installing required Roslyn analyzers...
+2021-01-27 16:32:39.167  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : 16:32:39.167  Provisioning analyzer assemblies for vbnet...
+2021-01-27 16:32:39.167  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : 16:32:39.167  Installing required Roslyn analyzers...
+2021-01-27 16:32:39.214  INFO 1884 --- [      Thread-39] c.s.i.r.controller.StreamGobbler         : 16:32:39.214  Pre-processing succeeded.
+2021-01-27 16:32:39.214  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.controller.StreamGobbler         : ExitValue: 0
+2021-01-27 16:32:39.214  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-begin exitValue=0
+2021-01-27 16:32:39.214  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\nuget.exe, restore, .]
+2021-01-27 16:32:39.230  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]# [C:\AMaaS\nuget.exe, restore, .]
+2021-01-27 16:32:39.792 ERROR 1884 --- [      Thread-41] c.s.i.r.controller.StreamGobbler         : The folder 'C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c' does not contain an msbuild solution or packages.config file to restore.
+2021-01-27 16:32:39.824  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.controller.StreamGobbler         : ExitValue: 1
+2021-01-27 16:32:39.824  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : Nuget.exe restore . exitValue=1
+2021-01-27 16:32:39.824  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\BuildTools\msbuild\current\bin\MSBuild.exe, /t:Rebuild, /tv:Current, /p:VisualStudioVersion=16.0]
+2021-01-27 16:32:39.824  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]# [C:\AMaaS\BuildTools\msbuild\current\bin\MSBuild.exe, /t:Rebuild, /tv:Current, /p:VisualStudioVersion=16.0]
+2021-01-27 16:32:39.933  INFO 1884 --- [      Thread-45] c.s.i.r.controller.StreamGobbler         : Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET Framework
+2021-01-27 16:32:39.933  INFO 1884 --- [      Thread-45] c.s.i.r.controller.StreamGobbler         : Copyright (C) Microsoft Corporation. All rights reserved.
+2021-01-27 16:32:39.933  INFO 1884 --- [      Thread-45] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 16:32:39.949  INFO 1884 --- [      Thread-45] c.s.i.r.controller.StreamGobbler         : MSBUILD : error MSB1003: Specify a project or solution file. The current working directory does not contain a project or solution file.
+2021-01-27 16:32:39.949  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.controller.StreamGobbler         : ExitValue: 1
+2021-01-27 16:32:39.949  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : MSBuild.exe-rebuild exitValue=1
+2021-01-27 16:32:39.949  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, end, /d:sonar.login=****]
+2021-01-27 16:32:39.949  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]# [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, end, /d:sonar.login=****]
+2021-01-27 16:32:40.011  INFO 1884 --- [      Thread-48] c.s.i.r.controller.StreamGobbler         : SonarScanner for MSBuild 5.0.4
+2021-01-27 16:32:40.011  INFO 1884 --- [      Thread-48] c.s.i.r.controller.StreamGobbler         : Using the .NET Framework version of the Scanner for MSBuild
+2021-01-27 16:32:40.074  INFO 1884 --- [      Thread-48] c.s.i.r.controller.StreamGobbler         : Post-processing started.
+2021-01-27 16:32:40.152 ERROR 1884 --- [      Thread-47] c.s.i.r.controller.StreamGobbler         : 16:32:40.152  The SonarScanner for MSBuild integration failed: SonarQube was unable to collect the required information about your projects.
+2021-01-27 16:32:40.152 ERROR 1884 --- [      Thread-47] c.s.i.r.controller.StreamGobbler         : Possible causes:
+2021-01-27 16:32:40.152  INFO 1884 --- [      Thread-48] c.s.i.r.controller.StreamGobbler         : 16:32:40.152  Generation of the sonar-properties file failed. Unable to complete the analysis.
+2021-01-27 16:32:40.152 ERROR 1884 --- [      Thread-47] c.s.i.r.controller.StreamGobbler         :   1. The project has not been built - the project must be built in between the begin and end steps
+2021-01-27 16:32:40.152 ERROR 1884 --- [      Thread-47] c.s.i.r.controller.StreamGobbler         :   2. An unsupported version of MSBuild has been used to build the project. Currently MSBuild 14.0.25420.1 and higher are supported.
+2021-01-27 16:32:40.152 ERROR 1884 --- [      Thread-47] c.s.i.r.controller.StreamGobbler         :   3. The begin, build and end steps have not all been launched from the same folder
+2021-01-27 16:32:40.152 ERROR 1884 --- [      Thread-47] c.s.i.r.controller.StreamGobbler         :   4. None of the analyzed projects have a valid ProjectGuid and you have not used a solution (.sln)
+2021-01-27 16:32:40.152 ERROR 1884 --- [      Thread-47] c.s.i.r.controller.StreamGobbler         : 16:32:40.152  Post-processing failed. Exit code: 1
+2021-01-27 16:32:40.167  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.controller.StreamGobbler         : ExitValue: 1
+2021-01-27 16:32:40.167  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-end exitValue=1
+2021-01-27 16:32:40.167  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-end exitValue=1
+2021-01-27 16:32:40.167  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : Deleting C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c and all subdirectories
+2021-01-27 16:32:40.183  INFO 1884 --- [nio-8080-exec-5] c.s.i.r.w.s.WindowsSonarQubeService      : Deletion of C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c result=true
+2021-01-27 16:32:40.183 DEBUG 1884 --- [nio-8080-exec-5] c.s.i.r.service.SonarQubeAPIService      : GET URL: https://sonarqube. ****.****.****/api/ce/component?component=ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c
+2021-01-27 16:32:40.277 ERROR 1884 --- [nio-8080-exec-5] c.s.i.r.service.SonarQubeAPIService      : Exception: 404 : [{"errors":[{"msg":"Component key 'ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c' not found"}]}]
+
+```
+
+##### Project file targeting an unsupported .NET Framework version
+
+The solution to the problem shown in this log is to upgrade the project or projects in the solution to target .Net Framework 4.6 to 4.8.
+
+```
+2021-01-27 16:45:51.963  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Pulling into C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c
+2021-01-27 16:45:51.978  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.GitRepoManager        : Verifying local directory C:\AMaaS\gitlab
+2021-01-27 16:45:51.978  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.name oauth
+2021-01-27 16:45:52.056 DEBUG 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 16:45:52.072 ERROR 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-27 16:45:52.072  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git config user.email ****@****.****
+2021-01-27 16:45:52.119 DEBUG 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (128)
+2021-01-27 16:45:52.119 ERROR 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : fatal: not in a git directory
+2021-01-27 16:45:52.119  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git ls-remote https://oauth: ****@gitlab. ****.****.com/****/ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c/TAG-21.01.27.164532.git
+2021-01-27 16:45:52.478 DEBUG 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 16:45:52.478  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : 993f8bf8a123c7a7a1b974151c89e41ae35c1c2d    HEAD
+2021-01-27 16:45:52.478  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : 993f8bf8a123c7a7a1b974151c89e41ae35c1c2d    refs/heads/master
+2021-01-27 16:45:52.478  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab]$ git clone https://oauth: ****@gitlab. ****.****.****/advisor/ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c/TAG-21.01.27.164532.git ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c
+2021-01-27 16:45:53.120 DEBUG 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 16:45:53.120 ERROR 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : Cloning into 'ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c'...
+2021-01-27 16:45:53.136  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]$ git status
+2021-01-27 16:45:53.235 DEBUG 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : (0)
+2021-01-27 16:45:53.240  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : On branch master
+2021-01-27 16:45:53.244  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : Your branch is up to date with 'origin/master'.
+2021-01-27 16:45:53.244  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      :
+2021-01-27 16:45:53.244  INFO 4220 --- [io-8080-exec-10] c.s.i.r.gitmanager.ExecShellCommand      : nothing to commit, working tree clean
+2021-01-27 16:45:53.244  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      :  Completed download of project ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c from git repository successfully to C:\AMaaS\gitlab
+2021-01-27 16:45:53.291  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqube. ****.****.****, /d:sonar.login=****, /k: ****, /n:russtest02]
+2021-01-27 16:45:53.291  INFO 4220 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]# [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, begin, /d:sonar.host.url=https://sonarqube. ****.****.****, /d:sonar.login=****, /k: ****, /n:russtest02]
+2021-01-27 16:45:53.401  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : SonarScanner for MSBuild 5.0.4
+2021-01-27 16:45:53.416  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Using the .NET Framework version of the Scanner for MSBuild
+2021-01-27 16:45:53.510  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Pre-processing started.
+2021-01-27 16:45:53.588  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : Preparing working directories...
+2021-01-27 16:45:53.588  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 16:45:53.557  Updating build integration targets...
+2021-01-27 16:45:53.776  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 16:45:53.776  Fetching analysis configuration settings...
+2021-01-27 16:45:54.245  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 16:45:54.245  Provisioning analyzer assemblies for cs...
+2021-01-27 16:45:54.260  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 16:45:54.26  Installing required Roslyn analyzers...
+2021-01-27 16:45:54.510  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 16:45:54.51  Provisioning analyzer assemblies for vbnet...
+2021-01-27 16:45:54.510  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 16:45:54.51  Installing required Roslyn analyzers...
+2021-01-27 16:45:54.557  INFO 4220 --- [      Thread-15] c.s.i.r.controller.StreamGobbler         : 16:45:54.557  Pre-processing succeeded.
+2021-01-27 16:45:54.573  INFO 4220 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 0
+2021-01-27 16:45:54.573  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-begin exitValue=0
+2021-01-27 16:45:54.573  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\nuget.exe, restore, .]
+2021-01-27 16:45:54.573  INFO 4220 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]# [C:\AMaaS\nuget.exe, restore, .]
+2021-01-27 16:45:55.198  INFO 4220 --- [      Thread-18] c.s.i.r.controller.StreamGobbler         : MSBuild auto-detection: using msbuild version '16.8.3.61104' from 'C:\AMaaS\BuildTools\MSBuild\Current\bin'.
+2021-01-27 16:45:56.074  INFO 4220 --- [      Thread-18] c.s.i.r.controller.StreamGobbler         : Nothing to do. None of the projects in this solution specify any packages for NuGet to restore.
+2021-01-27 16:45:56.090  INFO 4220 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 0
+2021-01-27 16:45:56.090  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Nuget.exe restore . exitValue=0
+2021-01-27 16:45:56.090  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\BuildTools\msbuild\current\bin\MSBuild.exe, /t:Rebuild, /tv:Current, /p:VisualStudioVersion=16.0]
+2021-01-27 16:45:56.090  INFO 4220 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]# [C:\AMaaS\BuildTools\msbuild\current\bin\MSBuild.exe, /t:Rebuild, /tv:Current, /p:VisualStudioVersion=16.0]
+2021-01-27 16:45:56.199  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET Framework
+2021-01-27 16:45:56.199  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Copyright (C) Microsoft Corporation. All rights reserved.
+2021-01-27 16:45:56.199  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 16:45:56.215  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Building the projects in this solution one at a time. To enable parallel build, please add the "-m" switch.
+2021-01-27 16:45:56.277  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Build started 1/27/2021 4:45:56 PM.
+2021-01-27 16:45:56.465  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Project "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication.sln" on node 1 (Rebuild target(s)).
+2021-01-27 16:45:56.465  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : ValidateSolutionConfiguration:
+2021-01-27 16:45:56.465  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Building solution configuration "Debug|Any CPU".
+2021-01-27 16:45:56.590  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Project "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication.sln" (1) is building "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication\SomeConsoleApplication.csproj" (2) on node 1 (Rebuild target(s)).
+2021-01-27 16:45:56.590  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CoreClean:
+2021-01-27 16:45:56.590  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "obj\Debug\".
+2021-01-27 16:45:56.605  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : C:\AMaaS\BuildTools\msbuild\current\bin\Microsoft.Common.CurrentVersion.targets(1180,5): error MSB3644: The reference assemblies for .NETFramework,Version=v4.0 were not found. To resolve this, install the Developer Pack (SDK/Targeting Pack) for this framework version or retarget your application. You can download .NET Framework Developer Packs at https://aka.ms/msbuild/developerpacks [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 16:45:56.605  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Done Building Project "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication\SomeConsoleApplication.csproj" (Rebuild target(s)) -- FAILED.
+2021-01-27 16:45:56.637  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Project "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication.sln" (1) is building "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj" (3) on node 1 (Rebuild target(s)).
+2021-01-27 16:45:56.637  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : CoreClean:
+2021-01-27 16:45:56.653  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "obj\Debug\".
+2021-01-27 16:45:56.746  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : PrepareForBuild:
+2021-01-27 16:45:56.746  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   Creating directory "bin\Debug\".
+2021-01-27 16:45:56.762  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Done Building Project "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplicationTest\SomeConsoleApplicationTest.csproj" (Rebuild target(s)) -- FAILED.
+2021-01-27 16:45:56.762  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Done Building Project "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication.sln" (Rebuild target(s)) -- FAILED.
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Build FAILED.
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication.sln" (Rebuild target) (1) ->
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : "C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication\SomeConsoleApplication.csproj" (Rebuild target) (2) ->
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : (GetReferenceAssemblyPaths target) ->
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :   C:\AMaaS\BuildTools\msbuild\current\bin\Microsoft.Common.CurrentVersion.targets(1180,5): error MSB3644: The reference assemblies for .NETFramework,Version=v4.0 were not found. To resolve this, install the Developer Pack (SDK/Targeting Pack) for this framework version or retarget your application. You can download .NET Framework Developer Packs at https://aka.ms/msbuild/developerpacks [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c\SomeConsoleApplication\SomeConsoleApplication.csproj]
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :     0 Warning(s)
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :     1 Error(s)
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         :
+2021-01-27 16:45:56.777  INFO 4220 --- [      Thread-21] c.s.i.r.controller.StreamGobbler         : Time Elapsed 00:00:00.50
+2021-01-27 16:45:56.793  INFO 4220 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 1
+2021-01-27 16:45:56.793  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : MSBuild.exe-rebuild exitValue=1
+2021-01-27 16:45:56.808  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Executing : [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, end, /d:sonar.login=5906cb9a0bf1f7457288a7ecb67e2fc3cd5557d6]
+2021-01-27 16:45:56.808  INFO 4220 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : [C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c]# [C:\AMaaS\sonar-scanner-msbuild-net46\SonarScanner.MSBuild.exe, end, /d:sonar.login=5906cb9a0bf1f7457288a7ecb67e2fc3cd5557d6]
+2021-01-27 16:45:56.871  INFO 4220 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : SonarScanner for MSBuild 5.0.4
+2021-01-27 16:45:56.871  INFO 4220 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : Using the .NET Framework version of the Scanner for MSBuild
+2021-01-27 16:45:56.937  INFO 4220 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : Post-processing started.
+2021-01-27 16:45:57.000  INFO 4220 --- [      Thread-24] c.s.i.r.controller.StreamGobbler         : 16:45:57  Generation of the sonar-properties file failed. Unable to complete the analysis.
+2021-01-27 16:45:57.000 ERROR 4220 --- [      Thread-23] c.s.i.r.controller.StreamGobbler         : 16:45:57  The SonarScanner for MSBuild integration failed: SonarQube was unable to collect the required information about your projects.
+2021-01-27 16:45:57.015 ERROR 4220 --- [      Thread-23] c.s.i.r.controller.StreamGobbler         : Possible causes:
+2021-01-27 16:45:57.015 ERROR 4220 --- [      Thread-23] c.s.i.r.controller.StreamGobbler         :   1. The project has not been built - the project must be built in between the begin and end steps
+2021-01-27 16:45:57.015 ERROR 4220 --- [      Thread-23] c.s.i.r.controller.StreamGobbler         :   2. An unsupported version of MSBuild has been used to build the project. Currently MSBuild 14.0.25420.1 and higher are supported.
+2021-01-27 16:45:57.015 ERROR 4220 --- [      Thread-23] c.s.i.r.controller.StreamGobbler         :   3. The begin, build and end steps have not all been launched from the same folder
+2021-01-27 16:45:57.031 ERROR 4220 --- [      Thread-23] c.s.i.r.controller.StreamGobbler         :   4. None of the analyzed projects have a valid ProjectGuid and you have not used a solution (.sln)
+2021-01-27 16:45:57.031  INFO 4220 --- [io-8080-exec-10] c.s.i.r.controller.StreamGobbler         : ExitValue: 1
+2021-01-27 16:45:57.031 ERROR 4220 --- [      Thread-23] c.s.i.r.controller.StreamGobbler         : 16:45:57.015  Post-processing failed. Exit code: 1
+2021-01-27 16:45:57.031  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-end exitValue=1
+2021-01-27 16:45:57.031  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : SonarScanner.MSBuild.exe-end exitValue=1
+2021-01-27 16:45:57.031  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Deleting C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c and all subdirectories
+2021-01-27 16:45:57.078  INFO 4220 --- [io-8080-exec-10] c.s.i.r.w.s.WindowsSonarQubeService      : Deletion of C:\AMaaS\gitlab\ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c result=true
+2021-01-27 16:45:57.093 DEBUG 4220 --- [io-8080-exec-10] c.s.i.r.service.SonarQubeAPIService      : GET URL: https://sonarqube. ****.****.****/api/ce/component?component=ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c
+2021-01-27 16:45:57.487 ERROR 4220 --- [io-8080-exec-10] c.s.i.r.service.SonarQubeAPIService      : Exception: 404 : [{"errors":[{"msg":"Component key 'ef09e56a-8f9d-4f0d-94e6-504d31c6fc8c' not found"}]}]
+
+```

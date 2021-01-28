@@ -11,16 +11,16 @@ This section of the Installation Guide will provide instructions for installing 
 
 ## Assumptions for Amazon EKS Installation
 
-- You are familiar with Amazon EKS Environments
+- Familiarity with Amazon EKS Environments
 - Access to functional Amazon EKS Environment
-- Knowledge of use of Helm files
+- Knowledge of Helm files usage
 - SSL Instructions have been completed **_NEED INPUT FROM TEAM ON THIS_**
 - **NEED INPUT FROM TEAM**
 
 ## Technical Requirements for Amazon EKS Installation
 
 - Access to Amazon EKS Environment
-- New Kubernetes Cluster 1.15+
+- Kubernetes Cluster 1.15+
 - kubectl
   - Access via command-line
   - Master permissions
@@ -32,7 +32,7 @@ This section of the Installation Guide will provide instructions for installing 
 - License Key
   - This will be provided by SAIC via email
   - Place the emailed license.txt file in the same folder where as your helm charts. The installation scripts will need this file in order to successfully install your license.
-- If processing Windows .NET Code, you must install Windows Report Service
+- If processing Windows .NET Code, you must install Windows Report Service and should ensure the following requirements are met:
   - If you are using AWS: download CloudScend Foresight Windows Report Service AMI from the AWS Marketplace
   - If you are not using AWS: Reach out to SAIC service desk for CloudScend Foresight Windows Report Service app
   - Windows Server Minimum requirements:
@@ -61,30 +61,53 @@ This section of the Installation Guide will provide instructions for installing 
 8. Install Elasticsearch
 9. Install Kibana
 10. Install Fluentd
-11. Install Windows Report Service (optional)
-    1. Install the app and dependencies (only required if not using the Report Service AMI from AWS Marketplace)
-       1. Copy the Windows Report Service App zip file to a Windows Server 2019 machine.
-       2. Extract the contents of the zip file to a temp folder.
-       3. Download the [install-prereqs.ps1](/installation-scripts/install-prereqs.ps1) and [configure-startup.ps1](/installation-scripts/configure-startup.ps1) powershell scripts to the same temp folder.
-       4. Start an Administrator elevated Command Prompt.
-       5. Change (cd) to the location of the zip file's extracted temp folder.
-       6. Run `powershell -File .\install-prereqs.ps1`
-          1. Content will be installed for .Net Framework 4.8, SonarScanner for MSBuild .NET, Visual Studio 2019 Build Tools, amd Java 11 JDK.
-          2. The files will be be downloaded and saved to C:\AMaaS\temp.
-          3. After the .Net Framework 4.8 install, the computer may reboot.
-             If it does, run `powershell -File .\install-prereqs.ps1` again to make sure the installation has completed.
-    2. Run `powershell -File .\configure-startup.ps1` and provide the requested information.
-       This step creates a start-report-service.bat file in C:\AMaaS with the provided values.
-    3. To start the Windows Report Service, run `C:\AMaaS\start-report-service.bat`.
-       Note: make sure port 8080 is exposed and addressable for the "normal" Java Report Service to access.
-12. **NEED INPUT FROM TEAM**
+11. **NEED INPUT FROM TEAM**
+
+## Optionally Install Windows Report Service
+
+If you will be processing any .NET code, you must install Windows Report Service. Follow the steps below to perform the installation.
+
+1. Install Windows Report Service (optional)
+   1. Install the app and dependencies (only required if not using the Report Service AMI from AWS Marketplace)
+      1. Copy the Windows Report Service App zip file to a Windows Server 2019 machine.
+      2. Extract the contents of the zip file to a temp folder.
+      3. Download the [install-prereqs.ps1](/installation-scripts/install-prereqs.ps1) and [configure-startup.ps1](/installation-scripts/configure-startup.ps1) powershell scripts to the same temp folder.
+      4. Start an Administrator elevated Command Prompt.
+      5. Change (cd) to the location of the zip file's extracted temp folder.
+      6. Run `powershell -File .\install-prereqs.ps1`
+         1. Content will be installed for .Net Framework 4.8, SonarScanner for MSBuild .NET, Visual Studio 2019 Build Tools, and Java 11 JDK.
+         2. The files will be downloaded and saved to C:\AMaaS\temp.
+         3. After the .Net Framework 4.8 install, the computer may reboot.
+            If it does, run `powershell -File .\install-prereqs.ps1` again to make sure the installation has completed.
+   2. Run `powershell -File .\configure-startup.ps1` and provide the requested information.
+      This step creates a start-report-service.bat file in C:\AMaaS with the provided values.
+   3. To start the Windows Report Service, run `C:\AMaaS\start-report-service.bat`.
+      Note: make sure port 8080 is exposed and addressable for the "normal" Java Report Service to access.
 
 ## Configure Cluster Level Applications
 
-1. Configure Sonarqube Access Token
-2. Configure Gitlab Access Token
-3. Configure Gitlab SSO w/ Keycloak
-4. **NEED INPUT FROM TEAM**
+1. Register GitLab User
+   - Browse to your gitlab instance (https://GITLAB_DOMAIN/)
+   - Click register and register a user
+2. Access Keycloak Admin
+   - Log into Keycloak Admin ( https://KEYCLOAK_DOMAIN_URL/auth )
+   - The Admin Password can be found in a Kubernetes Secrets Object
+   - The name of the object is "keycloak-credentials"
+   - In the object, the password is denoted by the following key: "adminPassword".
+3. Configure Sonarqube Access Token
+4. Configure Gitlab SSO w/ Keycloak
+   - In an Incognito Tab, browse to here (Replace GITLAB_DOMAIN with your gitlab instance url)
+     - https://GITLAB_DOMAIN/users/sign_in?auto_sign_in=false
+   - Login regularly with "root"
+   - The Admin Password can be found in a Kubernetes Secrets Object
+     - The name of the object is "NAMESPACE-gitlab-gitlab-initial-root-password"
+     - In the object, the password is denoted by the following key: "password"
+   - On the Top left there is a Wrench Icon that directs us to the Admin Dashboard
+   - On the Side bar to the left click on "Settings"
+   - Under Sign in restriction
+   - Add a Sign Out URL
+     - https://KEYCLOAK_DOMAIN_URL/auth/realms/appmod/protocol/openid-connect/logout?redirect_uri=GITLAB_DOMAIN
+5. **NEED INPUT FROM TEAM**
 
 ## Install Applications
 
