@@ -139,8 +139,8 @@ if(!(Test-Path $buildInstallDir -PathType Container)) {
         "--add Microsoft.Net.ComponentGroup.4.8.DeveloperTools", `
         "--add Microsoft.VisualStudio.Component.WebDeploy", `
         "--remove Microsoft.VisualStudio.Component.Windows10SDK.10240", `
-        "--remove Microsoft.VisualStudio.Component.Windows10SDK.10586", ` 
-        "--remove Microsoft.VisualStudio.Component.Windows10SDK.14393", ` 
+        "--remove Microsoft.VisualStudio.Component.Windows10SDK.10586", `
+        "--remove Microsoft.VisualStudio.Component.Windows10SDK.14393", `
         "--remove Microsoft.VisualStudio.Component.Windows81SDK"
 #>
     Write-Output "VS 2019 Build Tools finished."
