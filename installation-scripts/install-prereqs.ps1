@@ -120,12 +120,24 @@ if(!(Test-Path $buildInstallDir -PathType Container)) {
     #Install the Visual Studio 2019 Build Tools
     #Refer to https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2019
     #for the various workload/package IDs and the components they include.
-    Start-Process -FilePath $vsBuildToolsInstaller -Wait -ArgumentList "--wait --norestart --nocache --quiet --installPath $($buildInstallDir) --add Microsoft.VisualStudio.Workload.AzureBuildTools --add Microsoft.VisualStudio.Workload.VisualStudioExtensionBuildTools --add Microsoft.VisualStudio.Workload.WebBuildTools --remove Microsoft.VisualStudio.Component.Windows10SDK.10240 --remove Microsoft.VisualStudio.Component.Windows10SDK.10586 --remove Microsoft.VisualStudio.Component.Windows10SDK.14393 --remove Microsoft.VisualStudio.Component.Windows81SDK"
+    Start-Process -FilePath $vsBuildToolsInstaller -Wait -ArgumentList "--wait --norestart --nocache --quiet --installPath $($buildInstallDir) --add Microsoft.VisualStudio.Workload.AzureBuildTools --add Microsoft.VisualStudio.Workload.VisualStudioExtensionBuildTools --add Microsoft.VisualStudio.Workload.WebBuildTools --add Microsoft.VisualStudio.Workload.MSBuildTools --add Microsoft.Net.Component.4.6.TargetingPack --add Microsoft.Net.Component.4.6.1.TargetingPack --add Microsoft.Net.Component.4.6.2.TargetingPack --add Microsoft.Net.Component.4.7.1.TargetingPack --add Microsoft.Net.Component.4.7.TargetingPack --add Microsoft.Net.ComponentGroup.4.6.1.DeveloperTools --add Microsoft.Net.ComponentGroup.4.6.2.DeveloperTools --add Microsoft.Net.ComponentGroup.4.7.1.DeveloperTools --add Microsoft.Net.ComponentGroup.4.7.DeveloperTools --add Microsoft.Net.ComponentGroup.4.8.DeveloperTools --add Microsoft.VisualStudio.Component.WebDeploy --remove Microsoft.VisualStudio.Component.Windows10SDK.10240 --remove Microsoft.VisualStudio.Component.Windows10SDK.10586 --remove Microsoft.VisualStudio.Component.Windows10SDK.14393 --remove Microsoft.VisualStudio.Component.Windows81SDK"
 <#
         "--wait", "--norestart", "--quiet", "--nocache", "--installPath $($buildInstallDir)", `
         "--add Microsoft.VisualStudio.Workload.AzureBuildTools", `
         "--add Microsoft.VisualStudio.Workload.VisualStudioExtensionBuildTools", `
         "--add Microsoft.VisualStudio.Workload.WebBuildTools", `
+        "--add Microsoft.VisualStudio.Workload.MSBuildTools", `
+        "--add Microsoft.Net.Component.4.6.TargetingPack", `
+        "--add Microsoft.Net.Component.4.6.1.TargetingPack", `
+        "--add Microsoft.Net.Component.4.6.2.TargetingPack", `
+        "--add Microsoft.Net.Component.4.7.1.TargetingPack", `
+        "--add Microsoft.Net.Component.4.7.TargetingPack", `
+        "--add Microsoft.Net.ComponentGroup.4.6.1.DeveloperTools", `
+        "--add Microsoft.Net.ComponentGroup.4.6.2.DeveloperTools", `
+        "--add Microsoft.Net.ComponentGroup.4.7.1.DeveloperTools", `
+        "--add Microsoft.Net.ComponentGroup.4.7.DeveloperTools", `
+        "--add Microsoft.Net.ComponentGroup.4.8.DeveloperTools", `
+        "--add Microsoft.VisualStudio.Component.WebDeploy", `
         "--remove Microsoft.VisualStudio.Component.Windows10SDK.10240", `
         "--remove Microsoft.VisualStudio.Component.Windows10SDK.10586", `
         "--remove Microsoft.VisualStudio.Component.Windows10SDK.14393", `
