@@ -63,10 +63,10 @@ The Application Name, acronym, organization name, and application owner are all 
 
 <br></br>
 
-Once you have submitted your application for onboarding, you will be offered the option to continue on to complete your survey.
+Once you have submitted your application for onboarding, you will be offered the option to complete the application survey. As part of Foresight process flow, a technical profile of your application(s) is obtained through a survey. The survey details and what information needs to be compiled is described in the [Survey Management](#survey-management) section of this document.
 :::note
 
-It is common to complete your survey following onboarding your application. While completing the survey is required to analyze your application, it doesn't have to be done immediately following onboarding so you may choose to postpone this step.
+While completing the survey is required to analyze your application, it doesn't have to be done immediately following onboarding so you may choose to postpone this step.
 
 :::
 
@@ -78,7 +78,7 @@ Once you have selected the Complete Survey button, you will be taken to the Surv
 
 ### Survey Management
 
-In order to provide you with the most accurate cloud readiness analysis, you need to complete a short survey with questions regarding your application and its dependencies and interfaces as well as questions regarding the business impact of your application. Please be sure to provide the most accurate information as possible as incorrect answers can affect your output.
+In order to provide you with the most accurate cloud readiness analysis, you need to complete a short survey with questions regarding your application and its dependencies and interfaces as well as questions regarding the business impact of your application. Please be sure to provide the most accurate information as possible as incorrect answers can affect the application analysis.
 
 #### Survey Question Details
 
@@ -125,7 +125,7 @@ The table below provides you with the survey questions and possible answers so y
 
 #### Accessing and Completing the Survey
 
-You can access your survey in two ways. First you can simply move through the application Onboarding process and start your survey when asked after submitting your application information as described above in the [Onboarding Section](#application-onboarding), in which case you can move down to step 3 below. However, if you chose to postpone completing your survey or you need to make changes to your survey, you can access it from the App Analyzer screen. Follow these steps to access your survey at any time following onboarding your application:
+There are two approaches to complete and/or access the survey. First, as part of the [application onboarding process](#application-onboarding) you can simply move through the process and start your survey when the application prompts you to do it. However, if you chose to postpone completing your survey or you need to make changes to your survey, you can access it from the App Analyzer screen. Follow these steps to access your survey at any time following onboarding your application:
 
 **1. From the CloudScend Foresight home screen, you will select App Analyzer or from the main menu bar you can go to Dashboards -> App Analyzer.**
 
@@ -146,10 +146,10 @@ This will bring up the App Analyzer home screen.
 ![Start Survey](/img/SurveyBegin.png)
 
 :::important
-Survey answers need to be as accurate as possible. Seek out the assistance of your application software experts if you don't know the answers as incorrect survey values can affect your output.
+Survey answers need to be as accurate as possible. Seek out the assistance of your application software experts if you don't know the answers as incorrect survey values can potentially affect the application analysis results.
 :::
 
-**4. Once you complete the Technical Assessment questions, select Next at the bottom of the screen to answer the Business Impact questions. Optionally you can choose to Save your answers and leave the survey. If you choose to save and leave the survey your entered information will be saved but your survey will show as In Progress on the App Analyzer home screen. Additionally, if you choose to Cancel without saving your answers will be lost.**
+**4. Once you complete the Technical Assessment questions, select _Next_ at the bottom of the screen to answer the Business Impact questions. Optionally you can choose to _Save_ your answers and leave the survey. If you choose to save and leave the survey your entered information will be saved but your survey will show as 'In Progress' on the App Analyzer home screen. Additionally, if you choose to _Cancel_ without saving your answers will be lost.**
 
 ![Next Survey](/img/SurveyNext.png)
 
@@ -161,7 +161,7 @@ Survey answers need to be as accurate as possible. Seek out the assistance of yo
 
 ![Submit Survey](/img/SurveyEndSubmit.png)
 
-Once you have successfully submitted a completed survey, you will see the Survey Response screen which will show you your entered values.
+Once you have successfully submitted a completed survey, the Survey Response screen will be displayed showing the questions and responses you entered.
 
 ![Survey Response](/img/SurveyResponse.png)
 
@@ -175,13 +175,13 @@ If you need to print or save a local copy of your survey answers, you may select
 
 :::
 
-Once you have completed your survey, you can continue on with your application analysis by selecting Home on the menu bar.
+After completing the application survey, you can continue with the application analysis by selecting Home on the menu bar.
 
 <br></br>
 
 ## App Analyzer
 
-Once you have completed the setup of your application, you will want to perform the application analysis steps, including:
+Once the Onboarding and Survey Management steps are complete, it is time to perform the application analysis step using the App Analyzer. App Analyzer is the central component of Foresight in charge of ingesting your source code and providing with analytical insight on your cloud migration process. App Analyzer provides the following actions:
 
 - Uploading your source code
 - Uploading any application artifacts
@@ -194,13 +194,13 @@ Once you have completed the setup of your application, you will want to perform 
 
 ![App Analyzer](/img/SageHomeAppAnalyzer.png)
 
-This will take you to the App Analyzer main page where you should see your onboarded applications listed.
+This will take you to the App Analyzer main page where all onboarded applications assigned to you will be listed.
 
 ![Home Screen](/img/AppAnalyzerHome.png)
 
 :::tip
 
-You can filter your search for a specific application by entering the application name or the application identification number (App Global ID) in the Filter field under the App Analyzer name. The App Global ID can be found and stored on your clipboard by clicking on the gear icon on the right side of the Actions for your application.
+You can filter your search for a specific application by entering the application name or the application identification number (App Global ID) in the Filter field under the App Analyzer name. The App Global ID can be found by clicking on the gear icon on the right side of the Actions for your application which opens the application information window. The App Global ID value can be copied to your clipboard using the copy button on the left of the text box.
 
 :::
 
@@ -208,7 +208,9 @@ You can filter your search for a specific application by entering the applicatio
 
 ### Uploading Source Code
 
-Now that you have entered your information and taken the survey, it's time to upload your application source code. You will want to upload your source code to begin your migration estimate but you may upload your code at any other time as well. You will want to upload your source code throughout your refactoring process to keep track of your progress and keep on top of any new issues that have been created by your refactoring. While you can upload source code multiple times in a day, only the data from the last scan of the day will be used in any trend dashboards or continuous assessment views. To ensure you have data points for your trends, upload your source code on different calendar dates.
+Now that you have entered your information and taken the survey, you must upload your source code to begin your application's analysis.
+
+You will want to upload your source code on a regular basis throughout your refactoring process and beyond to keep track of your progress and keep on top of any new issues that may affect your application.
 For detailed information regarding packaging your source code for uploading, refer to the [CloudScend Foresight Operations Guide](foresight-ops-standard-guidelines.mdx#system-tuning).
 
 **1. Select the Upload Source Code icon.**
@@ -231,21 +233,21 @@ For detailed information regarding packaging your source code for uploading, ref
 
 ![Source Upload](/img/ClickUpload.png)
 
-You will see that as soon as your source code is uploaded, the CloudScend Foresight analyzer begins working and your App Analysis Status is now Processing.
+As soon as your source code is uploaded, the CloudScend Foresight analyzer starts working and the App Analysis Status changes to 'Processing'.
 
 ![Source Code Processing](/img/SourceCodeProcessing.png)
 
-And when the initial analysis is complete, your App Analysis Status will change to Analysis Results Ready.
+Once the initial analysis is complete, the App Analysis Status will change to 'Analysis Results Ready'.
 
 ![Analysis Results Ready](/img/AnalysisResultsReady.png)
 
 ### Migration Metrics Reports Details
 
-The CloudScend Foresight product will provide you with 4 reports once your source code is processed. Each of these reports provide different information regarding your application based on the source code you uploaded.
+The CloudScend Foresight product will generate four reports once your source code is processed. Each report will focus on a different aspect of the analyzed application.
 
 #### Application Assessment Report Details
 
-The Application Assessment Report provides you with general overview of your source code with information about the size and type of your source code as provided by a SonarQube scan. You will be presented with data regarding the following:
+The Application Assessment Report provides you with general overview of your source code with information about the size and type of the source code as provided by a SonarQube scan. You will be presented with data regarding the following:
 
 1. All languages supported in your source code
 2. The overall number of executable lines of code (LOC)
@@ -267,7 +269,7 @@ The Application Technical Debt Report provides you with an overall SAIC technica
 
 #### Application Cloud Readiness Report Details
 
-The Application Cloud Readiness report is generated by the CAST Highlight tool and presents you with metrics and analysis. Each of these metrics convey specific measurable dimension of code quality and cloud readiness.
+The Application Cloud Readiness report is generated by the CAST Highlight tool and presents you with a set of metrics that convey specific measurable dimension of code quality and cloud readiness.
 
 1. Normalized Cloud Readiness Index - Higher scores indicate an application is better suited for cloud migration with fewer modifications.
 2. The number of security vulnerabilities
@@ -275,29 +277,29 @@ The Application Cloud Readiness report is generated by the CAST Highlight tool a
 4. Software Resiliency index represents the presence of good or bad programming habits within your source code that make it more or less robust and secure. The higher the index the lower the likelihood of defects in production.
 5. Software Agility index represents the ease of maintaining your application source code. The higher the index the easier the code is to understand and maintain.
 6. Software Elegance index represents code complexity. The higher the index the fewer potential defects that may arise from your code.
-7. Obsolescence information informs you of the number of frameworks that are obsolete and need remediation.
+7. Obsolescence informs about the number of software frameworks used by your code that are obsolete and need remediation.
 8. CAST Technical Debt refers to the cost to fix the structural quality of the application per CAST Highlight calculations. Note, that this value will differ from the Technical Debt report above as CAST Highlight and SonarQube calculate technical debt differently.
 
 #### Application Cost Estimate Report Details
 
 The Application Cost Estimate report utilizes data from the Cloud Readiness Report as well as your business impact survey answers and feeds it into both a tailored COCOMO Model and a proprietary machine learning model to provide the following pieces of information.
 
-1. The Percent Design Modified value is a percentage of the application design that must be modified to adapt to the new objectives or environment.
-2. The Percent Code Modified value is a percentage of the application code that must be modified to adapt to the new objectives or environment.
-3. The Software Understand value is a penalty based on the ease of understanding the code, with lower values representing better structured and descriptive code.
-4. The Required Software Reliability refers to the effect caused if there is a software failure.
-5. The Product Complexity value refers to specific areas of operations for your software that may affect the effort to migrate your application.
-6. The Estimated Effort is the amount of time estimated to be required for completion in units of Person-Months
+1. The **Percent Design Modified** value is a percentage of the application design that must be modified to adapt to the new objectives or environment.
+2. The **Percent Code Modified** value is a percentage of the application code that must be modified to adapt to the new objectives or environment.
+3. The **Software Understand** value is a penalty based on the ease of understanding the code, with lower values representing better structured and descriptive code.
+4. The **Required Software Reliability** refers to the effect caused if there is a software failure.
+5. The **Product Complexity** value refers to specific areas of operations for your software that may affect the effort to migrate your application.
+6. The **Estimated Effort** is the amount of time estimated to be required for completion in units of Person-Hours.
 
 :::note
-It is of interest to know that because CloudScend Foresight is integrated with multiple best in class applications, there are a few pieces of data that each of our partnering applications calculate differently. For example, both CAST Highlight and SonarQube provide technical debt information but they have their own proprietary formula for calculating it. Therefore, in some locations you may see differing values for technical debt depending on the report that is being viewed.
+It is of interest to know that because CloudScend Foresight is integrated with multiple best-in-class applications, there are a couple of pieces of data elements that are computed differently by our partnering applications. For example, both CAST Highlight and SonarQube provide technical debt information but they have their own proprietary formula for calculating it. Therefore, in some locations you may see differing values for technical debt depending on the report that is being viewed.
 :::
 
 ### Viewing Migration Metrics Reports
 
-You can view the reports for your application for each time you have uploaded your source code. To access the reports follow these steps:
+You can view the reports for your application for each time the application source code has been uploaded. To access the reports follow these steps:
 
-**1. From the App Analyzer screen, once your App Analysis Status is Analysis Results Ready, you may view these reports. Click on the Analysis Results Ready link.**
+**1. From the App Analyzer screen, once your App Analysis Status is set to Analysis Results Ready, you may view these reports by clicking on the Analysis Results Ready link.**
 
 ![Analysis Ready](/img/AnalysisResultsReady.png)
 
@@ -309,7 +311,7 @@ You can view the reports for your application for each time you have uploaded yo
 
 ![Report Window](/img/CloudReadinessRpt.png)
 
-**4. To view any other report, you can simply select the tab for the report you would like to view. If you need to create a PDF file for any report, select the View PDF icon in the upper right corner of the screen. A .pdf file will be created for only the report tab with focus.**
+**4. To view any other report, you can simply select the tab for the report you would like to view. Select the View PDF icon in the upper right corner of the screen. A .pdf file will be created for only the report tab with focus. Please allow for 5 minute rendering before selecting the PDF request in order to ensure all the data is correct and available in your pdf file.**
 
 ![Report Tabs](/img/ReportTabs.png)
 
@@ -361,7 +363,7 @@ Upon selecting to delete you will be given a warning that the action cannot be u
 
 ### Migration Estimate
 
-In order to create your complete CloudScend Foresight Migration Estimate Report, you will need to run the Migration Estimation tool against your uploaded code results and completed survey. This estimate will calculate your migration effort and cost as well as your compute & storage cost. Migration estimates use the COCOMO model and AI/ML with AWS SageMaker to calculate your results.
+In order to create your complete CloudScend Foresight Migration Estimate Report, you will need to run the Migration Estimation tool against your uploaded code results and completed survey. This estimate will calculate your migration effort and cost as well as your compute & storage cost. Migration estimates use the Constructive Cost Model (COCOMO) and CloudScend Foresight (ML) machine learning models to generate cost estimates.
 
 Perform the following steps to create your migration estimates.
 
@@ -373,13 +375,13 @@ Perform the following steps to create your migration estimates.
 
 ![Migration Estimate](/img/MigrationEstimate.png)
 
-This shows you the calculated time in hours and calculated cost based on derived COCOMO parameters as well as the time and cost calculated by the ML model. If you would like to see what the COCOMO model would calculate with different parameters, you can use the Interactive Calculator to create a custom estimate.
+This shows you the calculated time in hours and calculated cost based on derived COCOMO parameters as well as the time and cost calculated by the ML model.
 
-**3. If you are interested in seeing an estimate based on custom values for your COCOMO model parameters, select the Interactive Calculator icon on the Migration Estimate screen.**
+**3. CloudScend Foresight provides an Interactive COCOMO Calculator that allows you to explore variations/customizations of the COCOMO parameters and the effect on the cost estimates. To access the calculator, select the icon on the Migration Estimate screen.**
 
 ![Interactive Calculator Icon](/img/InteractiveCalculatorIcon.png)
 
-The Interactive Calculator screen will come up populated with the current values used as parameters in your estimate.
+The Interactive Calculator screen will come up populated with the parameter values used in the Cost Estimation Report.
 
 ![Interactive Calculator](/img/InteractiveCalculator.png)
 
@@ -387,9 +389,9 @@ The Interactive Calculator screen will come up populated with the current values
 
 ![Interactive Calculator Edit](/img/InteractiveCalculatorEdit.png)
 
-Your new estimated effort will be calculated based on the data you changed in the Interactive Calculator.
+Your new effort estimate will be calculated based on the data you changed in the Interactive Calculator.
 
-**5. If you would like the values and estimate you have just entered into the Interactive Calculator, then select the Save Estimate Button at the bottom of the screen.**
+**5. Select the 'Save Estimate' button to save the values to the Interactive Calculator.**
 
 ![Interactive Calculator Save](/img/InteractiveCalculatorSaveEst.png)
 
@@ -410,6 +412,16 @@ Your complete CloudScend Foresight Results report will open on the Summary tab. 
 ![CloudScend Foresight Results](/img/SageResultsTabs.png)
 
 The Summary Tab provides you the overall estimation amounts for App Analysis and Refactoring based on Heuristic, COCOMO, and ML models as well as general profile information.
+
+App Analysis refers to the effort before a migration where the team will review all documentation and source code and perform a deeper dive into the applications specifics to create a more complex estimate and plan based on application specific challenges, configurations and interfaces.
+
+Refactoring refers to the process of improving the internal structure of the existing application source code to allow it to operate in a cloud environment, while preserving its external behavior.
+
+| Effort/Cost Category | Estimate Value Definition                                                                                                                                                                                                                                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bucket               | General category of effort ('Simple', 'Medium', 'Complex', 'Outlier') to perform the migration based on some specific metrics about your application. See the [CloudScend Foresight Operations Guide](foresight-ops-standard-guidelines#actual-bucket-criteria) for a chart of criteria that helps determine bucket size. |
+| Hour/Range           | The estimated number of person hours to complete each task based on the model calculations.                                                                                                                                                                                                                               |
+| Estimated Cost/Range | The estimated cost to complete each task based on the model calculations.                                                                                                                                                                                                                                                 |
 
 Selecting the App Analysis Details tab will provide you with all the information that goes into creating your App Analysis Estimation.
 
@@ -555,7 +567,7 @@ You can select any of the pieces of data on this page and bring up more details.
 
 ![App Portfolio Dashboard](/img/AppPortfolioDashboardsMenu.png)
 
-Below is a list of of dashboards and general description of the type of data displayed.
+Below is a list of dashboards and general description of the type of data displayed.
 
 | Dashboard              | Data Displayed                                                                                                                                                                  |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -574,7 +586,7 @@ Below is a list of of dashboards and general description of the type of data dis
 
 ![Portfolio Search](/img/AppPortfolioSearch.png)
 
-All of the information for the application you entered will now be shown to you in an overiew with eight tabs of detailed information.
+All of the information for the application you entered will now be shown to you in an overview with eight tabs of detailed information.
 
 ![Portfolio Search Results](/img/AppPortfolioSearchResults.png)
 
@@ -651,7 +663,7 @@ In this case, we will be shown all the technical debt details for this applicati
 
 ![Continuous Assessment App Debt Details](/img/ContinuousAssessmentAppDebtDetails.png)
 
-**6. In order to view trends over time, there is a tab for New Code which will show any newly added bugs, vulnerabilities,hotspots or debt that have been added with the most recent upload and code scan. Thus, the effect of any newly changed code that is causing your technical debt to rise.**
+**6. In order to view trends over time, there is a tab for New Code which will show any newly added bugs, vulnerabilities, hotspots or debt that have been added with the most recent upload and code scan. Thus, the effect of any newly changed code that is causing your technical debt to rise.**
 
 ![Continuous Assessment New Code](/img/ContinuousAssessmentNewCode.png)
 

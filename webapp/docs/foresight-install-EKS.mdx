@@ -7,32 +7,34 @@ sidebar_label: Installing CloudScend Foresight v1.0.0 to Amazon EKS
 
 # Installing CloudScend Foresight to Amazon EKS
 
-This section of the Installation Guide will provide instructions for installing CloudScend Foresight v1.0.0 in an Amazon EKS enviornment.
+This section of the Installation Guide will provide instructions for installing CloudScend Foresight v1.0.0 in an Amazon EKS environment.
 
 ## Assumptions for Amazon EKS Installation
 
 - Familiarity with Amazon EKS Environments
 - Access to functional Amazon EKS Environment
 - Knowledge of Helm files usage
-- SSL Instructions have been completed **_NEED INPUT FROM TEAM ON THIS_**
-- **NEED INPUT FROM TEAM**
 
 ## Technical Requirements for Amazon EKS Installation
 
-- Access to Amazon EKS Environment
 - Kubernetes Cluster 1.15+
+  - EFS as the data storage
+    - Need assistance: https://docs.aws.amazon.com/efs/latest/ug/troubleshooting-efs-mounting.html
+  - Nginx Ingress as the Ingress Controller
+  - Recommend 2 m5.xlarge EC2 Workers
 - kubectl
   - Access via command-line
   - Master permissions
-  - https://aws.amazon.com/premiumsupport/knowledge-center/eks-cluster-connection/
-- Helm
+  - Need assistance: https://aws.amazon.com/premiumsupport/knowledge-center/eks-cluster-connection/
+- Helm v3.4.1
   - https://helm.sh/docs/intro/install/
-- Helmfile
+- Helmfile v0.137.0
   - https://github.com/roboll/helmfile#installation
-- License Key
+- Foresight License Key
   - This will be provided by SAIC via email
-  - Place the emailed license.txt file in the same folder where as your helm charts. The installation scripts will need this file in order to successfully install your license.
-- If processing Windows .NET Code, you must install Windows Report Service and should ensure the following requirements are met:
+- Foresight ML application key
+  - This will be provided by SAIC via email
+    If processing Windows .NET Code, you must install Windows Report Service and should ensure the following requirements are met:
   - If you are using AWS: download CloudScend Foresight Windows Report Service AMI from the AWS Marketplace
   - If you are not using AWS: Reach out to SAIC service desk for CloudScend Foresight Windows Report Service app
   - Windows Server Minimum requirements:
@@ -40,30 +42,37 @@ This section of the Installation Guide will provide instructions for installing 
     - 1 CPU
     - 2GB RAM
     - 50 GB drive space on C:\
-- If any of your source code is written in ColdFusion, you must also download and install [CFLint](https://github.com/stepstone-tech/sonar-coldfusion/releases/tag/2.0.0).
-- **Explain different plugins for different versions of SonarQube (like CFLint, TypeScript, Java, etc)**
-- **NEED INPUT FROM TEAM**
 
-## Install Cluster Level Applications
+## Installation Procedure
 
-1. Look over environment Variables
-2. Replace certain variables
-3. Run the following commands
-   - set -a; source [nameOfEnvironmentFile].env; set +a;
-   - helmfile --log-level debug --allow-no-matching-release sync
-4. Install Keycloak
-   - Pre-configure the Realm Cert
-5. Install Sonarqube
-   - Requires Keycloak configuration set and a restart
-6. Install Gitlab
-   - SSO configuration requires Keycloak Realm Cert
-7. Install Metabase
-8. Install Elasticsearch
-9. Install Kibana
-10. Install Fluentd
-11. **NEED INPUT FROM TEAM**
+### Download Package
 
-## Optionally Install Windows Report Service
+1. Download the Installation Package
+2. Examine the folder structure and ensure you have the structure and files included in the table below.
+
+| Directory Name | Description                                                                                                                                              |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Apps           | Folder containing Helmfile configuration for CloudScend Foresight application                                                                            |
+| env            | Folder containing the environment file to configure the deployment                                                                                       |
+| init           | Folder containing scripts used in the deployment                                                                                                         |
+| initial        | Folder containing Helmfile configuration for the supporting applications: <br></br> - Keycloak <br></br> - GitLab<br></br>- SonarQube<br></br>- Metabase |
+| Istio-support  | Folder containing the installation details repeated                                                                                                      |
+| README         | README with the installation details repeated                                                                                                            |
+| foresight.sh   | Main script file to be run to install the application                                                                                                    |
+
+### Configure Environment
+
+1. Open the license.txt file you received from SAIC via email.
+2. Open the foresight.env file in an editor (Notepad++, Sublime Text, Visual Studio Code, etc.)
+   ![Env File](/img/EnvFile.png)
+3. Find the environment variable LICENSE_KEY
+   ![License Key](/img/EnvLicenseKey.png)
+4. Copy the text in the license.txt file and paste it into the LICENSE_KEY value.
+5. Change the remaining environment variable values based on your environment.
+   - You can view the [list of CloudScend Foresight Environment Variables](foresight-env-variables.mdx) so you are familiar with the variables.
+   - Reach out to SAIC service desk if you have questions or concerns.
+
+### Optionally Install Windows Report Service
 
 If you will be processing any .NET code, you must install Windows Report Service. Follow the steps below to perform the installation.
 
@@ -84,42 +93,37 @@ If you will be processing any .NET code, you must install Windows Report Service
    3. To start the Windows Report Service, run `C:\AMaaS\start-report-service.bat`.
       Note: make sure port 8080 is exposed and addressable for the "normal" Java Report Service to access.
 
-## Configure Cluster Level Applications
+### Run the Installer Script
 
-1. Register GitLab User
-   - Browse to your gitlab instance (https://GITLAB_DOMAIN/)
-   - Click register and register a user
-2. Access Keycloak Admin
-   - Log into Keycloak Admin ( https://KEYCLOAK_DOMAIN_URL/auth )
-   - The Admin Password can be found in a Kubernetes Secrets Object
-   - The name of the object is "keycloak-credentials"
-   - In the object, the password is denoted by the following key: "adminPassword".
-3. Configure Sonarqube Access Token
-4. Configure Gitlab SSO w/ Keycloak
-   - In an Incognito Tab, browse to here (Replace GITLAB_DOMAIN with your gitlab instance url)
-     - https://GITLAB_DOMAIN/users/sign_in?auto_sign_in=false
-   - Login regularly with "root"
-   - The Admin Password can be found in a Kubernetes Secrets Object
-     - The name of the object is "NAMESPACE-gitlab-gitlab-initial-root-password"
-     - In the object, the password is denoted by the following key: "password"
-   - On the Top left there is a Wrench Icon that directs us to the Admin Dashboard
-   - On the Side bar to the left click on "Settings"
-   - Under Sign in restriction
-   - Add a Sign Out URL
-     - https://KEYCLOAK_DOMAIN_URL/auth/realms/appmod/protocol/openid-connect/logout?redirect_uri=GITLAB_DOMAIN
-5. **NEED INPUT FROM TEAM**
+1. Open a terminal window and navigate to the top level of the installation folder
+2. Type ./foresight.sh to run the script
+   - Note, in Linux you may be required to change the permission of the script to Run As Admin.
+   - if you receive an error during installation, refer to the [Debugging and Installation Support](#debugging-and-installation-support) below.
+3. Wait for installation to complete. This usually takes less than 30 minutes depending on your system.
+4. Validate by examining the cluster pods.
 
-## Install Applications
+## Troubleshooting and Installation Support
 
-1. Install Reports Service Windows
-2. Install Commondata + Database
-3. Install Cast
-4. Install HighlightAgent
-5. Install Source Code Uploader
-6. Install Reports Service
-7. Install Sage Database, Sage API, Sage UI
-8. **NEED INPUT FROM TEAM**
+### Installation Issues
 
-## Troubleshooting and Support
+1. WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /Users/{username}/.kube/config
+   - This is only a warning, but for security best practices this should be addressed.
+   - The fix is to run the following command against your kubeconfig to change its permission to readable only by the current user
+     - chmod u=rw ~/.kube/config
+2. Missing Required Environment Variables
+   - An error will be printed out with the specific missing variable
+   - The fix is to set the missing variable, use the chart above or the foresight.env file for reference.
 
-If you experience issues with your installation or need support with your CloudScend Foresight installation, please contact the CloudScend Foresight service desk by phone at 1-866-411-4227 – option 3 or email foresight-support@saic.com.
+### Viewing logs
+
+1. You can view logs using kubectl
+
+- Use these links for information on how to use kubectl to view your logs:
+  - https://kubernetes.io/docs/tasks/debug-application-cluster/debug-running-pod/#container-exec
+  - https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+
+2. Add "-n [namespace]" to the end of the command to find your pod
+   -For example, "kubectl -n mynamespace logs podname-1 -c optional-container-name"
+3. You can also use Lens to view your logs. See information in the [CloudScend Foresight Operations Guide](foresight-ops-diagnostic#viewing-error-logs) for more details.
+
+If you are still experience issues with your installation or need support, please contact the CloudScend Foresight service desk by phone at 1-866-411-4227 – option 3 or email foresight-support@saic.com.

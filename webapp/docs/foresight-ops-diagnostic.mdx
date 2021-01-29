@@ -78,9 +78,16 @@ As an administrator there may be times when you need to examine the logs for pos
 There are many pods installed with CloudScend Foresight. You may need to look for errors in multiple pods to find the errors you are experiencing. When working with a support technician, you may be directed to provide logs for multiple pods.
 :::
 
-To view Kubernetes level logs, you may need the assistance of your Kubernetes administrator in order to follow these steps:
+**To view Kubernetes level logs, you may need the assistance of your Kubernetes administrator in order to follow the steps below.**
 
-_*1. Some instructions here from team on how to view Kubernetes logs.*_
+1. View logs using kubectl
+
+- Use these links for information on how to use kubectl to view your logs:
+  - https://kubernetes.io/docs/tasks/debug-application-cluster/debug-running-pod/#container-exec
+  - https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+
+2. Add "-n [namespace]" to the end of the command to find your pod
+   -For example, "kubectl -n mynamespace logs podname-1 -c optional-container-name"
 
 **To view Windows Report Service level logs, we suggest you follow the steps below.**
 
