@@ -54,7 +54,7 @@ All first time users of CloudScend Foresight will need to create and setup an ac
 
 Users will need to register for your account and create a password in the CloudScend Foresight Keycloak instance.
 
-**1. Open a web browser and go the the CloudScend Foresight site. _Not sure about this step - how do they get to the CloudScend Foresight site_**
+**1. Open a web browser and go the the CloudScend Foresight site. The CloudScend Foresight admin should provide you with the url for the application within your environment.**
 
 ![Keycloak Login](/img/KeyCloakLogin.png)
 
@@ -80,7 +80,7 @@ Keycloak administration does not do the same field validation that the new user 
 
 ### Packaging Source Code
 
-The CloudScend Foresight product requires uploading the source code of the application to be analyzed in order to provide you with the data regarding the health and cloud readiness of your application. The code should be packaged as a zip file for uploading. The source code folder should be assembled using the following guidelines to ensure optimal analysis.
+The CloudScend Foresight product requires uploading the source code of the application to be analyzed in order to provide you with the data regarding the health and cloud readiness of your application. The code should be packaged as a zip file for uploading. The source code folder should be assembled using the [guidelines](#packaging-source-code) below to ensure optimal analysis.
 
 #### Source Code Supported Languages
 
@@ -96,24 +96,25 @@ CloudScend Foresight provides support for most common programming languages. Bel
 | Python        | :heavy_check_mark: | :heavy_check_mark:    | :heavy_check_mark:     | :heavy_check_mark:     |
 | PHP           | :heavy_check_mark: | :heavy_check_mark:    | :heavy_check_mark:     | :heavy_check_mark:     |
 | VB.Net        | :heavy_check_mark: | :heavy_check_mark:    | :heavy_check_mark:     | :heavy_check_mark:     |
-| Ruby          | :heavy_check_mark: | :heavy_check_mark:    | :heavy_check_mark:     | Partial                |
-| ColdFusion    | Partial            | Partial               | :heavy_check_mark:     | Partial                |
-| Go            | :heavy_check_mark: | :heavy_check_mark:    | :heavy_check_mark:     | Partial                |
-| Scala         | :heavy_check_mark: | :heavy_check_mark:    | :heavy_check_mark:     | Partial                |
-| HTML          | :heavy_check_mark: | :heavy_check_mark:    | Partial                | Partial                |
-| CSS           | :heavy_check_mark: | :heavy_check_mark:    | Partial                | Partial                |
-| XML           | :heavy_check_mark: | :heavy_check_mark:    | Partial                | Partial                |
+| Ruby          | :heavy_check_mark: | :heavy_check_mark:    |                        | Partial                |
+| ColdFusion    | :heavy_check_mark: | :heavy_check_mark:    |                        | Partial                |
+| Go            | :heavy_check_mark: | :heavy_check_mark:    |                        | Partial                |
+| Scala         | :heavy_check_mark: | :heavy_check_mark:    |                        | Partial                |
+| Flex          | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
+| HTML          | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
+| CSS           | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
+| XML           | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
 | VB6           |                    |                       | :heavy_check_mark:     | :heavy_check_mark:     |
-| C             |                    |                       | Partial                | Partial                |
-| C++           |                    |                       | :heavy_check_mark:     | Partial                |
-| PL/SQL        |                    |                       | :heavy_check_mark:     | Partial                |
 | COBOL         |                    |                       | :heavy_check_mark:     | :heavy_check_mark:     |
-| T-SQL         |                    |                       | :heavy_check_mark:     | Partial                |
-| Shell Scripts |                    |                       | :heavy_check_mark:     | Partial                |
-| JSP           |                    |                       | :heavy_check_mark:     | Partial                |
 | Swift         |                    |                       | :heavy_check_mark:     | :heavy_check_mark:     |
-| Delphi        |                    |                       | :heavy_check_mark:     | Partial                |
-| Groovy        |                    |                       | :heavy_check_mark:     | Partial                |
+| JSP           |                    |                       | :heavy_check_mark:     | :heavy_check_mark:     |
+| T-SQL         |                    |                       | :heavy_check_mark:     | Partial                |
+| C++           |                    |                       | :heavy_check_mark:     | Partial                |
+| C             |                    |                       |                        | Partial                |
+| PL/SQL        |                    |                       |                        | Partial                |
+| Shell Scripts |                    |                       |                        | Partial                |
+| Delphi        |                    |                       |                        | Partial                |
+| Groovy        |                    |                       |                        | Partial                |
 
 #### General Guidelines for Packaging Source Code
 
@@ -148,7 +149,7 @@ CloudScend Foresight provides support for most common programming languages. Bel
 4. Zip file for source code upload must contain a \*.sln (Microsoft Visual Studio Solution File) in root directory which then links to the projects to be scanned.
    - If there are multiple \*.sln files, create a separate zip file and onboard as a separate application in CloudScend Foresight.
 5. Make sure to include the source code includes all .csproj files with links to the files to be scanned.
-6. Make sure to include packages/assemblies/DLLs which your solution uses to compiles.
+6. Make sure to include packages/assemblies/DLLs which your solution uses to compile.
    - Check with any 3rd party vendor's license requirements.
 7. Remove any .gitignore files if present in your source code; the typical .gitignore file will remove packages/assemblies/DLLs which your solution compiles against when ingested into CloudScend Foresight.
 8. Source code should have all required configuration so that it can be built locally using MSBuild 14.0 or higher for optimal analysis.
@@ -161,56 +162,80 @@ CloudScend Foresight requires your source code to be compressed into a zip file 
 
 ### Actual Bucket Criteria
 
-Once you are done with an app analysis or refactor, you will need to enter your actual bucket, hours and cost amounts. This will allow not only you to track your work across time, it will also provide important input into the CloudScend Foresight machine learning estimation model. By providing these actual values to CloudScend Foresight, you will be helping to ensure your future estimations are based on real world data. While your cost and hours are very specific numbers, the bucket value you select should be based on criteria about your application. Please follow the chart below to help you select your actual bucket value.
+In order to complete your application analysis and obtain a full picture of you application cloud migration effort, you will need to record the actual hours and cost for app analysis and refactor efforts.
+This will allow not only you to track your work across time, it will also provide important input into the CloudScend Foresight machine learning estimation model. While your cost and hours are very specific numbers, we also provide an effort-based categorization of apps which in CloudScend Foresight we call “application buckets.” These buckets will allow you to cluster the apps on your portfolio based on characteristics shared among application in such a way that you can get a higher level view on the composition of your portfolio for migration planning purposes.
+We have identified the following four bucket categories based on our work with government agencies: Simple, Medium, Complex and Outlier.
+As with actual cost and person-hours, CloudScend Foresight also allows you to record your own assessment for application bucket. The bucket value you select should be based on criteria about your application. Please follow the chart below as a guideline to help you select your actual bucket value.
 
-| Simple Bucket Criteria                                                                                              |
-| ------------------------------------------------------------------------------------------------------------------- |
+| Simple Bucket Criteria                                                                                              | H   |
+| ------------------------------------------------------------------------------------------------------------------- | --- |
 | Existing Cloud App or 3-Tier Web App                                                                                |
 | No Databases or 1-2 Databases with no Stored Procs or DB Links                                                      |
 | HTTPS Based Interfaces only                                                                                         |
-| CRI 75-80                                                                                                           |
+| Cloud Readiness Index > 80                                                                                          |
 | No Cloud Migration Blockers                                                                                         |
 | Uses PIV Authentication, SAML                                                                                       |
 | None of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools |
-| Negligible Technical Debt (<$100,000)                                                                               |
-| Low SLOC Count (<40k)                                                                                               |
+| Technical Debt less than $144,000                                                                                   |
+| SLOC Count less than 40K                                                                                            |
+| App Analysis total hours range: 0-240 hours                                                                         |
+| App Analysis total cost range: $0 - $33,600                                                                         |
+| Refactor total hours range: 0-2,857 hours                                                                           |
+| Refactor total cost range: $0 - $400,000                                                                            |
 
 | Medium Bucket Criteria                                                                                                     |
 | -------------------------------------------------------------------------------------------------------------------------- |
 | 2-4 Databases with a few Stored Procs and/or DB Links                                                                      |
 | Very Few Non-HTTPS Based Interfaces                                                                                        |
-| CRI 65-75                                                                                                                  |
+| Cloud Readiness Index 70-80                                                                                                |
 | No Cloud Migration Blockers                                                                                                |
 | Uses PIV-based Authentication, SAML/JWT                                                                                    |
 | None or one of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools |
-| Medium Technical Debt ($100,000 - $350,000)                                                                                |
-| Medium SLOC Count (40k - 70k)                                                                                              |
+| Technical Debt: $144,000 – $253,000                                                                                        |
+| SLOC Count: 40K - 70K                                                                                                      |
+| App Analysis total hours range: 241-360 hours                                                                              |
+| App Analysis total cost range: $33,700 - $50,400                                                                           |
+| Refactor total hours range: 2,858-5,000 hours                                                                              |
+| Refactor total cost range: $401,000 - $700,000                                                                             |
 
 | Complex Bucket Criteria                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------- |
 | 5 or more Databases with both Stored Procs and DB Links                                                                   |
 | Many Non-HTTPS Based Interfaces                                                                                           |
-| CRI < 65                                                                                                                  |
+| Cloud Readiness Index < 70                                                                                                |
 | 1-2 Cloud Migration Blockers                                                                                              |
 | Uses Non-PIV-based Authentication, JWT or Other Token                                                                     |
 | One or two of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools |
-| Large Technical Debt ($350,000 - $700,000)                                                                                |
-| Large SLOC Count (70k – 300k)                                                                                             |
+| Technical Debt: $253,000 - $722,000                                                                                       |
+| SLOC Count: 70K – 200K                                                                                                    |
+| App Analysis total hours range: 361-480 hours                                                                             |
+| App Analysis total cost range: $50,540 - $67,200                                                                          |
+| Refactor total hours range: 5,001-8929 hours                                                                              |
+| Refactor total cost range: $701,000 - $1,250,000                                                                          |
 
 | Outlier Bucket Criteria                                                                                                    |
 | -------------------------------------------------------------------------------------------------------------------------- |
 | Very Large number of Non-HTTPS Based Interfaces                                                                            |
+| Cloud Readiness Index <35                                                                                                  |
 | Numerous Cloud Migration Blockers                                                                                          |
 | Uses Non-PIV-based Authentication, Other Token                                                                             |
 | Most or all of the following: shared filesystems, caching, message queues, real-time data sync requirements, or COTS tools |
-| Extreme Technical Debt (>$700,000)                                                                                         |
-| Extreme SLOC Count (>300k)                                                                                                 |
+| Technical Debt: greater than $722,000                                                                                      |
+| SLOC Count: greater than 200k                                                                                              |
+| App Analysis total hours greater than 481 hours                                                                            |
+| App Analysis total cost greater than $67,340                                                                               |
+| Refactor total hours greater than 8930 hours                                                                               |
+| Refactor total cost greater than $1,250,000                                                                                |
 
 ### Storage configuration
 
-**This is a Placeholder for info based on an email the email said:** For Kubernetes deployments, we are using Kubernetes volumes. For plain Docker we are using volumes mapped to local storage, but the customer may be able to configure them as needed.
+CloudScend Foresight leverages AWS storage solutions to persist different types of artifact. For the EKS-based deployment, a set of Kubernetes data volumes are created during the installation process. These volumes are created under a provisioned AWS EFS file system.
 
-This is a minimalist approach, and customer will be in charge of backing up the volumes and data. This also removes the licensing issues we have seen. On the other hand if we need something more robust, I can continue looking for an alternative to minio, I don’t think we can’t get around the licensing limitations.
+CloudScend Foresight leverages AWS Elastic File System (EFS) https://aws.amazon.com/efs/. EFS is a fully managed system that is designed to be highly scalable, highly available, and highly durable and requires minimum configuration.
+
+It is recommended to implement an EFS file system backup process as part of the CloudScend Foresight management process. This can be easily implemented using the AWS Backup service (https://aws.amazon.com/backup/). An example implementation can be found here https://docs.aws.amazon.com/efs/latest/ug/awsbackup.html)
+
+In addition to data volumes, CloudScend Foresight uses AWS S3 as a default storage solution for application artifacts. As needed, the S3 bucket can be configured to meet the organization data storage requirements in terms on encryption, data life cycle, etc.
 
 ## Backup and Restore
 
@@ -218,7 +243,7 @@ This is a minimalist approach, and customer will be in charge of backing up the 
 
 Before making any significant environment changes, you should backup your Keycloak instance in order to keep your registered user information intact. Follow the steps below to backup your Keycloak instance.
 
-**1. Perform a Keycloak export. Use the [Keycloak documentation](https://www.keycloak.org/docs/latest/server_admin/#_export_import) for more information on this.**
+**1. Connect to the Keycloak pod using Lens or Kubectl.**
 
 **2. Browse to /opt/jboss/keycloak**
 
@@ -237,13 +262,30 @@ kubectl cp <some-namespace>/<some-pod>:/tmp/foo /tmp/bar
 kubectl cp -n keycloak keycloak/keycloak-0:/opt/jboss/keycloak/sage-keycloak-dev.json ./sage-keycloak-dev.json
 ```
 
-**5.Edit the JSON as required (More information to come)**
-
-**6. To restore the instance, import the JSON via the UI using the Keycloak Admin User**
+**5. To restore the instance, import the JSON via the UI using the Keycloak Admin User**
+**6. For help performing a Keycloak export use the [Keycloak documentation](https://www.keycloak.org/docs/latest/server_admin/#_export_import).**
 
 ### Postgres Database Backup and Restore
 
-CloudScend Foresight installs and creates multiple Postgres databases that are used throughout our product. In order to backup your Postgres databases that are filled with CloudScend Foresight data, you should review and follow these [instructions provided by Postgres](https://www.postgresql.org/docs/10/backup.html). You will want to make sure you are following these steps for your CloudScend Foresight database as well as your SonarQube database.
+CloudScend Foresight installs and creates multiple Postgres databases that are used throughout our product. The database information is persited on Kubernetes volumes despoyed in AWS EFS as explained above. This ensures high availability and high durability of your data. As needed, organizations can backup Postgres databases that contain the CloudScend Foresight data. Database backup [instructions provided by Postgres](https://www.postgresql.org/docs/10/backup.html) can provide you assistance.
+
+CloudScend Foresight uses Postgres instances for the following software components:
+
+- Sage backend service
+- Common data service
+- SonarQube service
+- CAST Highlight service
+
+As an example of backing up your database, you can follow these steps:
+
+1. Connect to the database pod via shell
+   - pg_dump -U postgres DATABASE_NAME > backup.sql
+2. Copy file from database pod to local system
+
+```
+   - kubectl cp <some-namespace>/<some-pod>:/tmp/foo /tmp/bar
+   - Example: kubectl cp -n keycloak keycloak/keycloak-0:/opt/jboss/keycloak/sage-keycloak-dev.json ./sage-keycloak-dev.json
+```
 
 ### GitLab Backup and Restore
 
