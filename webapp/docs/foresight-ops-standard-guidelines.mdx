@@ -98,12 +98,15 @@ CloudScend Foresight provides support for most common programming languages. Bel
 | VB.Net        | :heavy_check_mark: | :heavy_check_mark:    | :heavy_check_mark:     | :heavy_check_mark:     |
 | Ruby          | :heavy_check_mark: | :heavy_check_mark:    |                        | Partial                |
 | ColdFusion    | :heavy_check_mark: | :heavy_check_mark:    |                        | Partial                |
-| Go            | :heavy_check_mark: | :heavy_check_mark:    |                        | Partial                |
+| Go            | :heavy_check_mark: | :heavy_check_mark:    |  Partial               | Partial                |
 | Scala         | :heavy_check_mark: | :heavy_check_mark:    |                        | Partial                |
 | Flex          | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
 | HTML          | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
 | CSS           | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
 | XML           | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
+| CloudFormation| :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
+| Terraform     | :heavy_check_mark: | :heavy_check_mark:    |                        |                        |
+| Clojure       |                    |                       | :heavy_check_mark:     | :heavy_check_mark:     |
 | VB6           |                    |                       | :heavy_check_mark:     | :heavy_check_mark:     |
 | COBOL         |                    |                       | :heavy_check_mark:     | :heavy_check_mark:     |
 | Swift         |                    |                       | :heavy_check_mark:     | :heavy_check_mark:     |
@@ -120,10 +123,11 @@ CloudScend Foresight provides support for most common programming languages. Bel
 
 1. Only include code that is directly developed for the application and under direct control of the application owner.
 2. Keep the directory structure organization as used in your build environment.
-3. You can include DDL and SQL files under a folder separate from the source code however this is not necessary for a good scan and can cause very large .zip files.
-4. Do not include third party library source code.
-5. Do not include past versions of code that have been archived under your repository.
-6. Exclude files with the following extensions:
+3. **Note, there can be no spaces in the directory folder structure. Ensure all folders have no spaces in the name.**
+4. You can include DDL and SQL files under a folder separate from the source code however this is not necessary for a good scan and can cause very large .zip files.
+5. Do not include third party library source code.
+6. Do not include past versions of code that have been archived under your repository.
+7. Exclude files with the following extensions:
    - \*.javac
    - \*.pdf
    - \*.jdb
@@ -133,8 +137,8 @@ CloudScend Foresight provides support for most common programming languages. Bel
    - \*.zip
    - \*.gz
    - \*.bak
-7. When creating zip file from source code from an existing Git repository, if the repository contains LFS files, do not use the “Download source code” option from the browser. LFS files will not be included in this zip file and, therefore, will not be uploaded. Instead, clone the Git repository and create a zip file from the local download.
-8. The CloudScend Foresight product can support .zip files as large as 2GB. If after preparing your source code per these instructions, your .zip file is larger than 2GB please contact the SAIC Help Desk for assistance processing the larger file.
+8. When creating zip file from source code from an existing Git repository, if the repository contains LFS files, do not use the “Download source code” option from the browser. LFS files will not be included in this zip file and, therefore, will not be uploaded. Instead, clone the Git repository and create a zip file from the local download.
+9. The CloudScend Foresight product can support .zip files as large as 2GB. If after preparing your source code per these instructions, your .zip file is larger than 2GB please contact the SAIC Help Desk for assistance processing the larger file.
 
 #### Specific Guidelines for Java Applications
 
