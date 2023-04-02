@@ -1,7 +1,7 @@
 ---
 id: foresight-api-guide
 title: CloudScend Foresight API Guide
-hide_title: CloudScend Foresight API Guide
+
 sidebar_label: CloudScend Foresight API Guide
 ---
 
