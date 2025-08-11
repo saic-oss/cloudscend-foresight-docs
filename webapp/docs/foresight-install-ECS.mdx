@@ -12,7 +12,6 @@ sidebar_label: Installing CloudScend Foresight to AWS ECS
 - You are familiar with AWS ECS Environments
 - Access to functional AWS ECS Environment
 - Technical Knowledge of the following
-
   - Docker
   - Docker Compose
   - AWS
@@ -101,7 +100,6 @@ Additional information on installing AWS CLI is available at [AWS Amazon](https:
 1. Obtain your deployment code repository from the [CloudScend Foresight ECS Deployment location](PUT A LINK IN HERE?).
 
 2. Deployment order of CloudScend Foresight containers:
-
    - Commondata Database
    - Commondata Backend
    - Metabase DB
@@ -147,7 +145,6 @@ For example, the following describe and register statements create task definiti
 4. Create ECS Services
 
 - If your administrator has chosen the Fargate service, then create ECS Fargate Services
-
   - To create a service with Fargate, run similar AWS CLI command below for each ECS Task Definition previously created. Below is an example using the commondata-db container. Ensure you use the correct network and cluster values for your environment.
 
   ```
@@ -156,7 +153,6 @@ For example, the following describe and register statements create task definiti
 
   :::note
   It’s recommended to run Elasticsearch on Fargate due to recent compatibility contingencies.
-
   - To fix paging issue on Elasticsearch EC2 attempt to add this command to the instances: **THIS SAYS EC2 BUT DEALING WITH FARGATE**
   - sudo sysctl -w vm.max_map_count=262144
   - sudo sysctl -w fs.file-max=65536
@@ -225,7 +221,6 @@ Below find an example of a successful output when task definition is properly re
 ```
 
 - If your administrator has chosen the EC2 service, then create ECS EC2 Services
-
   - To create a service with ECS EC2, run simialiar AWS CLI command for each Task Definition previously created. Below is an example using the commondata container. Ensure you use the correct network and cluster values for your environment.
 
   ```

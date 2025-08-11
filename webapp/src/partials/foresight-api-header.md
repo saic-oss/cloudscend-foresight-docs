@@ -64,7 +64,6 @@ curl $FORESIGHT_API_BASE_URL/sage/application/ -H "Authorization: bearer $TOKEN"
 The quickest way to get started is to use our Postman request collection. The following steps will help you get up and running.
 
 1. **Import the CloudScend Foresight Postman Collection**
-
    - <a
      href={useBaseUrl("/data/foresight-api.postman_collection.json")}
      download
@@ -74,7 +73,6 @@ The quickest way to get started is to use our Postman request collection. The fo
    - From Postman, Import -> Select downloaded Foresight postman collection
 
 2. **Configure Postman Environment**
-
    - Setup a new environment in Postman. Click New -> Environment.
    - Name the new environment _Foresight API_
    - Add the following variables:
@@ -84,7 +82,6 @@ The quickest way to get started is to use our Postman request collection. The fo
    - Click Add to create
 
 3. **Authenticate**
-
    - In the Authorization tab for the collection, select OAuth 2.0 from the Type dropdown list. By default Postman will append the access token to Bearer in the Authorization header for your request.
    - To request an access token, fill out the fields in the Configure New Token section. There are several ways to configure based on the Grant Type you want to use. For the Password Credentials grant type enter the following details:
      - Access Token URL: {{loginBaseUrl}}/auth/realms/appmod/protocol/openid-connect/token
@@ -99,7 +96,6 @@ The quickest way to get started is to use our Postman request collection. The fo
    - View [Postman Documentation on OAuth2 Authentication](https://learning.postman.com/docs/sending-requests/authorization/#oauth-20) for more info.
 
 4. **Explore the API**
-
    - Execute any of the requests within the collection
    - Refer to this documentation for the requirements of each request
 
